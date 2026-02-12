@@ -4,10 +4,15 @@ import com.destroystokyo.paper.event.player.PlayerAdvancementCriterionGrantEvent
 import io.quill.paper.Bootable;
 import io.quill.paper.event.EventManager;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import studio.semicolon.prc.core.event.listener.advancement.GameModeChangeListener;
+import studio.semicolon.prc.core.event.listener.advancement.PlantTouchListener;
+import studio.semicolon.prc.core.event.listener.advancement.PlayerFallListener;
 import studio.semicolon.prc.core.event.listener.game.BackPackListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAILeftClickListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAIRightClickListener;
@@ -27,6 +32,7 @@ public class EventRegistrar implements Bootable {
                 .subscribe(new MachineDestroyListener())
                 .subscribe(new MachineInteractListener())
                 .subscribe(new MachinePlaceListener())
+                .subscribe(new PlantTouchListener())
                 .build();
         manger.register(PlayerItemConsumeEvent.class)
                 .subscribe(new CoffeeListener())
@@ -41,6 +47,12 @@ public class EventRegistrar implements Bootable {
                 .build();
         manger.register(EntityDamageByEntityEvent.class)
                 .subscribe(new RoPAILeftClickListener())
+                .build();
+        manger.register(EntityDamageEvent.class)
+                .subscribe(new PlayerFallListener())
+                .build();
+        manger.register(PlayerGameModeChangeEvent.class)
+                .subscribe(new GameModeChangeListener())
                 .build();
     }
 

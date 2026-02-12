@@ -14,11 +14,11 @@ public class Advancements {
     private static final String ADVANCEMENT_NAMESPACE = "pcadv";
     private static final Map<String, Advancement> CACHE = Maps.newHashMap();
 
-    public static void grant(Player player, String advancementID) {
-        Advancement advancement = getOrCache(advancementID);
+    public static void grant(Player player, String advancementKey) {
+        Advancement advancement = getOrCache(advancementKey);
 
         if (advancement == null) {
-            Logger.warn("Advancement not found: " + ADVANCEMENT_NAMESPACE + ":" + advancementID);
+            Logger.warn("Advancement not found: " + ADVANCEMENT_NAMESPACE + ":" + advancementKey);
             return;
         }
 

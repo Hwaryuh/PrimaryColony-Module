@@ -3,14 +3,10 @@ package studio.semicolon.prc.core.event.listener.game;
 import io.quill.paper.event.EventContext;
 import io.quill.paper.event.EventResult;
 import io.quill.paper.event.EventSubscriber;
-import io.quill.paper.util.bukkit.pdc.PDCKeys;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import studio.semicolon.prc.core.event.InteractionMatcher;
 
 import java.util.Optional;
 
@@ -29,7 +25,7 @@ public class RoPAIRightClickListener implements EventSubscriber<PlayerInteractEn
 
     @Override
     public EventResult onEvent(PlayerInteractEntityEvent e, EventContext.Empty empty) {
-        var player = e.getPlayer();
+        Player player = e.getPlayer();
         player.sendMessage("드론 우클릭");
 
         return EventResult.STOP;
