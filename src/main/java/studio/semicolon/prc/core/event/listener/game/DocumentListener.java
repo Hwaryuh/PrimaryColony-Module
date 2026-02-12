@@ -8,20 +8,21 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import studio.semicolon.prc.core.constant.text.UtilMessages;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
 import studio.semicolon.prc.core.event.InteractionMatcher;
 
 import java.util.Optional;
 
-public class BackPackListener implements EventSubscriber<PlayerInteractEntityEvent, EventContext.Empty>, InteractionMatcher, AdvancementMatcher {
+public class DocumentListener implements EventSubscriber<PlayerInteractEntityEvent, EventContext.Empty>, InteractionMatcher, AdvancementMatcher {
     @Override
     public NamespacedKey getIdentityKey() {
-        return PDCKeys.of("backpack_interaction");
+        return PDCKeys.of("documents_interaction");
     }
 
     @Override
     public String getAdvancementKey() {
-        return "module/normal/one_per_person";
+        return "module/normal/i_hate_studying";
     }
 
     @Override
@@ -36,8 +37,7 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
 
     @Override
     public EventResult onEvent(PlayerInteractEntityEvent e, EventContext.Empty ctx) {
-        e.getPlayer().sendMessage("가방");
-
+        e.getPlayer().sendMessage(UtilMessages.SERVER_LINK);
         return EventResult.STOP;
     }
 }

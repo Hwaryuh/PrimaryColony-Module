@@ -4,6 +4,8 @@ import io.quill.paper.event.EventContext;
 import io.quill.paper.event.EventResult;
 import io.quill.paper.event.EventSubscriber;
 import io.quill.paper.item.ItemMatcher;
+import io.quill.paper.player.PlayerContext;
+import io.quill.paper.player.PlayerContexts;
 import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -20,10 +22,12 @@ import studio.semicolon.prc.core.constant.item.ToolItems;
 import studio.semicolon.prc.api.machine.AbstractMachine;
 import studio.semicolon.prc.api.machine.MachineManager;
 import studio.semicolon.prc.core.constant.sound.PRCSounds;
+import studio.semicolon.prc.core.event.AdvancementMatcher;
 
 import java.util.Optional;
 
-public class MachineDestroyListener implements EventSubscriber<PlayerInteractEvent, MachineDestroyListener.Context> {
+public class MachineDestroyListener implements EventSubscriber<PlayerInteractEvent, MachineDestroyListener.Context>, AdvancementMatcher {
+    public static String COUNTER_KEY = "use_spanner";
 
     public sealed interface Context extends EventContext permits Context.Allow, Context.Deny {
         record Allow(GameMode mode, AbstractMachine machine, Location location) implements Context, EventContext.Data { }
@@ -39,6 +43,11 @@ public class MachineDestroyListener implements EventSubscriber<PlayerInteractEve
                 @Override public Component text() { return MachineMessages.DESTROY_EXIST_RESULT; }
             }
         }
+    }
+
+    @Override
+    public String getAdvancementKey() {
+        return "module/normal/dismantle";
     }
 
     @Override
@@ -78,6 +87,8 @@ public class MachineDestroyListener implements EventSubscriber<PlayerInteractEve
     @Override
     public EventResult onEvent(PlayerInteractEvent e, Context ctx) {
         Context.Allow allow = (Context.Allow) ctx;
+        Player player = e.getPlayer();
+        PlayerContext playerContext = PlayerContexts.ctx(player);
 
         if (allow.mode() == GameMode.SURVIVAL || allow.mode() == GameMode.ADVENTURE) {
             for (ItemStack drop : allow.machine().getDrops()) {
@@ -87,7 +98,12 @@ public class MachineDestroyListener implements EventSubscriber<PlayerInteractEve
 
         allow.machine().destroy();
         MachineManager.getInstance().unregister(allow.location());
-        e.getPlayer().swingMainHand();
+        player.swingMainHand();
+
+        int count = playerContext.increment(COUNTER_KEY);
+        if (count == 10) {
+            grant(player);
+        }
 
         return EventResult.TERMINATE;
     }

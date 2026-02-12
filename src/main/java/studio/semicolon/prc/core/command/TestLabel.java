@@ -9,7 +9,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-public class TestCommand {
+public class TestLabel {
     private static final ArgumentKey<Player> TARGET = ArgumentKey.of("target", Player.class);
     private static final ArgumentKey<Integer> AMOUNT = ArgumentKey.intKey("amount");
     private static final ArgumentKey<Location> LOCATION = ArgumentKey.of("location", Location.class);
