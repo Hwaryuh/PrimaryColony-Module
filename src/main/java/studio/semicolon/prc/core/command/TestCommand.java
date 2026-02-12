@@ -2,7 +2,6 @@ package studio.semicolon.prc.core.command;
 
 import io.quill.paper.command.ArgumentKey;
 import io.quill.paper.command.CommandResult;
-import io.quill.paper.command.SenderContext;
 import io.quill.paper.command.argument.ArgType;
 import io.quill.paper.command.builder.QuillCommand;
 import io.quill.paper.command.builder.QuillCommandBuilder;
@@ -22,14 +21,14 @@ public class TestCommand {
                         .name("pay").playerOnly()
                         .argument(TARGET, ArgType.player()).and()
                         .argument(AMOUNT, ArgType.integer(1, 1_000_000)).and()
-                        .run(ctx -> {
-                            Player sender = ((SenderContext.PlayerOnly) ctx.sender()).player();
+                        .runPlayer(ctx -> {
+                            Player player = ctx.sender().player();
                             Player target = ctx.arg(TARGET);
-                            if (sender.equals(target)) return CommandResult.failure("자기 자신에게는 송금할 수 없습니다.");
+                            if (player.equals(target)) return CommandResult.failure("자기 자신에게는 송금할 수 없습니다.");
 
                             int amount = ctx.arg(AMOUNT);
-                            sender.sendMessage(Component.text(target.getName() + "에게 $" + amount + "를 송금했습니다."));
-                            target.sendMessage(Component.text(sender.getName() + "에게서 $" + amount + "를 받았습니다."));
+                            player.sendMessage(Component.text(target.getName() + "에게 $" + amount + "를 송금했습니다."));
+                            target.sendMessage(Component.text(player.getName() + "에게서 $" + amount + "를 받았습니다."));
 
                             return CommandResult.success();
                         })
@@ -38,8 +37,8 @@ public class TestCommand {
                 .child(c -> c
                         .name("tp").playerOnly()
                         .argument(LOCATION, ArgType.location()).and()
-                        .run(ctx -> {
-                            Player player = ((SenderContext.PlayerOnly) ctx.sender()).player();
+                        .runPlayer(ctx -> {
+                            Player player = ctx.sender().player();
                             Location location = ctx.arg(LOCATION);
 
                             player.teleport(location);
