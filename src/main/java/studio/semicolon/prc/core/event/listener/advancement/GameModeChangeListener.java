@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class GameModeChangeListener implements EventSubscriber<PlayerGameModeChangeEvent, EventContext.Empty>, AdvancementMatcher {
     @Override
-    public String key() {
+    public String getAdvancementKey() {
         return "planet/hidden/gamemode";
     }
 
@@ -23,7 +23,7 @@ public class GameModeChangeListener implements EventSubscriber<PlayerGameModeCha
     }
 
     @Override
-    public EventResult onEvent(PlayerGameModeChangeEvent e, EventContext.Empty empty) {
+    public EventResult onEvent(PlayerGameModeChangeEvent e, EventContext.Empty ctx) {
         grant(e.getPlayer());
         return EventResult.STOP;
     }

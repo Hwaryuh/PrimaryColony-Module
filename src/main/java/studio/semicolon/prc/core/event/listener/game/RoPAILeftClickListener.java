@@ -24,7 +24,7 @@ public class RoPAILeftClickListener implements EventSubscriber<EntityDamageByEnt
     }
 
     @Override
-    public EventResult onEvent(EntityDamageByEntityEvent e, EventContext.Empty empty) {
+    public EventResult onEvent(EntityDamageByEntityEvent e, EventContext.Empty ctx) {
         if (!(e.getDamager() instanceof Player player)) return EventResult.PASS;
         player.sendMessage("드론 좌클릭");
 

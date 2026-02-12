@@ -8,11 +8,17 @@ import io.quill.paper.util.bukkit.Potions;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.potion.PotionEffectType;
 import studio.semicolon.prc.core.constant.item.machine.CoffeeMachineItems;
+import studio.semicolon.prc.core.event.AdvancementMatcher;
 import studio.semicolon.prc.core.util.Advancements;
 
 import java.util.Optional;
 
-public class CoffeeListener implements EventSubscriber<PlayerItemConsumeEvent, EventContext.Empty> {
+public class CoffeeListener implements EventSubscriber<PlayerItemConsumeEvent, EventContext.Empty>, AdvancementMatcher {
+    @Override
+    public String getAdvancementKey() {
+        return "module/normal/employee";
+    }
+
     @Override
     public Optional<EventContext.Empty> expect(PlayerItemConsumeEvent e) {
         return ItemMatcher.matches(e.getItem(), CoffeeMachineItems.COFFEE)
@@ -25,7 +31,7 @@ public class CoffeeListener implements EventSubscriber<PlayerItemConsumeEvent, E
         var player = e.getPlayer();
 
         if (player.hasPotionEffect(PotionEffectType.HASTE)) {
-            Advancements.grant(player, "module/normal/employee");
+            grant(player);
         }
 
         Potions.of(PotionEffectType.SPEED)

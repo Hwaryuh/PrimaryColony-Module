@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class PlantTouchListener implements EventSubscriber<PlayerInteractEvent, EventContext.Empty>, AdvancementMatcher {
     @Override
-    public String key() {
+    public String getAdvancementKey() {
         return "planet/normal/touch";
     }
 
@@ -30,7 +30,7 @@ public class PlantTouchListener implements EventSubscriber<PlayerInteractEvent, 
     }
 
     @Override
-    public EventResult onEvent(PlayerInteractEvent e, EventContext.Empty empty) {
+    public EventResult onEvent(PlayerInteractEvent e, EventContext.Empty ctx) {
         var player = e.getPlayer();
 
         grant(player);

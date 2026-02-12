@@ -20,7 +20,7 @@ public class ModulePanelListener implements EventSubscriber<PlayerInteractEntity
     public record Context(double panelY) implements EventContext, EventContext.Data { }
 
     @Override
-    public NamespacedKey key() {
+    public NamespacedKey getIdentityKey() {
         return PDCKeys.of("panel_interaction");
     }
 
@@ -35,7 +35,7 @@ public class ModulePanelListener implements EventSubscriber<PlayerInteractEntity
     }
 
     @Override
-    public EventResult onEvent(PlayerInteractEntityEvent e, ModulePanelListener.Context ctx) {
+    public EventResult onEvent(PlayerInteractEntityEvent e, Context ctx) {
         new BuildPanelMenu(e.getPlayer(), ctx.panelY).open();
 
         return EventResult.STOP;

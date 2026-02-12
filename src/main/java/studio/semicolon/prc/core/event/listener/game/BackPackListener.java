@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class BackPackListener implements EventSubscriber<PlayerInteractEntityEvent, EventContext.Empty>, InteractionMatcher {
     @Override
-    public NamespacedKey key() {
+    public NamespacedKey getIdentityKey() {
         return PDCKeys.of("backpack_interaction");
     }
 
@@ -29,7 +29,7 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
     }
 
     @Override
-    public EventResult onEvent(PlayerInteractEntityEvent e, EventContext.Empty empty) {
+    public EventResult onEvent(PlayerInteractEntityEvent e, EventContext.Empty ctx) {
         e.getPlayer().sendMessage("가방");
 
         return EventResult.STOP;

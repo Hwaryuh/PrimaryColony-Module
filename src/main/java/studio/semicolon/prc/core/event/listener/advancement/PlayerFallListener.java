@@ -13,7 +13,7 @@ public class PlayerFallListener implements EventSubscriber<EntityDamageEvent, Pl
     public record Context(Player player) implements EventContext, EventContext.Data { }
 
     @Override
-    public String key() {
+    public String getAdvancementKey() {
         return "planet/hidden/nine_point_eight";
     }
 
@@ -25,7 +25,7 @@ public class PlayerFallListener implements EventSubscriber<EntityDamageEvent, Pl
     }
 
     @Override
-    public EventResult onEvent(EntityDamageEvent e, PlayerFallListener.Context ctx) {
+    public EventResult onEvent(EntityDamageEvent e, Context ctx) {
         Player player = ctx.player;
         if (player.getFallDistance() > 10.0) {
             grant(player);

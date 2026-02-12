@@ -24,7 +24,7 @@ public class RoPAIRightClickListener implements EventSubscriber<PlayerInteractEn
     }
 
     @Override
-    public EventResult onEvent(PlayerInteractEntityEvent e, EventContext.Empty empty) {
+    public EventResult onEvent(PlayerInteractEntityEvent e, EventContext.Empty ctx) {
         Player player = e.getPlayer();
         player.sendMessage("드론 우클릭");
 
