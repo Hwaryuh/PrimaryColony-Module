@@ -21,9 +21,9 @@ public class EscapeCommand {
                 .playerOnly()
                 .runPlayer(ctx -> {
                     Player player = ctx.sender().player();
-                    PlayerContext playerContexts = PlayerContexts.ctx(player);
+                    PlayerContext playerContext = PlayerContexts.ctx(player);
 
-                    if (!playerContexts.cooldown(COOLDOWN_KEY)) {
+                    if (!playerContext.cooldown(COOLDOWN_KEY)) {
                         Potions.of(PotionEffectType.LEVITATION)
                                 .duration(EFFECT_DURATION)
                                 .level(1)
@@ -33,7 +33,7 @@ public class EscapeCommand {
                                 .applyTo(player);
 
                         Advancements.grant(player, "planet/hidden/escape");
-                        playerContexts.cooldown(COOLDOWN_KEY, EFFECT_DURATION);
+                        playerContext.cooldown(COOLDOWN_KEY, EFFECT_DURATION);
                     }
 
                     return CommandResult.success();

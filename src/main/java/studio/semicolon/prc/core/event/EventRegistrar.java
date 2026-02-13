@@ -19,6 +19,7 @@ import studio.semicolon.prc.core.event.listener.game.DocumentListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAILeftClickListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAIRightClickListener;
 import studio.semicolon.prc.core.event.listener.machine.CoffeeListener;
+import studio.semicolon.prc.core.event.listener.machine.EntryModuleListener;
 import studio.semicolon.prc.core.event.listener.machine.MachineDestroyListener;
 import studio.semicolon.prc.core.event.listener.machine.MachineInteractListener;
 import studio.semicolon.prc.core.event.listener.machine.MachinePlaceListener;
@@ -50,6 +51,7 @@ public class EventRegistrar implements Bootable {
                 .subscribe(new ModulePanelListener())
                 .subscribe(new BackPackListener())
                 .subscribe(new DocumentListener())
+                .subscribe(new EntryModuleListener())
                 .build();
         manger.register(EntityDamageByEntityEvent.class)
                 .subscribe(new RoPAILeftClickListener())
