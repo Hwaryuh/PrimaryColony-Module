@@ -1,4 +1,4 @@
-package studio.semicolon.prc.core.constant.item.module;
+package studio.semicolon.prc.api.constant.item.module;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;

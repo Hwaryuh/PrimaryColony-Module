@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.block.structure.Mirror;
 import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.structure.Structure;
-import studio.semicolon.prc.core.constant.sound.PRCSounds;
+import studio.semicolon.prc.api.constant.sound.PRCSounds;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;

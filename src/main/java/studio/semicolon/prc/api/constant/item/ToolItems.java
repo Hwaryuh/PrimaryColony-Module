@@ -1,4 +1,4 @@
-package studio.semicolon.prc.core.constant.item;
+package studio.semicolon.prc.api.constant.item;
 
 import io.quill.paper.util.bukkit.pdc.PDCKeys;
 import net.kyori.adventure.text.Component;

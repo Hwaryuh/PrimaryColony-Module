@@ -14,10 +14,10 @@ import studio.semicolon.prc.api.machine.AbstractMachine;
 import studio.semicolon.prc.api.machine.MachineMenu;
 import studio.semicolon.prc.api.machine.MachineState;
 import studio.semicolon.prc.api.machine.Upgradeable;
-import studio.semicolon.prc.core.constant.item.ETCItems;
-import studio.semicolon.prc.core.constant.item.machine.GrinderMachineItems;
-import studio.semicolon.prc.core.constant.sound.PRCSounds;
-import studio.semicolon.prc.core.constant.text.MachineMessages;
+import studio.semicolon.prc.api.constant.item.ETCItems;
+import studio.semicolon.prc.api.constant.item.machine.GrinderMachineItems;
+import studio.semicolon.prc.api.constant.sound.PRCSounds;
+import studio.semicolon.prc.api.constant.text.MachineMessages;
 
 @SuppressWarnings("UnstableApiUsage")
 public class GrinderMachineMenu extends MachineMenu {

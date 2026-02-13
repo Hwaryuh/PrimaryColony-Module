@@ -7,9 +7,8 @@ import io.quill.paper.item.ItemMatcher;
 import io.quill.paper.util.bukkit.Potions;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.potion.PotionEffectType;
-import studio.semicolon.prc.core.constant.item.machine.CoffeeMachineItems;
+import studio.semicolon.prc.api.constant.item.machine.CoffeeMachineItems;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
-import studio.semicolon.prc.core.util.Advancements;
 
 import java.util.Optional;
 

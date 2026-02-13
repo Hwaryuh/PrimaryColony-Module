@@ -8,7 +8,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import studio.semicolon.prc.core.constant.text.UtilMessages;
+import studio.semicolon.prc.api.constant.text.UtilMessages;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
 import studio.semicolon.prc.core.event.InteractionMatcher;
 
@@ -37,7 +37,7 @@ public class DocumentListener implements EventSubscriber<PlayerInteractEntityEve
 
     @Override
     public EventResult onEvent(PlayerInteractEntityEvent e, EventContext.Empty ctx) {
-        e.getPlayer().sendMessage(UtilMessages.SERVER_LINK);
+        e.getPlayer().sendMessage(UtilMessages.WIKI_LINK);
         return EventResult.STOP;
     }
 }

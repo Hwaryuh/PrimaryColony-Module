@@ -11,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MenuType;
 import org.bukkit.inventory.view.builder.InventoryViewBuilder;
 import org.jetbrains.annotations.NotNull;
-import studio.semicolon.prc.core.constant.item.ETCItems;
-import studio.semicolon.prc.core.constant.sound.PRCSounds;
+import studio.semicolon.prc.api.constant.item.ETCItems;
+import studio.semicolon.prc.api.constant.sound.PRCSounds;
 
 import java.util.HashMap;
 import java.util.List;

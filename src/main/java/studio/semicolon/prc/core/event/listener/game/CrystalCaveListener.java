@@ -17,7 +17,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
-import studio.semicolon.prc.core.constant.text.GameMessages;
+import studio.semicolon.prc.api.constant.text.GameMessages;
 
 import java.util.Optional;
 

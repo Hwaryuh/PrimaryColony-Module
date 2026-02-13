@@ -1,4 +1,4 @@
-package studio.semicolon.prc.core.constant.sound;
+package studio.semicolon.prc.api.constant.sound;
 
 import net.kyori.adventure.sound.SoundStop;
 import org.bukkit.Location;
@@ -44,16 +44,10 @@ public interface PRCSounds {
             player.playSound(player, sound, newVolume, newPitch);
         }
 
-        /**
-         * 기존 사운드를 중지하고 새로 재생
-         */
         public void stopAndPlay(Location location) {
             stopAndPlay(location, volume, pitch);
         }
 
-        /**
-         * 기존 사운드를 중지하고 새로 재생
-         */
         public void stopAndPlay(Location location, float newVolume, float newPitch) {
             String soundKey = sound.startsWith("minecraft:") ? sound.substring(10) : sound;
 
@@ -61,16 +55,10 @@ public interface PRCSounds {
             location.getWorld().playSound(location, sound, newVolume, newPitch);
         }
 
-        /**
-         * 특정 플레이어에게만 사운드 중지 후 재생
-         */
         public void stopAndPlay(Player player) {
             stopAndPlay(player, volume, pitch);
         }
 
-        /**
-         * 특정 플레이어에게만 사운드 중지 후 재생
-         */
         public void stopAndPlay(Player player, float newVolume, float newPitch) {
             String soundKey = sound.startsWith("minecraft:") ? sound.substring(10) : sound;
 

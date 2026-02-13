@@ -1,4 +1,4 @@
-package studio.semicolon.prc.core.constant.item;
+package studio.semicolon.prc.api.constant.item;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

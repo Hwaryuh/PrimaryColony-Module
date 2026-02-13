@@ -8,16 +8,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.joml.Vector3f;
-import studio.semicolon.prc.core.constant.item.machine.MachineItems;
-import studio.semicolon.prc.core.constant.item.machine.CoffeeMachineItems;
-import studio.semicolon.prc.core.constant.sound.PRCSounds;
+import studio.semicolon.prc.api.constant.item.machine.MachineItems;
+import studio.semicolon.prc.api.constant.item.machine.CoffeeMachineItems;
+import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.machine.MachineMenu;
 import studio.semicolon.prc.api.machine.MachineState;
 import studio.semicolon.prc.api.machine.AbstractMachine;
-import studio.semicolon.prc.core.constant.text.MenuTitles;
+import studio.semicolon.prc.api.constant.text.MenuTitles;
 
 import java.util.List;
-import java.util.UUID;
 
 public class CoffeeMachine extends AbstractMachine {
     private static final String MACHINE_TYPE = "coffee_machine";

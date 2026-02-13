@@ -18,8 +18,8 @@ import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
-import studio.semicolon.prc.core.constant.text.MachineMessages;
-import studio.semicolon.prc.core.constant.sound.PRCSounds;
+import studio.semicolon.prc.api.constant.text.MachineMessages;
+import studio.semicolon.prc.api.constant.sound.PRCSounds;
 
 import java.util.List;
 import java.util.UUID;

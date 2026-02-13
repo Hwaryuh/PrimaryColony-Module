@@ -2,8 +2,8 @@ package studio.semicolon.prc.core.machine.print;
 
 import com.google.common.collect.Maps;
 import org.bukkit.inventory.ItemStack;
-import studio.semicolon.prc.core.constant.item.ToolItems;
-import studio.semicolon.prc.core.constant.item.machine.FurnaceMachineItems;
+import studio.semicolon.prc.api.constant.item.ToolItems;
+import studio.semicolon.prc.api.constant.item.machine.FurnaceMachineItems;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

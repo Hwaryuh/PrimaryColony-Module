@@ -2,7 +2,7 @@ package studio.semicolon.prc.core.machine.grinder;
 
 import io.quill.paper.item.ItemMatcher;
 import org.bukkit.inventory.ItemStack;
-import studio.semicolon.prc.core.constant.item.machine.GrinderMachineItems;
+import studio.semicolon.prc.api.constant.item.machine.GrinderMachineItems;
 
 public enum GrinderRecipe {
     MG(GrinderMachineItems.MG, GrinderMachineItems.MG_POWDER, new int[]{5, 4, 2}, 0),

@@ -17,11 +17,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import studio.semicolon.prc.api.machine.MachineState;
-import studio.semicolon.prc.core.constant.text.MachineMessages;
-import studio.semicolon.prc.core.constant.item.ToolItems;
+import studio.semicolon.prc.api.constant.text.MachineMessages;
+import studio.semicolon.prc.api.constant.item.ToolItems;
 import studio.semicolon.prc.api.machine.AbstractMachine;
 import studio.semicolon.prc.api.machine.MachineManager;
-import studio.semicolon.prc.core.constant.sound.PRCSounds;
+import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
 
 import java.util.Optional;

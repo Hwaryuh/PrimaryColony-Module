@@ -2,7 +2,7 @@ package studio.semicolon.prc.core.module;
 
 import io.quill.paper.item.require.InventoryRequirement;
 import org.bukkit.inventory.ItemStack;
-import studio.semicolon.prc.core.constant.item.module.ModuleItems;
+import studio.semicolon.prc.api.constant.item.module.ModuleItems;
 import studio.semicolon.prc.core.module.validate.connect.ConnectRule;
 
 public enum ModuleType {

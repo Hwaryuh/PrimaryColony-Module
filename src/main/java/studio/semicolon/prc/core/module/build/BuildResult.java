@@ -1,7 +1,7 @@
 package studio.semicolon.prc.core.module.build;
 
 import net.kyori.adventure.text.Component;
-import studio.semicolon.prc.core.constant.text.ModuleMessages;
+import studio.semicolon.prc.api.constant.text.ModuleMessages;
 
 public enum BuildResult {
     SUCCESS,

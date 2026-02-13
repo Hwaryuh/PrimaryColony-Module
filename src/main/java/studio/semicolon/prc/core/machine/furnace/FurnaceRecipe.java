@@ -2,8 +2,8 @@ package studio.semicolon.prc.core.machine.furnace;
 
 import io.quill.paper.item.ItemMatcher;
 import org.bukkit.inventory.ItemStack;
-import studio.semicolon.prc.core.constant.item.machine.FurnaceMachineItems;
-import studio.semicolon.prc.core.constant.item.machine.GrinderMachineItems;
+import studio.semicolon.prc.api.constant.item.machine.FurnaceMachineItems;
+import studio.semicolon.prc.api.constant.item.machine.GrinderMachineItems;
 
 import java.util.List;
 

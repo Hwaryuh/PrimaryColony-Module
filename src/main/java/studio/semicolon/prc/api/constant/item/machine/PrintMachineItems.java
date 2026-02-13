@@ -1,4 +1,4 @@
-package studio.semicolon.prc.core.constant.item.machine;
+package studio.semicolon.prc.api.constant.item.machine;
 
 import com.google.common.collect.Lists;
 import net.kyori.adventure.text.Component;

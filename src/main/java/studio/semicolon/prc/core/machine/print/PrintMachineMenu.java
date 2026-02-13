@@ -10,10 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MenuType;
 import studio.semicolon.prc.api.machine.AbstractMachine;
 import studio.semicolon.prc.api.machine.MachineMenu;
-import studio.semicolon.prc.core.constant.item.machine.PrintMachineItems;
-import studio.semicolon.prc.core.constant.sound.PRCSounds;
-import studio.semicolon.prc.core.constant.text.MachineMessages;
-import studio.semicolon.prc.core.constant.text.MenuTitles;
+import studio.semicolon.prc.api.constant.item.machine.PrintMachineItems;
+import studio.semicolon.prc.api.constant.sound.PRCSounds;
+import studio.semicolon.prc.api.constant.text.MachineMessages;
+import studio.semicolon.prc.api.constant.text.MenuTitles;
 
 import java.util.Map;
 

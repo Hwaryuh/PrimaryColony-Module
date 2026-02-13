@@ -6,6 +6,7 @@ import studio.semicolon.prc.core.command.CommandRegister;
 import studio.semicolon.prc.core.event.EventRegistrar;
 import studio.semicolon.prc.api.machine.MachineManager;
 import studio.semicolon.prc.core.module.build.BuildSessionManager;
+import studio.semicolon.prc.core.server.ServerLinkService;
 
 public final class Module extends JavaPlugin {
     private static Module instance;
@@ -19,9 +20,10 @@ public final class Module extends JavaPlugin {
     public void onEnable() {
         Quill.initialize(this,
                 new EventRegistrar(),
-                new MachineManager(),
                 new CommandRegister(),
-                BuildSessionManager.getInstance()
+                new MachineManager(),
+                BuildSessionManager.getInstance(),
+                new ServerLinkService()
         );
     }
 
