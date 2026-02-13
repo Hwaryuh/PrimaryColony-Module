@@ -1,12 +1,9 @@
 package studio.semicolon.prc.api.module;
 
-import com.google.common.collect.Lists;
 import io.quill.paper.util.bukkit.Locations;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.structure.StructureRotation;
-
-import java.util.List;
 
 public class Structures {
     private Structures() { }
@@ -53,25 +50,6 @@ public class Structures {
         int z = chunk.getZ() * CHUNK_SIZE + CHUNK_SIZE / 2;
 
         return Locations.of(chunk.getWorld(), x, y, z);
-    }
-
-    /**
-     * 구조물이 점유할 청크 목록 반환 (rotation 고려)
-     */
-    public static List<Chunk> getOccupiedChunks(Chunk baseChunk, int chunksToOccupy, StructureRotation rotation) {
-        List<Chunk> chunks = Lists.newArrayList(baseChunk);
-        if (chunksToOccupy == 1) return chunks;
-
-        int[] offset = getOffsetFromRotation(rotation);
-
-        for (int i = 1; i < chunksToOccupy; i++) {
-            chunks.add(baseChunk.getWorld().getChunkAt(
-                    baseChunk.getX() + (offset[0] * i),
-                    baseChunk.getZ() + (offset[1] * i)
-            ));
-        }
-
-        return chunks;
     }
 
     public static int[] getOffsetFromRotation(StructureRotation rotation) {

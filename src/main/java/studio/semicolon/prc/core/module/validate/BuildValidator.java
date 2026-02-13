@@ -1,7 +1,7 @@
 package studio.semicolon.prc.core.module.validate;
 
 import org.bukkit.Chunk;
-import studio.semicolon.prc.api.module.indicator.IndicatorState;
+import studio.semicolon.prc.core.module.indicator.IndicatorState;
 import studio.semicolon.prc.core.module.ModuleMetadata;
 import studio.semicolon.prc.core.module.validate.connect.ConnectRule;
 
@@ -14,7 +14,7 @@ public class BuildValidator {
      * 인디케이터가 점유할 모든 청크가 비어있는지 확인
      */
     public static boolean isOccupied(IndicatorState state) {
-        for (Chunk chunk : state.getOccupiedChunks()) {
+        for (Chunk chunk : state.occupiedChunks().asList()) {  // 수정
             if (ModuleMetadata.isChunkOccupied(chunk)) {
                 return true;
             }

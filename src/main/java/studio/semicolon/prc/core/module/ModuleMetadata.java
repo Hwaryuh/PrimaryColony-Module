@@ -8,7 +8,7 @@ import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import studio.semicolon.prc.api.module.Yaws;
-import studio.semicolon.prc.api.module.indicator.IndicatorState;
+import studio.semicolon.prc.core.module.indicator.IndicatorState;
 import studio.semicolon.prc.core.module.validate.connect.ConnectRule;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class ModuleMetadata {
     private static final NamespacedKey CONNECT_WEST = PDCKeys.of("module_connect_west");
 
     public static void saveMetadata(IndicatorState state) {
-        List<Chunk> chunks = state.getOccupiedChunks();
+        List<Chunk> chunks = state.occupiedChunks().asList();
 
         for (Chunk chunk : chunks) {
             removeMetadata(chunk);
@@ -65,7 +65,7 @@ public class ModuleMetadata {
      * 모듈 설치 시 각 청크에 연결 가능 방향 저장
      */
     public static void saveConnections(IndicatorState state) {
-        List<Chunk> chunks = state.getOccupiedChunks();
+        List<Chunk> chunks = state.occupiedChunks().asList();
         ModuleType type = state.moduleType();
         int chunkCount = type.getChunkCount();
 

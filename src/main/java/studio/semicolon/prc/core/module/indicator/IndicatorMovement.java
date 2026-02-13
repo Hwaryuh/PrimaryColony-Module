@@ -1,4 +1,4 @@
-package studio.semicolon.prc.api.module.indicator;
+package studio.semicolon.prc.core.module.indicator;
 
 import org.bukkit.Chunk;
 import org.bukkit.World;

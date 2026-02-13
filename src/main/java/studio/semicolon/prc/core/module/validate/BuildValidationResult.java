@@ -1,6 +1,6 @@
 package studio.semicolon.prc.core.module.validate;
 
-import studio.semicolon.prc.api.module.indicator.IndicatorRenderer;
+import studio.semicolon.prc.core.module.indicator.IndicatorRenderer;
 
 public record BuildValidationResult(boolean occupied, boolean canConnect) {
     public IndicatorRenderer.RenderState toRenderState() {

@@ -10,7 +10,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
-import studio.semicolon.prc.api.module.indicator.IndicatorState;
+import studio.semicolon.prc.core.module.indicator.IndicatorState;
 import studio.semicolon.prc.core.module.ModuleMetadata;
 import studio.semicolon.prc.core.module.validate.BuildValidationResult;
 
