@@ -31,12 +31,12 @@ import java.util.Optional;
 
 public class BackPackListener implements EventSubscriber<PlayerInteractEntityEvent, BackPackListener.Context>, InteractionMatcher, AdvancementMatcher {
     public static final NamespacedKey BACKPACK_KEY = PDCKeys.of("backpack_interaction");
-    public static final NamespacedKey BACKPACK_FIRST = PDCKeys.of("backpack_first");
+    public static final NamespacedKey BACKPACK_SPECIAL = PDCKeys.of("backpack_special");
     public static final String FLAG_KEY = "backpack_item_received";
     public static final String COUNTER_KEY = "backpack_click";
 
     public sealed interface Context extends EventContext permits Context.First, Context.Received {
-        record First(Player player, PlayerContext playerContext, boolean isSpecial) implements Context, EventContext.Data { }
+        record First(Player player, PlayerContext playerContext, Interaction interaction, boolean isSpecial) implements Context, EventContext.Data { }
         record Received(Player player, PlayerContext playerContext) implements Context, EventContext.Data { }
     }
 
@@ -62,22 +62,19 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
         if (playerContext.persistentFlag(FLAG_KEY)) {
             return Optional.of(new Context.Received(player, playerContext));
         } else {
-            boolean isSpecial = interaction.getPersistentDataContainer().getOrDefault(BACKPACK_FIRST, PersistentDataType.BOOLEAN, false);
-            return Optional.of(new Context.First(player, playerContext, isSpecial));
+            boolean isSpecial = interaction.getPersistentDataContainer().getOrDefault(BACKPACK_SPECIAL, PersistentDataType.BOOLEAN, false);
+            return Optional.of(new Context.First(player, playerContext, interaction, isSpecial));
         }
     }
 
     @Override
     public EventResult onEvent(PlayerInteractEntityEvent e, BackPackListener.Context ctx) {
-        if (ctx instanceof Context.First(Player player, PlayerContext playerContext, boolean isSpecial)) {
+        if (ctx instanceof Context.First(Player player, PlayerContext playerContext, Interaction interaction, boolean isSpecial)) {
             playerContext.persistentFlag(FLAG_KEY, true);
             Players.stopMovement(player, 60);
 
             if (isSpecial) {
-                Entity entity = e.getRightClicked();
-                if (entity instanceof Interaction interaction) {
-                    interaction.getPersistentDataContainer().set(BACKPACK_FIRST, PersistentDataType.BOOLEAN, false);
-                }
+                interaction.getPersistentDataContainer().set(BACKPACK_SPECIAL, PersistentDataType.BOOLEAN, false);
             }
 
             new TaskChain() {
