@@ -3,10 +3,13 @@ package studio.semicolon.prc.core.event.listener.game;
 import io.quill.paper.event.EventContext;
 import io.quill.paper.event.EventResult;
 import io.quill.paper.event.EventSubscriber;
+import io.quill.paper.player.PlayerContext;
+import io.quill.paper.player.PlayerContexts;
 import io.quill.paper.util.bukkit.pdc.PDCKeys;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import studio.semicolon.prc.api.constant.text.UtilMessages;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
@@ -15,6 +18,8 @@ import studio.semicolon.prc.core.event.InteractionMatcher;
 import java.util.Optional;
 
 public class DocumentListener implements EventSubscriber<PlayerInteractEntityEvent, EventContext.Empty>, InteractionMatcher, AdvancementMatcher {
+    public static String COUNTER_KEY = "documents_click";
+
     @Override
     public NamespacedKey getIdentityKey() {
         return PDCKeys.of("documents_interaction");
@@ -37,7 +42,15 @@ public class DocumentListener implements EventSubscriber<PlayerInteractEntityEve
 
     @Override
     public EventResult onEvent(PlayerInteractEntityEvent e, EventContext.Empty ctx) {
-        e.getPlayer().sendMessage(UtilMessages.WIKI_LINK);
+        Player player = e.getPlayer();
+        PlayerContext playerContext = PlayerContexts.ctx(player);
+
+        player.sendMessage(UtilMessages.WIKI_LINK);
+        int count = playerContext.increment(COUNTER_KEY);
+        if (count == 5) {
+            grant(player);
+        }
+
         return EventResult.STOP;
     }
 }
