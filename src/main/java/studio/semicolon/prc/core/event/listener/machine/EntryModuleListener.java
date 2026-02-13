@@ -8,7 +8,6 @@ import io.quill.paper.player.PlayerContexts;
 import io.quill.paper.util.bukkit.Selectors;
 import io.quill.paper.util.bukkit.Ticks;
 import io.quill.paper.util.bukkit.pdc.PDCKeys;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -20,7 +19,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
-import studio.semicolon.prc.api.constant.text.GameMessages;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
 import studio.semicolon.prc.core.util.Titles;
 

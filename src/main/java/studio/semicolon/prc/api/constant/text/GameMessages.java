@@ -6,4 +6,8 @@ import net.kyori.adventure.text.format.NamedTextColor;
 public interface GameMessages {
     Component CRYSTAL_CAVE_FORBIDDEN = Component.text("날아다니는 분진으로 인해 호흡이 힘들어 더 이상 들어갈 수가 없다, 지금은 무리야...", NamedTextColor.GRAY);
     Component COLD_OUTSIDE = Component.text("얼어붙고 있는 것 같아..");
+
+    public static Component getBackPackSearchingMessage(int dotCount) {
+        return Component.text("가방을 수색하는 중" + ".".repeat(dotCount), NamedTextColor.GRAY);
+    }
 }

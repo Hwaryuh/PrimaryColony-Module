@@ -11,6 +11,7 @@ public class ModuleCommand {
                 .child(ResetChunkChild.create())
                 .child(ResetAdvancementChild.create())
                 .child(DebugChild.create())
+                .child(SpawnBackPackChild.create())
                 .build();
     }
 }
