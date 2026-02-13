@@ -3,7 +3,7 @@ package studio.semicolon.prc.core.module;
 import io.quill.paper.item.require.InventoryRequirement;
 import io.quill.paper.item.require.InventoryRequirements;
 import org.bukkit.inventory.ItemStack;
-import studio.semicolon.prc.core.module.validate.ConnectRule;
+import studio.semicolon.prc.core.module.validate.connect.ConnectRule;
 
 public record ModuleConfig(int chunkCount, ConnectRule connectRule, int indicatorModelData, String structureKey, ItemStack requiredItem) {
     public double getCameraOffset() {

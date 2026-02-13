@@ -3,7 +3,7 @@ package studio.semicolon.prc.core.module;
 import io.quill.paper.item.require.InventoryRequirement;
 import org.bukkit.inventory.ItemStack;
 import studio.semicolon.prc.core.constant.item.module.ModuleItems;
-import studio.semicolon.prc.core.module.validate.ConnectRule;
+import studio.semicolon.prc.core.module.validate.connect.ConnectRule;
 
 public enum ModuleType {
     DEFAULT(new ModuleConfig(1, ConnectRule.TWO_WAY, 21, "module_default", ModuleItems.DEFAULT)),

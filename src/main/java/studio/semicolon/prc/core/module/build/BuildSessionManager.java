@@ -62,7 +62,7 @@ public class BuildSessionManager implements Bootable {
     }
 
     @Nullable
-    public BuildSession getSession(Player player) {
+    public synchronized BuildSession getSession(Player player) {
         if (currentSession == null) return null;
         return currentSession.getPlayer().equals(player) ? currentSession : null;
     }
@@ -136,7 +136,7 @@ public class BuildSessionManager implements Bootable {
         return session;
     }
 
-    public void beginExit(Player player) {
+    public synchronized void beginExit(Player player) {
         if (currentSession == null) return;
         if (!currentSession.getPlayer().equals(player)) return;
 
@@ -145,7 +145,7 @@ public class BuildSessionManager implements Bootable {
         Titles.fade(player, () -> exit(player));
     }
 
-    public void exit(Player player) {
+    public synchronized void exit(Player player) {
         if (currentSession == null) return;
 
         player.setSpectatorTarget(null);
@@ -157,7 +157,7 @@ public class BuildSessionManager implements Bootable {
         currentSession = null;
     }
 
-    public void clearAll() {
+    public synchronized void clearAll() {
         if (currentSession == null) return;
 
         Player player = currentSession.getPlayer();

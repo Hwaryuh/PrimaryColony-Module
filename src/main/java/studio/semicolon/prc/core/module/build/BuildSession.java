@@ -40,7 +40,7 @@ public class BuildSession {
             Player player,
             Location originalLocation,
             GameMode originalGameMode,
-            ItemStack originalHelmet,
+            @Nullable ItemStack originalHelmet,
             Entity cameraEntity,
             ItemDisplay indicatorDisplay,
             BossBar hud,

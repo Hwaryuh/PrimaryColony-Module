@@ -1,9 +1,9 @@
 package studio.semicolon.prc.core.module.validate;
 
 import org.bukkit.Chunk;
-import studio.semicolon.prc.api.module.Yaws;
 import studio.semicolon.prc.api.module.indicator.IndicatorState;
 import studio.semicolon.prc.core.module.ModuleMetadata;
+import studio.semicolon.prc.core.module.validate.connect.ConnectRule;
 
 import java.util.Map;
 
@@ -22,24 +22,33 @@ public class BuildValidator {
         return false;
     }
 
+    /**
+     * 카메라 청크에서 인디케이터 청크로 연결 가능한지 검증
+     *
+     * @param cameraChunk 카메라가 위치한 청크
+     * @param state 인디케이터 상태
+     * @param cameraConnections 카메라 청크의 방향별 연결 가능 여부
+     * @return 연결 가능 여부
+     */
     public static boolean canConnect(Chunk cameraChunk, IndicatorState state, Map<ModuleMetadata.Direction, Boolean> cameraConnections) {
         Chunk indicatorChunk = state.chunk();
-        int distance = Math.abs(cameraChunk.getX() - indicatorChunk.getX()) + Math.abs(cameraChunk.getZ() - indicatorChunk.getZ());
 
-        if (distance != 1) return false;
+        if (!isAdjacent(cameraChunk, indicatorChunk)) {
+            return false;
+        }
 
-        ModuleMetadata.Direction toIndicator = getDirectionBetween(cameraChunk, indicatorChunk);
-
-        if (!cameraConnections.getOrDefault(toIndicator, false)) return false;
+        ModuleMetadata.Direction directionToIndicator = getDirectionBetween(cameraChunk, indicatorChunk);
+        if (!cameraConnections.getOrDefault(directionToIndicator, false)) {
+            return false;
+        }
 
         ConnectRule rule = state.moduleType().getConnectRule();
+        return rule.validate(cameraChunk, indicatorChunk, state.yaw());
+    }
 
-        return switch (rule) {
-            case FRONT_ONLY -> isFrontConnection(cameraChunk, indicatorChunk, state.yaw());
-            case TWO_WAY -> isTwoWayConnection(cameraChunk, indicatorChunk, state.yaw());
-            case THREE_WAY -> isThreeWayConnection(cameraChunk, indicatorChunk, state.yaw());
-            case ALL_WAY -> true;
-        };
+    private static boolean isAdjacent(Chunk chunk1, Chunk chunk2) {
+        int distance = Math.abs(chunk1.getX() - chunk2.getX()) + Math.abs(chunk1.getZ() - chunk2.getZ());
+        return distance == 1;
     }
 
     /**
@@ -55,49 +64,5 @@ public class BuildValidator {
         if (dz == -1) return ModuleMetadata.Direction.NORTH;
 
         throw new IllegalArgumentException("Chunks are not adjacent");
-    }
-
-    private static boolean isFrontConnection(Chunk camera, Chunk indicator, float yaw) {
-        int dx = camera.getX() - indicator.getX();
-        int dz = camera.getZ() - indicator.getZ();
-        int quantized = Yaws.quantize(yaw);
-
-        return switch (quantized) {
-            case 0 -> dz == 1;
-            case 90 -> dx == -1;
-            case 180 -> dz == -1;
-            case 270 -> dx == 1;
-            default -> false;
-        };
-    }
-
-    private static boolean isTwoWayConnection(Chunk camera, Chunk indicator, float yaw) {
-        int dx = camera.getX() - indicator.getX();
-        int dz = camera.getZ() - indicator.getZ();
-        int quantized = Yaws.quantize(yaw);
-
-        return switch (quantized) {
-            case 0 -> dz == 1 || dz == -1; // 앞면 남쪽 → 남/북 허용
-            case 90 -> dx == -1 || dx == 1; // 앞면 서쪽 → 서/동 허용
-            case 180 -> dz == -1 || dz == 1; // 앞면 북쪽 → 북/남 허용
-            case 270 -> dx == 1 || dx == -1; // 앞면 동쪽 → 동/서 허용
-            default -> false;
-        };
-    }
-
-    private static boolean isThreeWayConnection(Chunk camera, Chunk indicator, float yaw) {
-        int dx = camera.getX() - indicator.getX();
-        int dz = camera.getZ() - indicator.getZ();
-        int quantized = Yaws.quantize(yaw);
-
-        boolean blockedDirection = switch (quantized) {
-            case 0 -> (dx == -1); // yaw 0 (앞면 남쪽) → 서쪽 막힘
-            case 90 -> (dz == -1); // yaw 90 (앞면 서쪽) → 북쪽 막힘
-            case 180 -> (dx == 1); // yaw 180 (앞면 북쪽) → 동쪽 막힘
-            case 270 -> (dz == 1); // yaw 270 (앞면 동쪽) → 남쪽 막힘
-            default -> false;
-        };
-
-        return !blockedDirection;
     }
 }

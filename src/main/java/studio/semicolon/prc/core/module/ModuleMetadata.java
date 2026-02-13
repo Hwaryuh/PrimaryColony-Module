@@ -9,7 +9,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import studio.semicolon.prc.api.module.Yaws;
 import studio.semicolon.prc.api.module.indicator.IndicatorState;
-import studio.semicolon.prc.core.module.validate.ConnectRule;
+import studio.semicolon.prc.core.module.validate.connect.ConnectRule;
 
 import java.util.List;
 import java.util.Set;
