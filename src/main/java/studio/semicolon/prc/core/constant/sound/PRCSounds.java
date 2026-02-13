@@ -1,6 +1,8 @@
 package studio.semicolon.prc.core.constant.sound;
 
+import net.kyori.adventure.sound.SoundStop;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 
 public interface PRCSounds {
@@ -22,6 +24,9 @@ public interface PRCSounds {
     SoundData MODULE_BUILD_MODE_CANCEL = new SoundData("minecraft:semicolon.build_module_cancel", 1.5f, 1.0f);
     SoundData MODULE_BUILD_PROGRESS = new SoundData("minecraft:semicolon.build_module_progress", 1.75f, 1.0f);
 
+    SoundData MODULE_DOOR_OPEN = new SoundData("minecraft:semicolon.build_module_door_open", 1.0f, 1.0f);
+    SoundData MODULE_DOOR_CLOSE = new SoundData("minecraft:semicolon.build_module_door_close", 1.0f, 1.0f);
+
     record SoundData(String sound, float volume, float pitch) {
         public void play(Location location) {
             play(location, volume, pitch);
@@ -36,6 +41,40 @@ public interface PRCSounds {
         }
 
         public void play(Player player, float newVolume, float newPitch) {
+            player.playSound(player, sound, newVolume, newPitch);
+        }
+
+        /**
+         * 기존 사운드를 중지하고 새로 재생
+         */
+        public void stopAndPlay(Location location) {
+            stopAndPlay(location, volume, pitch);
+        }
+
+        /**
+         * 기존 사운드를 중지하고 새로 재생
+         */
+        public void stopAndPlay(Location location, float newVolume, float newPitch) {
+            String soundKey = sound.startsWith("minecraft:") ? sound.substring(10) : sound;
+
+            location.getWorld().stopSound(SoundStop.named(NamespacedKey.minecraft(soundKey)));
+            location.getWorld().playSound(location, sound, newVolume, newPitch);
+        }
+
+        /**
+         * 특정 플레이어에게만 사운드 중지 후 재생
+         */
+        public void stopAndPlay(Player player) {
+            stopAndPlay(player, volume, pitch);
+        }
+
+        /**
+         * 특정 플레이어에게만 사운드 중지 후 재생
+         */
+        public void stopAndPlay(Player player, float newVolume, float newPitch) {
+            String soundKey = sound.startsWith("minecraft:") ? sound.substring(10) : sound;
+
+            player.stopSound(SoundStop.named(NamespacedKey.minecraft(soundKey)));
             player.playSound(player, sound, newVolume, newPitch);
         }
 

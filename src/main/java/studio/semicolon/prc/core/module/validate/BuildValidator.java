@@ -1,6 +1,7 @@
 package studio.semicolon.prc.core.module.validate;
 
 import org.bukkit.Chunk;
+import studio.semicolon.prc.core.module.Structures;
 import studio.semicolon.prc.core.module.indicator.IndicatorState;
 import studio.semicolon.prc.core.module.ModuleMetadata;
 import studio.semicolon.prc.core.module.validate.connect.ConnectRule;
@@ -37,7 +38,7 @@ public class BuildValidator {
             return false;
         }
 
-        ModuleMetadata.Direction directionToIndicator = getDirectionBetween(cameraChunk, indicatorChunk);
+        ModuleMetadata.Direction directionToIndicator = Structures.getDirectionBetween(cameraChunk, indicatorChunk);
         if (!cameraConnections.getOrDefault(directionToIndicator, false)) {
             return false;
         }
@@ -49,20 +50,5 @@ public class BuildValidator {
     private static boolean isAdjacent(Chunk chunk1, Chunk chunk2) {
         int distance = Math.abs(chunk1.getX() - chunk2.getX()) + Math.abs(chunk1.getZ() - chunk2.getZ());
         return distance == 1;
-    }
-
-    /**
-     * 두 청크 사이의 방향 계산
-     */
-    private static ModuleMetadata.Direction getDirectionBetween(Chunk from, Chunk to) {
-        int dx = to.getX() - from.getX();
-        int dz = to.getZ() - from.getZ();
-
-        if (dx == 1) return ModuleMetadata.Direction.EAST;
-        if (dx == -1) return ModuleMetadata.Direction.WEST;
-        if (dz == 1) return ModuleMetadata.Direction.SOUTH;
-        if (dz == -1) return ModuleMetadata.Direction.NORTH;
-
-        throw new IllegalArgumentException("Chunks are not adjacent");
     }
 }

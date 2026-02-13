@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.bukkit.Chunk;
 import org.bukkit.block.structure.StructureRotation;
-import studio.semicolon.prc.api.module.Structures;
+import studio.semicolon.prc.core.module.Structures;
 import studio.semicolon.prc.core.module.ModuleType;
 
 import java.util.List;

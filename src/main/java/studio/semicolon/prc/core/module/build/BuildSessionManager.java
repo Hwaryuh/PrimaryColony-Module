@@ -23,7 +23,7 @@ import studio.semicolon.prc.core.module.indicator.IndicatorMovement;
 import studio.semicolon.prc.core.module.indicator.IndicatorRenderer;
 import studio.semicolon.prc.core.module.indicator.IndicatorState;
 import studio.semicolon.prc.api.module.RelativeDirection;
-import studio.semicolon.prc.api.module.Structures;
+import studio.semicolon.prc.core.module.Structures;
 import studio.semicolon.prc.core.constant.item.module.ModuleItems;
 import studio.semicolon.prc.core.constant.text.ModuleMessages;
 import studio.semicolon.prc.core.event.listener.module.ModuleInputListener;

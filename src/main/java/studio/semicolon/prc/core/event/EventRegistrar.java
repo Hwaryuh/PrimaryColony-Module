@@ -3,6 +3,7 @@ package studio.semicolon.prc.core.event;
 import com.destroystokyo.paper.event.player.PlayerAdvancementCriterionGrantEvent;
 import io.quill.paper.Bootable;
 import io.quill.paper.event.EventManager;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
@@ -21,10 +22,13 @@ import studio.semicolon.prc.core.event.listener.machine.CoffeeListener;
 import studio.semicolon.prc.core.event.listener.machine.MachineDestroyListener;
 import studio.semicolon.prc.core.event.listener.machine.MachineInteractListener;
 import studio.semicolon.prc.core.event.listener.machine.MachinePlaceListener;
+import studio.semicolon.prc.core.event.listener.module.DoorUpdateListener;
 import studio.semicolon.prc.core.event.listener.module.ModulePanelListener;
 import studio.semicolon.prc.core.event.listener.game.CrystalCaveListener;
 
 public class EventRegistrar implements Bootable {
+    private final DoorUpdateListener doorUpdateListener = new DoorUpdateListener();
+
     @Override
     public void start(JavaPlugin plugin) {
         var manger = EventManager.getInstance();
@@ -56,8 +60,12 @@ public class EventRegistrar implements Bootable {
         manger.register(PlayerGameModeChangeEvent.class)
                 .subscribe(new GameModeChangeListener())
                 .build();
+
+        plugin.getServer().getPluginManager().registerEvents(doorUpdateListener, plugin);
     }
 
     @Override
-    public void end(JavaPlugin plugin) { }
+    public void end(JavaPlugin plugin) {
+        HandlerList.unregisterAll(doorUpdateListener);
+    }
 }

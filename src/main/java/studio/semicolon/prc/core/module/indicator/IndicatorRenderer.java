@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.util.Transformation;
 import org.joml.Vector3f;
-import studio.semicolon.prc.api.module.Structures;
+import studio.semicolon.prc.core.module.Structures;
 import studio.semicolon.prc.core.module.ModuleType;
 
 public class IndicatorRenderer {

@@ -9,7 +9,7 @@ import studio.semicolon.prc.Module;
 import studio.semicolon.prc.core.module.ModuleMetadata;
 import studio.semicolon.prc.core.module.validate.BuildValidationResult;
 import studio.semicolon.prc.core.module.indicator.IndicatorState;
-import studio.semicolon.prc.api.module.Structures;
+import studio.semicolon.prc.core.module.Structures;
 import studio.semicolon.prc.core.module.ModuleType;
 import studio.semicolon.prc.core.module.exception.StructureLoadException;
 
