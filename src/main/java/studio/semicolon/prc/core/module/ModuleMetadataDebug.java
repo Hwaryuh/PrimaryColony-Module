@@ -31,7 +31,7 @@ public class ModuleMetadataDebug {
      * 청크의 모든 모듈 메타데이터 삭제 (점유 + 모든 방향)
      */
     public static void clearAll(Chunk chunk) {
-        chunk.getPersistentDataContainer().remove(ModuleMetadata.MODULE_DATA);
+        ModuleMetadata.removeMetadata(chunk);
     }
 
     /**

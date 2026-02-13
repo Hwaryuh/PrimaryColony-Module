@@ -28,10 +28,15 @@ public class ModuleMetadata {
         List<Chunk> chunks = state.getOccupiedChunks();
 
         for (Chunk chunk : chunks) {
+            removeMetadata(chunk);
             setOccupied(chunk);
         }
 
         saveConnections(state);
+    }
+
+    public static void removeMetadata(Chunk chunk) {
+        chunk.getPersistentDataContainer().remove(ModuleMetadata.MODULE_DATA);
     }
 
     public static boolean isChunkOccupied(Chunk chunk) {

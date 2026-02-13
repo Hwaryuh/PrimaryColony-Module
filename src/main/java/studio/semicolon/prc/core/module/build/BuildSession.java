@@ -9,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import studio.semicolon.prc.api.module.indicator.IndicatorState;
 import studio.semicolon.prc.core.module.ModuleMetadata;
 import studio.semicolon.prc.core.module.validate.BuildValidationResult;
@@ -19,6 +20,7 @@ public class BuildSession {
     private final Player player;
     private final Location originalLocation;
     private final GameMode originalGameMode;
+    @Nullable
     private final ItemStack originalHelmet;
     private final Entity cameraEntity;
     private final ItemDisplay indicatorDisplay;
