@@ -2,6 +2,8 @@ package studio.semicolon.prc.core.machine.print;
 
 import io.quill.paper.item.ItemMatcher;
 import io.quill.paper.menu.DragPolicy;
+import io.quill.paper.util.bukkit.Logger;
+import kr.eme.prcMission.enums.MissionVersion;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -14,6 +16,7 @@ import studio.semicolon.prc.api.constant.item.machine.PrintMachineItems;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.constant.text.MachineMessages;
 import studio.semicolon.prc.api.constant.text.MenuTitles;
+import studio.semicolon.prc.core.util.Missions;
 
 import java.util.Map;
 
@@ -227,11 +230,47 @@ public class PrintMachineMenu extends MachineMenu {
 
     @Override
     protected void onTakeResult() {
+        String recipeID = state.getProcessResult();
+        if (recipeID == null) return;
+
+        PrintRecipe recipe = PrintRecipe.getByID(recipeID);
+        if (recipe == null) {
+            Logger.warn("Invalid recipe ID: " + recipeID);
+            return;
+        }
+
+        progressMission(recipe);
         this.clearSlots();
     }
 
     @Override
     protected void onClose(InventoryCloseEvent event) {
         super.onClose(event);
+    }
+
+    private void progressMission(PrintRecipe recipe) {
+        switch (recipe) {
+            case HOE_1 -> {
+                Missions.progressV1(player, "CRAFTING", "crafting", 1);
+            }
+            case WATERING_CAN_1 -> {
+                Missions.progressV1(player, "CRAFTING", "crafting", 2);
+            }
+            case PICKAXE_2 -> {
+                Missions.progressV1(player, "UPGRADE", "upgrade", 1);
+            }
+            case HOE_2 -> {
+                Missions.progressV1(player, "UPGRADE", "upgrade", 2);
+            }
+            case WATERING_CAN_2 -> {
+                Missions.progressV1(player, "UPGRADE", "upgrade", 3);
+            }
+            case CAPSULE_GUN -> {
+                Missions.progressV2(player, "CRAFTING", "crafting", 1);
+            }
+            case WEAPON_LONG_SWORD, PICKAXE_3 -> {
+                Missions.progressV2(player, "CRAFTING", "printer_module", 1);
+            }
+        }
     }
 }

@@ -18,6 +18,7 @@ import studio.semicolon.prc.api.constant.item.ETCItems;
 import studio.semicolon.prc.api.constant.item.machine.GrinderMachineItems;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.constant.text.MachineMessages;
+import studio.semicolon.prc.core.util.Missions;
 
 @SuppressWarnings("UnstableApiUsage")
 public class GrinderMachineMenu extends MachineMenu {
@@ -150,6 +151,7 @@ public class GrinderMachineMenu extends MachineMenu {
                         });
                     } else if (requiredLevel == 2) {
                         setUpgradeSlot(UPGRADE_3_SLOT, 3, GrinderMachineItems.DRILL);
+                        Missions.progressV2(player, "MODULE_UPGRADE", "crusher_process", 1);
                     }
 
                     PRCSounds.MACHINE_UPGRADE.play(player);
@@ -238,12 +240,12 @@ public class GrinderMachineMenu extends MachineMenu {
 
         if (recipeIDs.length >= 1 && !recipeIDs[0].isEmpty()) {
             GrinderRecipe recipe1 = GrinderRecipe.valueOf(recipeIDs[0]);
-            setResultButton(RESULT_1_SLOT, recipe1.getPowder());
+            setResultButton(RESULT_1_SLOT, recipe1.getPowder(), recipe1);
         }
 
         if (recipeIDs.length >= 2 && !recipeIDs[1].isEmpty()) {
             GrinderRecipe recipe2 = GrinderRecipe.valueOf(recipeIDs[1]);
-            setResultButton(RESULT_2_SLOT, recipe2.getPowder());
+            setResultButton(RESULT_2_SLOT, recipe2.getPowder(), recipe2);
         }
     }
 
@@ -282,10 +284,11 @@ public class GrinderMachineMenu extends MachineMenu {
         });
     }
 
-    private void setResultButton(int slot, ItemStack result) {
+    private void setResultButton(int slot, ItemStack result, GrinderRecipe recipe) {
         setButton(slot, button(result)
                 .onAnyClick(ctx -> {
                     if (ctx.isPickup() || ctx.isMove()) {
+                        processMission(recipe);
                         onTakePowder();
                     }
                 })
@@ -299,6 +302,12 @@ public class GrinderMachineMenu extends MachineMenu {
         super.onClose(e);
         if (state.isIdle()) {
             returnAllInputSlots();
+        }
+    }
+
+    private void processMission(GrinderRecipe recipe) {
+        switch (recipe) {
+            case FE -> Missions.progressV1(player, "DEVICE_INTERACTION", "crusher_process", 1);
         }
     }
 

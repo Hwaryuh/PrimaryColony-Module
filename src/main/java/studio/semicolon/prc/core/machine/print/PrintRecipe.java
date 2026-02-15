@@ -9,6 +9,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public enum PrintRecipe {
+    WEAPON_PIPE(
+            ToolItems.WEAPON_PIPE,
+            materials(
+                    FurnaceMachineItems.FE_INGOT, 10
+            )
+    ),
     PICKAXE_1(
             ToolItems.PICKAXE_1,
             materials(
@@ -27,10 +33,13 @@ public enum PrintRecipe {
                     FurnaceMachineItems.AL_INGOT, 10
             )
     ),
-    WEAPON_PIPE(
-            ToolItems.WEAPON_PIPE,
+
+    WEAPON_KNIFE(
+            ToolItems.WEAPON_KNIFE,
             materials(
-                    FurnaceMachineItems.FE_INGOT, 10
+                    FurnaceMachineItems.CU_INGOT, 10,
+                    FurnaceMachineItems.LI_INGOT, 10,
+                    FurnaceMachineItems.PT_INGOT, 10
             )
     ),
     PICKAXE_2(
@@ -61,12 +70,13 @@ public enum PrintRecipe {
                     ToolItems.WATERING_CAN_1, 1
             )
     ),
-    WEAPON_KNIFE(
-            ToolItems.WEAPON_KNIFE,
+
+    WEAPON_LONG_SWORD(
+            ToolItems.WEAPON_LONG_SWORD,
             materials(
-                    FurnaceMachineItems.CU_INGOT, 10,
-                    FurnaceMachineItems.LI_INGOT, 10,
-                    FurnaceMachineItems.PT_INGOT, 10
+                    FurnaceMachineItems.AL_INGOT, 20,
+                    FurnaceMachineItems.FE_INGOT, 10,
+                    FurnaceMachineItems.CU_INGOT, 10
             )
     ),
     PICKAXE_3(
@@ -97,14 +107,6 @@ public enum PrintRecipe {
                     FurnaceMachineItems.CU_INGOT, 20,
                     FurnaceMachineItems.LI_INGOT, 20,
                     FurnaceMachineItems.PT_INGOT, 15
-            )
-    ),
-    WEAPON_LONG_SWORD(
-            ToolItems.WEAPON_LONG_SWORD,
-            materials(
-                    FurnaceMachineItems.AL_INGOT, 20,
-                    FurnaceMachineItems.FE_INGOT, 10,
-                    FurnaceMachineItems.CU_INGOT, 10
             )
     );
 

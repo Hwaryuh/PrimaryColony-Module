@@ -12,6 +12,7 @@ import studio.semicolon.prc.core.module.indicator.IndicatorState;
 import studio.semicolon.prc.core.module.Structures;
 import studio.semicolon.prc.core.module.ModuleType;
 import studio.semicolon.prc.core.module.exception.StructureLoadException;
+import studio.semicolon.prc.core.util.Missions;
 
 public class ModuleBuilder {
     private ModuleBuilder() { }
@@ -43,13 +44,36 @@ public class ModuleBuilder {
 
         Location cornerLocation = Structures.getCornerLocation(state.chunk(), rotation, (int) yCoordinate);
         BuildAnimation.start(structure, cornerLocation, rotation);
-
         ModuleMetadata.saveMetadata(state);
         moduleType.getPlacementRequirement().consume(player.getInventory());
+        progressMission(player, moduleType);
     }
 
     private static Structure loadStructure(ModuleType type) {
         NamespacedKey key = NamespacedKey.minecraft(type.getStructureKey());
         return Module.getInstance().getServer().getStructureManager().loadStructure(key);
+    }
+
+    private static void progressMission(Player player, ModuleType module) {
+        switch (module) {
+            case MINE -> {
+                Missions.progressV1(player, "MODULE_PLACE", "mine_module", 1);
+            }
+            case STORAGE_M -> {
+                Missions.progressV1(player, "MODULE_PLACE", "storage_module", 1);
+            }
+            case CROSS_SHAPED -> {
+                Missions.progressV1(player, "MODULE_PLACE", "cross_extension", 1);
+            }
+            case ENTRY -> {
+                Missions.progressV2(player, "MODULE_PLACE", "access_module", 1);
+            }
+            case STORAGE_L -> {
+                Missions.progressV2(player, "MODULE_PLACE", "storage_module", 1);
+            }
+            case FARM_L -> {
+                Missions.progressV2(player, "MODULE_PLACE", "farming_module", 1);
+            }
+        }
     }
 }

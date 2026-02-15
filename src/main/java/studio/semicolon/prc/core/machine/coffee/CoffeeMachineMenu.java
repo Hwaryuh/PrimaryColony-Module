@@ -6,6 +6,7 @@ import io.quill.paper.menu.button.ClickContext;
 import io.quill.paper.menu.button.DynamicButton;
 import io.quill.paper.menu.slot.SlotFilter;
 import io.quill.paper.util.bukkit.task.Tasks;
+import kr.eme.prcMission.enums.MissionVersion;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -18,6 +19,7 @@ import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.machine.MachineMenu;
 import studio.semicolon.prc.api.machine.MachineState;
 import studio.semicolon.prc.api.machine.AbstractMachine;
+import studio.semicolon.prc.core.util.Missions;
 
 @SuppressWarnings({"UnstableApiUsage", "UnnecessaryUnicodeEscape"})
 public class CoffeeMachineMenu extends MachineMenu {
@@ -215,10 +217,13 @@ public class CoffeeMachineMenu extends MachineMenu {
     @Override
     protected void onTakeResult() {
         this.clearSlots();
+        Missions.progressV1(player, "DEVICE_INTERACTION", "coffee_module", 1);
     }
 
     private boolean isCoffeeBean(ItemStack item) {
-        return ItemMatcher.matches(item, CoffeeMachineItems.COFFEE_BEAN_AG) || ItemMatcher.matches(item, CoffeeMachineItems.COFFEE_BEAN_AU) || ItemMatcher.matches(item, CoffeeMachineItems.COFFEE_BEAN_TI);
+        return ItemMatcher.matches(item, CoffeeMachineItems.COFFEE_BEAN_AG) ||
+                ItemMatcher.matches(item, CoffeeMachineItems.COFFEE_BEAN_AU) ||
+                ItemMatcher.matches(item, CoffeeMachineItems.COFFEE_BEAN_TI);
     }
 
     private int getBrewTime(ItemStack bean) {

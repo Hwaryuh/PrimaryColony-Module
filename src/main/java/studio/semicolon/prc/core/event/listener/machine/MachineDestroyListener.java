@@ -6,6 +6,7 @@ import io.quill.paper.event.EventSubscriber;
 import io.quill.paper.item.ItemMatcher;
 import io.quill.paper.player.PlayerContext;
 import io.quill.paper.player.PlayerContexts;
+import kr.eme.prcMission.enums.MissionVersion;
 import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -23,6 +24,7 @@ import studio.semicolon.prc.api.machine.AbstractMachine;
 import studio.semicolon.prc.api.machine.MachineManager;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
+import studio.semicolon.prc.core.util.Missions;
 
 import java.util.Optional;
 
@@ -94,6 +96,7 @@ public class MachineDestroyListener implements EventSubscriber<PlayerInteractEve
             for (ItemStack drop : allow.machine().getDrops()) {
                 allow.location().getWorld().dropItemNaturally(allow.location(), drop);
             }
+            Missions.progressV1(player, "DEVICE_INTERACTION", "wrench_pickup", 1);
         }
 
         allow.machine().destroy();

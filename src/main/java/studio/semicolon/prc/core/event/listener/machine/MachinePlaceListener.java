@@ -24,6 +24,7 @@ import studio.semicolon.prc.core.machine.coffee.CoffeeMachine;
 import studio.semicolon.prc.core.machine.furnace.FurnaceMachine;
 import studio.semicolon.prc.core.machine.grinder.GrinderMachine;
 import studio.semicolon.prc.core.machine.print.PrintMachine;
+import studio.semicolon.prc.core.util.Missions;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -93,7 +94,7 @@ public class MachinePlaceListener implements EventSubscriber<PlayerInteractEvent
         Context.Allow allow = (Context.Allow) ctx;
         Player player = e.getPlayer();
 
-        AbstractMachine machine = createMachine(allow.item(), allow.targetLoc());
+        AbstractMachine machine = createMachine(player, allow.item(), allow.targetLoc());
         if (machine == null) return EventResult.TERMINATE;
         if (!machine.place(player)) return EventResult.TERMINATE;
 
@@ -113,17 +114,20 @@ public class MachinePlaceListener implements EventSubscriber<PlayerInteractEvent
         return EventResult.TERMINATE;
     }
 
-    private AbstractMachine createMachine(ItemStack item, Location location) {
+    private AbstractMachine createMachine(Player player, ItemStack item, Location location) {
         if (ItemMatcher.matches(item, MachineItems.COFFEE_MACHINE)) {
             return new CoffeeMachine(location);
         }
         if (ItemMatcher.matches(item, MachineItems.PRINT_MACHINE)) {
+            Missions.progressV1(player, "MODULE_PLACE", "printer_module", 1);
             return new PrintMachine(location);
         }
         if (ItemMatcher.matches(item, MachineItems.FURNACE_MACHINE)) {
+            Missions.progressV1(player, "MODULE_PLACE", "storage_module", 2);
             return new FurnaceMachine(location);
         }
         if (ItemMatcher.matches(item, MachineItems.GRINDER_MACHINE)) {
+            Missions.progressV1(player, "MODULE_PLACE", "storage_module", 1);
             return new GrinderMachine(location);
         }
         return null;

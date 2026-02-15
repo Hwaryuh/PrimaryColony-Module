@@ -3,7 +3,9 @@ package studio.semicolon.prc.core.machine.furnace;
 import io.quill.paper.item.ItemMatcher;
 import io.quill.paper.menu.DragPolicy;
 import io.quill.paper.menu.slot.SlotFilter;
+import io.quill.paper.util.bukkit.Logger;
 import io.quill.paper.util.bukkit.task.Tasks;
+import kr.eme.prcMission.enums.MissionVersion;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,6 +21,7 @@ import studio.semicolon.prc.api.constant.item.machine.FurnaceMachineItems;
 import studio.semicolon.prc.api.constant.item.machine.GrinderMachineItems;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.constant.text.MachineMessages;
+import studio.semicolon.prc.core.util.Missions;
 
 import java.util.List;
 
@@ -101,6 +104,7 @@ public class FurnaceMachineMenu extends MachineMenu {
                         Tasks.run(() -> {
                             setPlaceholderSlot(POWDER_2_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, 4);
                             registerInputSlot(POWDER_2_SLOT);
+                            Missions.progressV2(player, "MODULE_UPGRADE", "furnace_process", 1);
                         });
                     } else if (requiredLevel == 2) {
                         removeButton(POWDER_3_SLOT);
@@ -235,13 +239,38 @@ public class FurnaceMachineMenu extends MachineMenu {
     }
 
     @Override
-    protected void onTakeResult() { }
+    protected void onTakeResult() {
+        String recipeID = state.getProcessResult();
+        if (recipeID == null) return;
+
+        try {
+            FurnaceRecipe recipe = FurnaceRecipe.valueOf(recipeID);
+            processMission(recipe);
+        } catch (IllegalArgumentException e) {
+            Logger.warn("Invalid recipe ID: " + recipeID, e);
+        }
+    }
 
     @Override
     protected void onClose(InventoryCloseEvent e) {
         super.onClose(e);
         if (state.isIdle()) {
             returnAllInputSlots();
+        }
+    }
+
+    private void processMission(FurnaceRecipe recipe) {
+        switch (recipe) {
+            case FE -> {
+                Missions.progressV1(player, "DEVICE_INTERACTION", "furnace_process", 1);
+            }
+            case AL_CU -> {
+                Missions.progressV2(player, "CRAFTING", "crafting", 1);
+                Missions.progressV2(player, "PLAYER_PROGRESS", "furnace_process", 1);
+            }
+            case AL_MG, AL_LI, CU_AU, NI_FE, TI_PT_AU -> {
+                Missions.progressV2(player, "PLAYER_PROGRESS", "furnace_process", 1);
+            }
         }
     }
 }
