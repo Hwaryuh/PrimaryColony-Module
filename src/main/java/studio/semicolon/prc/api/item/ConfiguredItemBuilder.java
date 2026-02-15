@@ -1,7 +1,9 @@
 package studio.semicolon.prc.api.item;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import io.quill.paper.util.bukkit.pdc.PDCKeys;
 import net.kyori.adventure.text.Component;
@@ -12,6 +14,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.components.EquippableComponent;
@@ -25,13 +28,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"UnstableApiUsage", "DataFlowIssue"})
 public class ConfiguredItemBuilder {
     private final Material material;
     private int amount = 1;
     private Integer customModelData;
     private Component itemName;
     private final List<Component> lore = Lists.newArrayList();
-    private final Map<Attribute, AttributeModifier> attributes = Maps.newHashMap();
+    private final Multimap<Attribute, AttributeModifier> attributes = ArrayListMultimap.create();
     private final Set<ItemFlag> itemFlags = Sets.newHashSet();
     private Integer maxStackSize;
     private Integer maxDurability;
@@ -73,6 +77,27 @@ public class ConfiguredItemBuilder {
 
     public ConfiguredItemBuilder addLore(Component line) {
         this.lore.add(line);
+        return this;
+    }
+
+    public ConfiguredItemBuilder addAttribute(Attribute attribute, String key, double value, AttributeModifier.Operation operation) {
+        AttributeModifier modifier = new AttributeModifier(
+                new NamespacedKey(Module.getInstance(), key),
+                value,
+                operation
+        );
+        attributes.put(attribute, modifier);
+        return this;
+    }
+
+    public ConfiguredItemBuilder addAttribute(Attribute attribute, String key, double value, AttributeModifier.Operation operation, EquipmentSlotGroup slotGroup) {
+        AttributeModifier modifier = new AttributeModifier(
+                new NamespacedKey(Module.getInstance(), key),
+                value,
+                operation,
+                slotGroup
+        );
+        attributes.put(attribute, modifier);
         return this;
     }
 
@@ -123,7 +148,6 @@ public class ConfiguredItemBuilder {
         return this;
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     public ItemStack build() {
         ItemStack item = ItemStack.of(material, amount);
 

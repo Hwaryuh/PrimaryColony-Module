@@ -28,6 +28,8 @@ public interface PRCSounds {
     SoundData MODULE_DOOR_CLOSE = new SoundData("minecraft:semicolon.build_module_door_close", 1.0f, 1.0f);
     SoundData MODULE_INTERACT_ENTRY = new SoundData("minecraft:semicolon.entry_module_interact", 1.0f, 1.0f);
 
+    SoundData BURIED_CHEST_OPEN = new SoundData("minecraft:item.mace.smash_ground", 1.0f, 1.0f);
+
     record SoundData(String sound, float volume, float pitch) {
         public void play(Location location) {
             play(location, volume, pitch);

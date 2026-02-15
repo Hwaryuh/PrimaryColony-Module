@@ -12,6 +12,7 @@ public class ModuleCommand {
                 .child(ResetAdvancementChild.create())
                 .child(DebugChild.create())
                 .child(SpawnBackPackChild.create())
+                .child(SpawnBuriedChestChild.create())
                 .build();
     }
 }

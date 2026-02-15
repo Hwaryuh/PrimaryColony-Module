@@ -82,7 +82,7 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
                 protected void define() {
                     run(() -> {
                         Titles.show(player, GameMessages.getBackPackSearchingMessage(1), Component.empty(), 1.0, 1.5, 0);
-                        player.playSound(player.getLocation(), Sound.ITEM_BUNDLE_DROP_CONTENTS, 1.0f, 0.7f);
+                        player.playSound(player, Sound.ITEM_BUNDLE_DROP_CONTENTS, 1.0f, 0.7f);
                     });
                     delay(20);
                     run(() -> {

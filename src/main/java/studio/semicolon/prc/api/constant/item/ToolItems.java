@@ -4,9 +4,13 @@ import io.quill.paper.util.bukkit.pdc.PDCKeys;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import studio.semicolon.prc.api.item.IConfigureItem;
+
+import static org.bukkit.attribute.AttributeModifier.Operation.ADD_NUMBER;
 
 public interface ToolItems extends IConfigureItem {
     String PRCCore = "PrcCore"; 
@@ -89,4 +93,9 @@ public interface ToolItems extends IConfigureItem {
             .build();
 
     ItemStack SPANNER = IConfigureItem.builder(Material.WOODEN_SHOVEL).customModelData(13).itemName(Component.text("스패너")).build();
+
+    @SuppressWarnings("UnstableApiUsage")
+    ItemStack FINAL_BOOTS = IConfigureItem.builder(Material.DIAMOND_BOOTS)
+            .addAttribute(Attribute.STEP_HEIGHT, "step_height", 2.0, ADD_NUMBER, EquipmentSlotGroup.FEET)
+            .build();
 }
