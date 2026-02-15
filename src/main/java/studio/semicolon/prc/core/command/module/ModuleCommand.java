@@ -13,6 +13,7 @@ public class ModuleCommand {
                 .child(DebugChild.create())
                 .child(SpawnBackPackChild.create())
                 .child(SpawnBuriedChestChild.create())
+                .child(SpawnCommunicationChild.create())
                 .build();
     }
 }
