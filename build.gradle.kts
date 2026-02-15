@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
-    implementation(files("libs/Quill-0.2.8.jar"))
+    implementation(files("libs/Quill-0.2.81.jar"))
 }
 
 tasks {
