@@ -35,8 +35,8 @@ public interface FurnaceMachineItems extends IConfigureItem {
     ItemStack NI_RECIPE = IConfigureItem.builder(Material.SADDLE).customModelData(30).itemName(Component.text("니켈 주괴 레시피")).build();
     ItemStack TI_RECIPE = IConfigureItem.builder(Material.SADDLE).customModelData(31).itemName(Component.text("티타늄 주괴 레시피")).build();
     ItemStack AL_MG_RECIPE = IConfigureItem.builder(Material.SADDLE).customModelData(32).itemName(Component.text("Al-Mg 합금 주괴 레시피")).build();
-    ItemStack AL_CU_RECIPE = IConfigureItem.builder(Material.SADDLE).customModelData(33).itemName(Component.text("Al-Cu 합금 레시피")).build();
-    ItemStack AL_LI_RECIPE = IConfigureItem.builder(Material.SADDLE).customModelData(34).itemName(Component.text("Al-Li 합금 레시피")).build();
+    ItemStack AL_CU_RECIPE = IConfigureItem.builder(Material.SADDLE).customModelData(33).itemName(Component.text("Al-Cu 합금 주괴 레시피")).build();
+    ItemStack AL_LI_RECIPE = IConfigureItem.builder(Material.SADDLE).customModelData(34).itemName(Component.text("Al-Li 합금 주괴 레시피")).build();
     ItemStack CU_AU_RECIPE = IConfigureItem.builder(Material.SADDLE).customModelData(35).itemName(Component.text("Cu-Au 합금 주괴 레시피")).build();
     ItemStack NI_FE_RECIPE = IConfigureItem.builder(Material.SADDLE).customModelData(36).itemName(Component.text("Ni-Fe 합금 주괴 레시피")).build();
     ItemStack TI_PT_AU_RECIPE = IConfigureItem.builder(Material.SADDLE).customModelData(37).itemName(Component.text("Ti-Pt-Au 합금 주괴 레시피")).build();
