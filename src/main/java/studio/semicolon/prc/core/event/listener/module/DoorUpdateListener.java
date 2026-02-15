@@ -1,5 +1,6 @@
 package studio.semicolon.prc.core.event.listener.module;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -7,9 +8,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import studio.semicolon.prc.core.event.AdvancementMatcher;
 import studio.semicolon.prc.core.module.door.AutomaticDoorService;
 
-public class DoorUpdateListener implements Listener {
+public class DoorUpdateListener implements Listener, AdvancementMatcher {
+    @Override
+    public String getAdvancementKey() {
+        return "planet/hidden/red_pill";
+    }
 
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -23,6 +29,9 @@ public class DoorUpdateListener implements Listener {
         if (player.isSwimming()) return;
 
         AutomaticDoorService.getInstance().updateDoors(player);
+        if (e.getTo().getBlock().getRelative(0, -1, 0).getType() == Material.GRASS_BLOCK) {
+            grant(player);
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
