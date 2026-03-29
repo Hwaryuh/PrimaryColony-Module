@@ -14,6 +14,7 @@ public class ModuleCommand {
                 .child(SpawnBackPackChild.create())
                 .child(SpawnBuriedChestChild.create())
                 .child(SpawnCommunicationChild.create())
+                .child(AdminChild.create())
                 .build();
     }
 }

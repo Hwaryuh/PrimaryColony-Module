@@ -6,7 +6,6 @@ import io.quill.paper.event.EventSubscriber;
 import io.quill.paper.item.ItemMatcher;
 import io.quill.paper.player.PlayerContext;
 import io.quill.paper.player.PlayerContexts;
-import kr.eme.prcMission.enums.MissionVersion;
 import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -19,7 +18,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import studio.semicolon.prc.api.machine.MachineState;
 import studio.semicolon.prc.api.constant.text.MachineMessages;
-import studio.semicolon.prc.api.constant.item.ToolItems;
+import studio.semicolon.prc.api.constant.item.game.ToolItems;
 import studio.semicolon.prc.api.machine.AbstractMachine;
 import studio.semicolon.prc.api.machine.MachineManager;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
@@ -100,7 +99,7 @@ public class MachineDestroyListener implements EventSubscriber<PlayerInteractEve
         }
 
         allow.machine().destroy();
-        MachineManager.getInstance().unregister(allow.location());
+        MachineManager.getInstance().unregister(allow.machine().getLocation());
         player.swingMainHand();
 
         int count = playerContext.increment(COUNTER_KEY);

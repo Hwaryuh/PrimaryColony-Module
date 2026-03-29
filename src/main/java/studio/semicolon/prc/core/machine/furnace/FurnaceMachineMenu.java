@@ -5,7 +5,6 @@ import io.quill.paper.menu.DragPolicy;
 import io.quill.paper.menu.slot.SlotFilter;
 import io.quill.paper.util.bukkit.Logger;
 import io.quill.paper.util.bukkit.task.Tasks;
-import kr.eme.prcMission.enums.MissionVersion;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -16,7 +15,7 @@ import studio.semicolon.prc.api.machine.AbstractMachine;
 import studio.semicolon.prc.api.machine.MachineMenu;
 import studio.semicolon.prc.api.machine.MachineState;
 import studio.semicolon.prc.api.machine.Upgradeable;
-import studio.semicolon.prc.api.constant.item.ETCItems;
+import studio.semicolon.prc.api.constant.item.game.ETCItems;
 import studio.semicolon.prc.api.constant.item.machine.FurnaceMachineItems;
 import studio.semicolon.prc.api.constant.item.machine.GrinderMachineItems;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
@@ -39,6 +38,8 @@ public class FurnaceMachineMenu extends MachineMenu {
     private static final int UPGRADE_1_SLOT = 8;
     private static final int UPGRADE_2_SLOT = 17;
     private static final int UPGRADE_3_SLOT = 26;
+
+    private static final int REQUIRED_POWDER_AMOUNT = 3;
 
     public FurnaceMachineMenu(Player player, AbstractMachine machine) {
         super(player, machine, MenuType.GENERIC_9X6);
@@ -68,9 +69,20 @@ public class FurnaceMachineMenu extends MachineMenu {
 
         List<ItemStack> requiredPowders = recipe.getRequiredPowders();
         int[] slots = { POWDER_1_SLOT, POWDER_2_SLOT, POWDER_3_SLOT };
+
         for (int i = 0; i < requiredPowders.size(); i++) {
             ItemStack powder = getInventory().getItem(slots[i]);
-            if (!ItemMatcher.matches(powder, requiredPowders.get(i)) || powder.getAmount() < 4) {
+            if (!ItemMatcher.matches(powder, requiredPowders.get(i)) || powder.getAmount() < REQUIRED_POWDER_AMOUNT) {
+                alert(MachineMessages.FURNACE_INSUFFICIENT_INGREDIENTS);
+                return null;
+            }
+        }
+
+        int activeSlotCount = Math.min(upgradeable.getUpgradeLevel() + 1, slots.length);
+        for (int i = requiredPowders.size(); i < activeSlotCount; i++) {
+            ItemStack extra = getInventory().getItem(slots[i]);
+            boolean isEmpty = extra == null || extra.getType().isAir() || ItemMatcher.matches(extra, FurnaceMachineItems.GUIDE_POWDER);
+            if (!isEmpty) {
                 alert(MachineMessages.FURNACE_INSUFFICIENT_INGREDIENTS);
                 return null;
             }
@@ -102,7 +114,7 @@ public class FurnaceMachineMenu extends MachineMenu {
                         removeButton(POWDER_2_SLOT);
                         setUpgradeSlot(UPGRADE_2_SLOT, 2, FurnaceMachineItems.ICE_MOLD);
                         Tasks.run(() -> {
-                            setPlaceholderSlot(POWDER_2_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, 4);
+                            setPlaceholderSlot(POWDER_2_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, REQUIRED_POWDER_AMOUNT);
                             registerInputSlot(POWDER_2_SLOT);
                             Missions.progressV2(player, "MODULE_UPGRADE", "furnace_process", 1);
                         });
@@ -110,7 +122,7 @@ public class FurnaceMachineMenu extends MachineMenu {
                         removeButton(POWDER_3_SLOT);
                         setUpgradeSlot(UPGRADE_3_SLOT, 3, FurnaceMachineItems.TORCH);
                         Tasks.run(() -> {
-                            setPlaceholderSlot(POWDER_3_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, 4);
+                            setPlaceholderSlot(POWDER_3_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, REQUIRED_POWDER_AMOUNT);
                             registerInputSlot(POWDER_3_SLOT);
                         });
                     }
@@ -136,16 +148,16 @@ public class FurnaceMachineMenu extends MachineMenu {
             setPlaceholderSlot(FUEL_SLOT, FurnaceMachineItems.GUIDE_FUEL, i -> ItemMatcher.matches(i, GrinderMachineItems.MG_POWDER), 1);
             registerInputSlot(FUEL_SLOT);
 
-            setPlaceholderSlot(POWDER_1_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, 4);
+            setPlaceholderSlot(POWDER_1_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, REQUIRED_POWDER_AMOUNT);
             registerInputSlot(POWDER_1_SLOT);
 
             if (upgradeable.getUpgradeLevel() >= 1) {
-                setPlaceholderSlot(POWDER_2_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, 4);
+                setPlaceholderSlot(POWDER_2_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, REQUIRED_POWDER_AMOUNT);
                 registerInputSlot(POWDER_2_SLOT);
             }
 
             if (upgradeable.getUpgradeLevel() >= 2) {
-                setPlaceholderSlot(POWDER_3_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, 4);
+                setPlaceholderSlot(POWDER_3_SLOT, FurnaceMachineItems.GUIDE_POWDER, GrinderMachineItems::isPowder, REQUIRED_POWDER_AMOUNT);
                 registerInputSlot(POWDER_3_SLOT);
             }
 

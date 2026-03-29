@@ -50,7 +50,10 @@ public class CoffeeMachine extends AbstractMachine {
 
     @Override
     protected List<Vector> getBarrierOffsets() {
-        return List.of(new Vector(0, 0, 0));
+        return List.of(
+                new Vector(0, 0, 0),
+                new Vector(0, 1, 0)
+        );
     }
 
     @Override

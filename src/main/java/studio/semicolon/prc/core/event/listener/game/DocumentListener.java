@@ -11,13 +11,14 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.constant.text.UtilMessages;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
-import studio.semicolon.prc.core.event.InteractionMatcher;
+import studio.semicolon.prc.core.event.PDCMatcher;
 
 import java.util.Optional;
 
-public class DocumentListener implements EventSubscriber<PlayerInteractEntityEvent, EventContext.Empty>, InteractionMatcher, AdvancementMatcher {
+public class DocumentListener implements EventSubscriber<PlayerInteractEntityEvent, EventContext.Empty>, PDCMatcher, AdvancementMatcher {
     public static String COUNTER_KEY = "documents_click";
 
     @Override
@@ -46,6 +47,7 @@ public class DocumentListener implements EventSubscriber<PlayerInteractEntityEve
         PlayerContext playerContext = PlayerContexts.ctx(player);
 
         player.sendMessage(UtilMessages.WIKI_LINK);
+        PRCSounds.DOCUMENTS_CLICK.play(player);
         int count = playerContext.increment(COUNTER_KEY);
         if (count == 5) {
             grant(player);

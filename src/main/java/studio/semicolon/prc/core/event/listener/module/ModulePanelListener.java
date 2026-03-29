@@ -3,20 +3,19 @@ package studio.semicolon.prc.core.event.listener.module;
 import io.quill.paper.event.EventContext;
 import io.quill.paper.event.EventResult;
 import io.quill.paper.event.EventSubscriber;
-import io.quill.paper.util.bukkit.Potions;
 import io.quill.paper.util.bukkit.pdc.PDCKeys;
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.potion.PotionEffectType;
-import studio.semicolon.prc.core.event.InteractionMatcher;
+import studio.semicolon.prc.core.event.PDCMatcher;
 import studio.semicolon.prc.core.module.menu.BuildPanelMenu;
-import studio.semicolon.prc.core.util.Advancements;
 
 import java.util.Optional;
 
-public class ModulePanelListener implements EventSubscriber<PlayerInteractEntityEvent, ModulePanelListener.Context>, InteractionMatcher {
+public class ModulePanelListener implements EventSubscriber<PlayerInteractEntityEvent, ModulePanelListener.Context>, PDCMatcher {
     public record Context(double panelY) implements EventContext, EventContext.Data { }
 
     @Override
@@ -26,6 +25,9 @@ public class ModulePanelListener implements EventSubscriber<PlayerInteractEntity
 
     @Override
     public Optional<ModulePanelListener.Context> expect(PlayerInteractEntityEvent e) {
+        Player player = e.getPlayer();
+        GameMode gameMode = player.getGameMode();
+        if (gameMode != GameMode.ADVENTURE && gameMode != GameMode.SURVIVAL) return Optional.empty();
         Entity entity = e.getRightClicked();
         if (!(entity instanceof Interaction interaction)) return Optional.empty();
 

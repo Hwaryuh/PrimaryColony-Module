@@ -3,16 +3,18 @@ package studio.semicolon.prc.api.constant.sound;
 import net.kyori.adventure.sound.SoundStop;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 public interface PRCSounds {
     SoundData GLOBAL_CLICK = new SoundData("minecraft:semicolon.click", 1.3f, 1.0f);
     SoundData GLOBAL_ERROR = new SoundData("minecraft:semicolon.error", 1.0f, 1.0f);
+    SoundData GRANT_ADVANCEMENTS = new SoundData("minecraft:semicolon.grant_advancements", 1.0f, 1.0f);
 
     SoundData MACHINE_PLACE = new SoundData("minecraft:block.heavy_core.place", 1.0f, 1.4f);
     SoundData MACHINE_INSERT_ITEM = new SoundData("minecraft:item.armor.equip_generic", 1.0f, 0.75f);
     SoundData MACHINE_DESTROY = new SoundData("minecraft:block.copper.place", 1.0f, 0.5f);
-    SoundData MACHINE_UPGRADE = new SoundData("minecraft:semicolon.upgrade", 1.2f, 1.0f);
+    SoundData MACHINE_UPGRADE = new SoundData("minecraft:semicolon.module_upgrade", 1.2f, 1.0f);
 
     SoundData COFFEE_MACHINE_START = new SoundData("minecraft:semicolon.coffee_module_start", 1.5f, 1.0f);
     SoundData FURNACE_MACHINE_START = new SoundData("minecraft:semicolon.furnace_module_start", 1.5f, 1.0f);
@@ -29,22 +31,39 @@ public interface PRCSounds {
     SoundData MODULE_INTERACT_ENTRY = new SoundData("minecraft:semicolon.entry_module_interact", 1.0f, 1.0f);
 
     SoundData BURIED_CHEST_OPEN = new SoundData("minecraft:item.mace.smash_ground", 1.0f, 1.0f);
+    SoundData DOCUMENTS_CLICK = new SoundData("minecraft:item.book.page_turn", 1.0f, 1.25f);
 
     record SoundData(String sound, float volume, float pitch) {
         public void play(Location location) {
             play(location, volume, pitch);
         }
 
+        public void play(Location location, SoundCategory category) {
+            play(location, category, volume, pitch);
+        }
+
         public void play(Player player) {
             play(player, volume, pitch);
+        }
+
+        public void play(Player player, SoundCategory category) {
+            play(player, category, volume, pitch);
         }
 
         public void play(Location location, float newVolume, float newPitch) {
             location.getWorld().playSound(location, sound, newVolume, newPitch);
         }
 
+        public void play(Location location, SoundCategory category, float newVolume, float newPitch) {
+            location.getWorld().playSound(location, sound, category, newVolume, newPitch);
+        }
+
         public void play(Player player, float newVolume, float newPitch) {
             player.playSound(player, sound, newVolume, newPitch);
+        }
+
+        public void play(Player player, SoundCategory category, float newVolume, float newPitch) {
+            player.playSound(player, sound, category, newVolume, newPitch);
         }
 
         public void stopAndPlay(Location location) {

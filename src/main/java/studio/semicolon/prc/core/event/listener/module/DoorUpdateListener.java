@@ -1,5 +1,6 @@
 package studio.semicolon.prc.core.event.listener.module;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +21,9 @@ public class DoorUpdateListener implements Listener, AdvancementMatcher {
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent e) {
-        if (!e.hasExplicitlyChangedBlock()) return;
+        Location from = e.getFrom();
+        Location to = e.getTo();
+        if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ()) return;
         Player player = e.getPlayer();
 
         if (!player.isOnGround()) return;

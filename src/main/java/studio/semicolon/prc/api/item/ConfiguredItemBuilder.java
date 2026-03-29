@@ -45,6 +45,7 @@ public class ConfiguredItemBuilder {
     private EquipmentSlot equipmentSlot;
     private NamespacedKey cameraOverlay;
     private final Map<NamespacedKey, PDCEntry<?>> pdcData = Maps.newHashMap();
+    private boolean unbreakable = false;
 
     public ConfiguredItemBuilder(Material material) {
         this.material = material;
@@ -126,6 +127,11 @@ public class ConfiguredItemBuilder {
         return this;
     }
 
+    public ConfiguredItemBuilder unbreakable() {
+        this.unbreakable = true;
+        return this;
+    }
+
     public ConfiguredItemBuilder maxDurability(int durability) {
         this.maxDurability = durability;
         return this;
@@ -157,7 +163,7 @@ public class ConfiguredItemBuilder {
             }
 
             if (itemName != null) {
-                meta.itemName(itemName.decoration(TextDecoration.ITALIC, false));
+                meta.itemName(itemName);
             }
 
             if (!lore.isEmpty()) {
@@ -193,6 +199,10 @@ public class ConfiguredItemBuilder {
                     PDCEntry<Object> typedEntry = (PDCEntry<Object>) entry;
                     pdc.set(key, typedEntry.type, typedEntry.value);
                 });
+            }
+
+            if (unbreakable) {
+                meta.setUnbreakable(true);
             }
         });
 

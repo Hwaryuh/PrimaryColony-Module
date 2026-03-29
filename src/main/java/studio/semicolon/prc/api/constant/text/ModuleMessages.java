@@ -17,6 +17,8 @@ public interface ModuleMessages {
     Component CONFIRM_TITLE = Component.text("설치 후 되돌릴 수 없습니다.", NamedTextColor.RED);
     Component CONFIRM_SUB_TITLE = Component.text("진행하려면 한번 더 입력하세요.", NamedTextColor.YELLOW);
 
+    Component REMOVED_MODULE_MARKER = Component.text("성공적으로 마커를 제거했습니다.", NamedTextColor.BLUE);
+
 
     // HUD
     Component HUD_MOVE = Component.text("A", TextColor.color(254, 254, 254)).font(Key.key("minecraft", "semicolon"));

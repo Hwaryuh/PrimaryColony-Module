@@ -10,8 +10,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInputEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
@@ -40,6 +43,13 @@ public class BuildSessionManager implements Bootable {
 
     private final ModuleInputListener inputListener = new ModuleInputListener();
     private final ModuleExitListener exitListener = new ModuleExitListener();
+    private final Listener joinListener = new Listener() {
+        @EventHandler
+        public void onJoin(PlayerJoinEvent e) {
+            if (currentSession == null) return;
+            e.getPlayer().hideEntity(Module.getInstance(), currentSession.getIndicatorDisplay());
+        }
+    };
 
     @Nullable
     private BuildSession currentSession = null;
@@ -130,6 +140,10 @@ public class BuildSessionManager implements Bootable {
                 cameraConnections
         );
 
+        Module.getInstance().getServer().getOnlinePlayers().stream()
+                .filter(p -> !p.equals(player))
+                .forEach(p -> p.hideEntity(Module.getInstance(), indicatorDisplay));
+
         currentSession = session;
         registerListeners();
 
@@ -177,6 +191,7 @@ public class BuildSessionManager implements Bootable {
 
         EventManager.getInstance().capture(PlayerInputEvent.class, inputListener);
         Module.getInstance().getServer().getPluginManager().registerEvents(exitListener, Module.getInstance());
+        Module.getInstance().getServer().getPluginManager().registerEvents(joinListener, Module.getInstance());
 
         listenersRegistered = true;
     }
@@ -186,6 +201,7 @@ public class BuildSessionManager implements Bootable {
 
         EventManager.getInstance().release(PlayerInputEvent.class, inputListener);
         HandlerList.unregisterAll(exitListener);
+        HandlerList.unregisterAll(joinListener);
 
         listenersRegistered = false;
     }

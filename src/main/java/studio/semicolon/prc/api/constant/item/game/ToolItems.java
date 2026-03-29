@@ -1,11 +1,10 @@
-package studio.semicolon.prc.api.constant.item;
+package studio.semicolon.prc.api.constant.item.game;
 
 import io.quill.paper.util.bukkit.pdc.PDCKeys;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import studio.semicolon.prc.api.item.IConfigureItem;
@@ -76,26 +75,23 @@ public interface ToolItems extends IConfigureItem {
 
     ItemStack WEAPON_KNIFE = IConfigureItem.builder(Material.WOODEN_SHOVEL).customModelData(10).itemName(Component.text("나이프"))
             .addLore(Component.text("빠르게 적을 베어낼 수 있다.", NamedTextColor.GRAY)).hideAttributes()
+            .addAttribute(Attribute.ATTACK_SPEED, "prc_attack_speed", 2.0, ADD_NUMBER)
             .attackDamage(6.0)
-            .maxDurability(250)
+            .maxDurability(700)
             .build();
     ItemStack WEAPON_LONG_SWORD = IConfigureItem.builder(Material.WOODEN_SHOVEL).customModelData(11).itemName(Component.text("장도"))
             .addLore(Component.text("클래식 근접 무기, 무기가 가진 밸런스가 좋다.", NamedTextColor.GRAY)).hideAttributes()
+            .addAttribute(Attribute.ATTACK_SPEED, "prc_attack_speed", 0.75, ADD_NUMBER)
             .attackDamage(7.0)
-            .maxDurability(750)
+            .maxDurability(950)
             .build();
     ItemStack WEAPON_PIPE = IConfigureItem.builder(Material.WOODEN_SHOVEL).customModelData(12).itemName(Component.text("파이프"))
             .addLore(Component.text("무겁지만 치명적인 근접무기,", NamedTextColor.GRAY))
-            .addLore(Component.text("느리지만 매 공격 치명적인 피해를 입힐 수 있다.", NamedTextColor.GRAY))
+            .addLore(Component.text("느리지만 강한 피해를 입힐 수 있다.", NamedTextColor.GRAY))
             .hideAttributes()
             .attackDamage(4.0)
-            .maxDurability(150)
+            .maxDurability(500)
             .build();
 
     ItemStack SPANNER = IConfigureItem.builder(Material.WOODEN_SHOVEL).customModelData(13).itemName(Component.text("스패너")).build();
-
-    @SuppressWarnings("UnstableApiUsage")
-    ItemStack FINAL_BOOTS = IConfigureItem.builder(Material.DIAMOND_BOOTS)
-            .addAttribute(Attribute.STEP_HEIGHT, "step_height", 2.0, ADD_NUMBER, EquipmentSlotGroup.FEET)
-            .build();
 }

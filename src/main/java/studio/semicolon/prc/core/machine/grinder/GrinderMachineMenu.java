@@ -14,7 +14,7 @@ import studio.semicolon.prc.api.machine.AbstractMachine;
 import studio.semicolon.prc.api.machine.MachineMenu;
 import studio.semicolon.prc.api.machine.MachineState;
 import studio.semicolon.prc.api.machine.Upgradeable;
-import studio.semicolon.prc.api.constant.item.ETCItems;
+import studio.semicolon.prc.api.constant.item.game.ETCItems;
 import studio.semicolon.prc.api.constant.item.machine.GrinderMachineItems;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.constant.text.MachineMessages;
@@ -32,6 +32,9 @@ public class GrinderMachineMenu extends MachineMenu {
     private static final int UPGRADE_1_SLOT = 27;
     private static final int UPGRADE_2_SLOT = 36;
     private static final int UPGRADE_3_SLOT = 45;
+
+    private static final int REQUIRED_ORE_AMOUNT = 2;
+    private static final int RESULT_PER_ORE = 2;
 
     public GrinderMachineMenu(Player player, AbstractMachine machine) {
         super(player, machine, MenuType.GENERIC_9X6);
@@ -52,11 +55,11 @@ public class GrinderMachineMenu extends MachineMenu {
         setUpgradeSlot(UPGRADE_3_SLOT, 3, GrinderMachineItems.DRILL);
 
         if (state.isIdle()) {
-            setPlaceholderSlot(ORE_1_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, 1);
+            setPlaceholderSlot(ORE_1_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, REQUIRED_ORE_AMOUNT);
             registerInputSlot(ORE_1_SLOT);
 
             if (upgradeable.getUpgradeLevel() >= 1) {
-                setPlaceholderSlot(ORE_2_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, 1);
+                setPlaceholderSlot(ORE_2_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, REQUIRED_ORE_AMOUNT);
                 registerInputSlot(ORE_2_SLOT);
             }
 
@@ -146,7 +149,7 @@ public class GrinderMachineMenu extends MachineMenu {
                         removeButton(ORE_2_SLOT);
                         setUpgradeSlot(UPGRADE_2_SLOT, 2, GrinderMachineItems.GEAR);
                         Tasks.run(() -> {
-                            setPlaceholderSlot(ORE_2_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, 1);
+                            setPlaceholderSlot(ORE_2_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, REQUIRED_ORE_AMOUNT);
                             registerInputSlot(ORE_2_SLOT);
                         });
                     } else if (requiredLevel == 2) {
@@ -240,12 +243,12 @@ public class GrinderMachineMenu extends MachineMenu {
 
         if (recipeIDs.length >= 1 && !recipeIDs[0].isEmpty()) {
             GrinderRecipe recipe1 = GrinderRecipe.valueOf(recipeIDs[0]);
-            setResultButton(RESULT_1_SLOT, recipe1.getPowder(), recipe1);
+            setResultButton(RESULT_1_SLOT, recipe1.getPowder().asQuantity(REQUIRED_ORE_AMOUNT * RESULT_PER_ORE), recipe1);
         }
 
         if (recipeIDs.length >= 2 && !recipeIDs[1].isEmpty()) {
             GrinderRecipe recipe2 = GrinderRecipe.valueOf(recipeIDs[1]);
-            setResultButton(RESULT_2_SLOT, recipe2.getPowder(), recipe2);
+            setResultButton(RESULT_2_SLOT, recipe2.getPowder().asQuantity(REQUIRED_ORE_AMOUNT * RESULT_PER_ORE), recipe2);
         }
     }
 

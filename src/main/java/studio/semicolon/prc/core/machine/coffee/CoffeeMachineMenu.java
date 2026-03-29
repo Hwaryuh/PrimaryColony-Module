@@ -23,11 +23,11 @@ import studio.semicolon.prc.core.util.Missions;
 
 @SuppressWarnings({"UnstableApiUsage", "UnnecessaryUnicodeEscape"})
 public class CoffeeMachineMenu extends MachineMenu {
-    private final int[] TAT = { 120, 90, 10 }; // AG, AU, TI
+    private static final int[] TAT = { 120, 90, 10 }; // AG, AU, TI
 
-    private final int BREW_BUTTON_SLOT = 12;
-    private final int MUG_SLOT = 39;
-    private final int BEAN_SLOT = 52;
+    private static final int BREW_BUTTON_SLOT = 12;
+    private static final int MUG_SLOT = 39;
+    private static final int BEAN_SLOT = 52;
 
     public CoffeeMachineMenu(Player player, AbstractMachine machine) {
         super(player, machine, MenuType.GENERIC_9X6);

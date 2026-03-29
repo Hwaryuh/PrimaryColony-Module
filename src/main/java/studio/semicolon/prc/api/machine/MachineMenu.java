@@ -5,13 +5,14 @@ import io.quill.paper.util.bukkit.task.Tasks;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MenuType;
 import org.bukkit.inventory.view.builder.InventoryViewBuilder;
 import org.jetbrains.annotations.NotNull;
-import studio.semicolon.prc.api.constant.item.ETCItems;
+import studio.semicolon.prc.api.constant.item.game.ETCItems;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public abstract class MachineMenu extends InventoryMenu {
         state.startProcessing(durationSeconds, resultItemID);
         machine.saveState(state);
         updateUI();
-        machine.getCraftingStartSound().play(machine.getLocation());
+        machine.getCraftingStartSound().play(machine.getLocation(), SoundCategory.RECORDS);
     }
 
     @Override

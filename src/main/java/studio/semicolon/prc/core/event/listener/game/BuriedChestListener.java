@@ -21,7 +21,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import studio.semicolon.prc.api.constant.item.ToolItems;
+import studio.semicolon.prc.api.constant.item.game.GameItems;
+import studio.semicolon.prc.api.constant.item.game.ToolItems;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.constant.text.GameMessages;
 
@@ -43,10 +44,10 @@ public class BuriedChestListener implements EventSubscriber<PlayerInteractEntity
     );
 
     private static final Map<NamespacedKey, ItemStack> CHEST_REWARDS = ImmutableMap.of(
-            BURIED_HELMET, ItemStack.of(Material.DIAMOND_HELMET),
-            BURIED_CHESTPLATE, ItemStack.of(Material.DIAMOND_CHESTPLATE),
-            BURIED_LEGGINGS, ItemStack.of(Material.DIAMOND_LEGGINGS),
-            BURIED_BOOTS, ToolItems.FINAL_BOOTS
+            BURIED_HELMET, GameItems.FINAL_HELMET,
+            BURIED_CHESTPLATE, GameItems.FINAL_CHESTPLATE,
+            BURIED_LEGGINGS, GameItems.FINAL_LEGGINGS,
+            BURIED_BOOTS, GameItems.FINAL_BOOTS
     );
 
     private static final int CHEST_CLOSED_CMD = 42;

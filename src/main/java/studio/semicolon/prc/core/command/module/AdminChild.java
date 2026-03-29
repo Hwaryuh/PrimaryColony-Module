@@ -3,19 +3,23 @@ package studio.semicolon.prc.core.command.module;
 import io.quill.paper.command.CommandResult;
 import io.quill.paper.command.builder.QuillCommand;
 import io.quill.paper.command.builder.QuillCommandBuilder;
-import org.bukkit.Chunk;
+import io.quill.paper.util.bukkit.Locations;
+import io.quill.paper.util.bukkit.pdc.PDCKeys;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
-import studio.semicolon.prc.core.module.ModuleMetadataDebug;
+import org.bukkit.persistence.PersistentDataType;
+import studio.semicolon.prc.core.menu.AdminMenu;
 
-public class ResetChunkChild {
+public class AdminChild {
     public static QuillCommand create() {
         return QuillCommandBuilder.create()
-                .name("resetChunk").playerOnly()
+                .name("admin").playerOnly()
                 .runPlayer(ctx -> {
                     Player player = ctx.sender().player();
-                    Chunk chunk = player.getChunk();
-                    ModuleMetadataDebug.clearAll(chunk);
-                    player.sendMessage(ModuleMetadataDebug.getInfo(player.getChunk()).toString());
+
+                    new AdminMenu(player).open();
                     return CommandResult.success();
                 })
                 .build();

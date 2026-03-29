@@ -14,22 +14,28 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import studio.semicolon.prc.api.constant.item.ToolItems;
+import org.bukkit.scoreboard.Team;
+import studio.semicolon.prc.api.constant.item.game.GameItems;
+import studio.semicolon.prc.api.constant.item.game.ToolItems;
 import studio.semicolon.prc.api.constant.item.module.ModuleItems;
 import studio.semicolon.prc.api.constant.text.GameMessages;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
-import studio.semicolon.prc.core.event.InteractionMatcher;
+import studio.semicolon.prc.core.event.PDCMatcher;
+import studio.semicolon.prc.core.util.Missions;
 import studio.semicolon.prc.core.util.Players;
+import studio.semicolon.prc.core.util.Teams;
 
 import java.util.List;
 import java.util.Optional;
 
-public class BackPackListener implements EventSubscriber<PlayerInteractEntityEvent, BackPackListener.Context>, InteractionMatcher, AdvancementMatcher {
+public class BackPackListener implements EventSubscriber<PlayerInteractEntityEvent, BackPackListener.Context>, PDCMatcher, AdvancementMatcher {
     public static final NamespacedKey BACKPACK_KEY = PDCKeys.of("backpack_interaction");
     public static final NamespacedKey BACKPACK_SPECIAL = PDCKeys.of("backpack_special");
     public static final String FLAG_KEY = "backpack_item_received";
@@ -99,19 +105,28 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
                         player.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0f, 1.0f);
 
                         List<ItemStack> items = Lists.newArrayList(List.of(
-                                ToolItems.PICKAXE_1,
-                                ToolItems.WEAPON_PIPE,
-                                ItemStack.of(Material.CHAINMAIL_HELMET),
-                                ItemStack.of(Material.CHAINMAIL_CHESTPLATE),
-                                ItemStack.of(Material.CHAINMAIL_LEGGINGS),
-                                ItemStack.of(Material.CHAINMAIL_BOOTS)
+                                ToolItems.PICKAXE_1.clone(),
+                                ToolItems.WEAPON_PIPE.clone(),
+                                GameItems.FOOD_CAPSULE.clone(),
+                                ItemStack.of(Material.CHAINMAIL_HELMET).clone(),
+                                ItemStack.of(Material.CHAINMAIL_CHESTPLATE).clone(),
+                                ItemStack.of(Material.CHAINMAIL_LEGGINGS).clone(),
+                                ItemStack.of(Material.CHAINMAIL_BOOTS).clone(),
+                                ModuleItems.MODULE_MARKER_ADD.clone(),
+                                ModuleItems.MODULE_MARKER_REMOVE.clone()
                         ));
 
                         if (isSpecial) {
                             items.add(ModuleItems.MINE);
                         }
 
+                        player.setExperienceLevelAndProgress(0);
+                        player.setLevel(0);
                         player.getInventory().addItem(items.toArray(new ItemStack[0]));
+                        Missions.progressV1(player, "DEVICE_INTERACTION", "home_module", 1);
+                        Teams.getOrCreate(player, "primary_colony", team -> {
+                            team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+                        }).addPlayer(player);
                     });
                 }
             }.start();

@@ -10,12 +10,18 @@ import java.util.Set;
 public class DoorConditionChecker {
     private DoorConditionChecker() { }
 
-    private static final double ACTIVATION_RANGE = 3.0;
+    private static final double ACTIVATION_RANGE = 4.0;
+    private static final double DEACTIVATION_RANGE = 6.0;
     private static final double CONNECTION_RANGE = 5.05;
 
     public static boolean shouldOpen(AutomaticDoor door, Player player, Set<AutomaticDoor> allDoors) {
         double distance = door.location().distance(player.getLocation());
-        if (distance > ACTIVATION_RANGE) return false;
+
+        if (door.isElevated()) {
+            if (distance > DEACTIVATION_RANGE) return false;
+        } else {
+            if (distance > ACTIVATION_RANGE) return false;
+        }
 
         boolean hasStructure = hasConnectedStructure(door, player);
         if (!hasStructure) return false;

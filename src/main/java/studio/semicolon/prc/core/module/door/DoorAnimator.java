@@ -181,13 +181,11 @@ public class DoorAnimator {
 
             for (Location loc : locations) {
                 if (!loc.isChunkLoaded()) {
-                    Logger.warn("청크 언로드됨, 배리어 복구 불가: " + loc);
                     continue;
                 }
 
                 Block block = loc.getBlock();
                 if (block.getType() != Material.AIR) {
-                    Logger.warn("블럭이 AIR가 아님, 복구 스킵: " + loc + " (현재: " + block.getType() + ")");
                     continue;
                 }
 

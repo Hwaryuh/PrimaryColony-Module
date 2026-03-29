@@ -49,6 +49,14 @@ public class CoffeeListener implements EventSubscriber<PlayerItemConsumeEvent, E
                 .icon(true)
                 .applyTo(player);
 
+        Potions.of(PotionEffectType.STRENGTH)
+                .seconds(45)
+                .level(1)
+                .ambient(false)
+                .particles(false)
+                .icon(false)
+                .applyTo(player);
+
         return EventResult.STOP;
     }
 }

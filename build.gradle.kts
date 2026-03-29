@@ -6,9 +6,8 @@ plugins {
 }
 
 group = "studio.semicolon"
-version = "0.9"
+version = "1.02"
 val serverDirectory = project.findProperty("server.directory") as String
-
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -17,12 +16,15 @@ java {
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://jitpack.io")
 }
 
 dependencies {
     paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
-    implementation(files("libs/Quill-0.2.81.jar"))
-    implementation(files("libs/PRCMission-1.0.8.jar"))
+    implementation(files("libs/Quill-0.2.86.jar"))
+    compileOnly(files("libs/PRCMission-1.0.9.jar"))
+
+    compileOnly("com.github.mireu9275:PRCShop:v1.0.13")
 }
 
 tasks {
@@ -50,7 +52,12 @@ tasks {
     build {
         dependsOn(shadowJar)
         doLast {
-            val jar = shadowJar.get().archiveFile.get().asFile
+            val jar =
+                shadowJar
+                    .get()
+                    .archiveFile
+                    .get()
+                    .asFile
             val serverDir = file(serverDirectory)
             val updateDir = File(serverDir, "update")
 

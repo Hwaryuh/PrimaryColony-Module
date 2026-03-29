@@ -2,7 +2,7 @@ package studio.semicolon.prc.core.machine.print;
 
 import com.google.common.collect.Maps;
 import org.bukkit.inventory.ItemStack;
-import studio.semicolon.prc.api.constant.item.ToolItems;
+import studio.semicolon.prc.api.constant.item.game.ToolItems;
 import studio.semicolon.prc.api.constant.item.machine.FurnaceMachineItems;
 
 import java.util.LinkedHashMap;
@@ -12,19 +12,19 @@ public enum PrintRecipe {
     WEAPON_PIPE(
             ToolItems.WEAPON_PIPE,
             materials(
-                    FurnaceMachineItems.FE_INGOT, 10
+                    FurnaceMachineItems.FE_INGOT, 5
             )
     ),
     PICKAXE_1(
             ToolItems.PICKAXE_1,
             materials(
-                    FurnaceMachineItems.FE_INGOT, 10
+                    FurnaceMachineItems.FE_INGOT, 5
             )
     ),
     HOE_1(
             ToolItems.HOE_1,
             materials(
-                    FurnaceMachineItems.FE_INGOT, 10
+                    FurnaceMachineItems.FE_INGOT, 5
             )
     ),
     WATERING_CAN_1(
@@ -45,10 +45,10 @@ public enum PrintRecipe {
     PICKAXE_2(
             ToolItems.PICKAXE_2,
             materials(
-                    FurnaceMachineItems.AL_INGOT, 20,
+                    FurnaceMachineItems.AL_INGOT, 10,
                     FurnaceMachineItems.FE_INGOT, 10,
                     FurnaceMachineItems.CU_INGOT, 10,
-                    FurnaceMachineItems.LI_INGOT, 5,
+                    FurnaceMachineItems.LI_INGOT, 2,
                     ToolItems.PICKAXE_1, 1
             )
     ),
@@ -76,7 +76,7 @@ public enum PrintRecipe {
             materials(
                     FurnaceMachineItems.AL_INGOT, 20,
                     FurnaceMachineItems.FE_INGOT, 10,
-                    FurnaceMachineItems.CU_INGOT, 10
+                    FurnaceMachineItems.CU_INGOT, 5
             )
     ),
     PICKAXE_3(
@@ -104,9 +104,9 @@ public enum PrintRecipe {
     CAPSULE_GUN(
             ToolItems.CAPSULE_GUN,
             materials(
-                    FurnaceMachineItems.CU_INGOT, 20,
-                    FurnaceMachineItems.LI_INGOT, 20,
-                    FurnaceMachineItems.PT_INGOT, 15
+                    FurnaceMachineItems.FE_INGOT, 15,
+                    FurnaceMachineItems.CU_INGOT, 10,
+                    FurnaceMachineItems.LI_INGOT, 10
             )
     );
 
