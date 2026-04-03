@@ -24,7 +24,7 @@ dependencies {
     implementation(files("libs/Quill-0.2.86.jar"))
     compileOnly(files("libs/PRCMission-1.0.9.jar"))
 
-    compileOnly("com.github.mireu9275:PRCShop:v1.0.13")
+    compileOnly("com.github.mireu9275:PRCShop:v1.1.1")
 }
 
 tasks {

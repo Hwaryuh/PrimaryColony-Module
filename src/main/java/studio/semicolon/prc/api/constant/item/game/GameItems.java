@@ -1,6 +1,6 @@
 package studio.semicolon.prc.api.constant.item.game;
 
-import net.kyori.adventure.text.Component;
+import kr.eme.prcShop.api.PRCItems;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.inventory.EquipmentSlotGroup;
@@ -10,7 +10,8 @@ import studio.semicolon.prc.api.item.IConfigureItem;
 import static org.bukkit.attribute.AttributeModifier.Operation.ADD_NUMBER;
 
 public interface GameItems extends IConfigureItem {
-    ItemStack FOOD_CAPSULE = IConfigureItem.builder(Material.GOLDEN_CARROT).itemName(Component.text("식량 캡슐")).amount(32).build();
+//    ItemStack FOOD_CAPSULE = IConfigureItem.builder(Material.GOLDEN_CARROT).itemName(Component.text("식량 캡슐")).amount(32).build();
+    ItemStack FOOD_CAPSULE = PRCItems.INSTANCE.getFOOD_CAPSULE().create(32);
 
     ItemStack FINAL_HELMET = IConfigureItem.builder(Material.DIAMOND_HELMET).unbreakable().build();
     ItemStack FINAL_CHESTPLATE = IConfigureItem.builder(Material.DIAMOND_CHESTPLATE).unbreakable().build();
