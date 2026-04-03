@@ -1,8 +1,11 @@
 package studio.semicolon.prc.core.machine.grinder;
 
+import com.google.common.collect.Lists;
 import io.quill.paper.item.ItemMatcher;
 import org.bukkit.inventory.ItemStack;
 import studio.semicolon.prc.api.constant.item.machine.GrinderMachineItems;
+
+import java.util.List;
 
 public enum GrinderRecipe {
     MG(GrinderMachineItems.MG, GrinderMachineItems.MG_POWDER, new int[]{5, 4, 2}, 0),
@@ -27,6 +30,8 @@ public enum GrinderRecipe {
         this.requireLevel = requireLevel;
     }
 
+    public static final int POWDER_PER_ORE = 2;
+
     public ItemStack getPowder() { return powder.clone(); }
 
     public int getDuration(int upgradeLevel) {
@@ -49,5 +54,27 @@ public enum GrinderRecipe {
             }
         }
         return null;
+    }
+
+    public record GrindingResult(GrinderRecipe recipe, int oreAmount) {
+        public int powderAmount() {
+            return oreAmount * POWDER_PER_ORE;
+        }
+    }
+
+    public static List<GrindingResult> parseResults(String processResult) {
+        if (processResult == null || processResult.isBlank()) return List.of();
+
+        List<GrindingResult> results = Lists.newArrayList();
+        for (String entry : processResult.split(",")) {
+            String[] parts = entry.split(":");
+            if (parts.length != 2) continue;
+            try {
+                GrinderRecipe recipe = GrinderRecipe.valueOf(parts[0]);
+                int amount = Integer.parseInt(parts[1]);
+                results.add(new GrindingResult(recipe, amount));
+            } catch (IllegalArgumentException ignored) { }
+        }
+        return results;
     }
 }

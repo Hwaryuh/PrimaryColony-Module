@@ -80,15 +80,8 @@ public class GrinderMachine extends AbstractMachine implements Upgradeable {
 
         if (state.isCompleted()) {
             String processResult = state.getProcessResult();
-            if (processResult != null) {
-                String[] recipeIDs = processResult.split(",");
-
-                for (String recipeID : recipeIDs) {
-                    try {
-                        GrinderRecipe recipe = GrinderRecipe.valueOf(recipeID);
-                        drops.add(recipe.getPowder());
-                    } catch (IllegalArgumentException ignored) { }
-                }
+            for (GrinderRecipe.GrindingResult result : GrinderRecipe.parseResults(processResult)) {
+                drops.add(result.recipe().getPowder().asQuantity(result.powderAmount()));
             }
         }
 

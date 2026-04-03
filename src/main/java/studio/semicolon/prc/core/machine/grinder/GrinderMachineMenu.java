@@ -20,6 +20,8 @@ import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.constant.text.MachineMessages;
 import studio.semicolon.prc.core.util.Missions;
 
+import java.util.List;
+
 @SuppressWarnings("UnstableApiUsage")
 public class GrinderMachineMenu extends MachineMenu {
     private final Upgradeable upgradeable;
@@ -34,7 +36,6 @@ public class GrinderMachineMenu extends MachineMenu {
     private static final int UPGRADE_3_SLOT = 45;
 
     private static final int REQUIRED_ORE_AMOUNT = 2;
-    private static final int RESULT_PER_ORE = 2;
 
     public GrinderMachineMenu(Player player, AbstractMachine machine) {
         super(player, machine, MenuType.GENERIC_9X6);
@@ -183,7 +184,7 @@ public class GrinderMachineMenu extends MachineMenu {
         }
 
         int duration = recipe1.getDuration(upgradeable.getUpgradeLevel());
-        String processResult = recipe1.name();
+        String processResult = recipe1.name() + ":" + ore1.getAmount();
 
         ItemStack ore2 = getInventory().getItem(ORE_2_SLOT);
 
@@ -201,7 +202,7 @@ public class GrinderMachineMenu extends MachineMenu {
 
             int duration2 = recipe2.getDuration(upgradeable.getUpgradeLevel());
             duration = Math.max(duration, duration2);
-            processResult = recipe1.name() + "," + recipe2.name();
+            processResult += "," + recipe2.name() + ":" + ore2.getAmount();
         }
 
         return new GrindingData(duration, processResult);
@@ -236,19 +237,16 @@ public class GrinderMachineMenu extends MachineMenu {
     protected void renderResult() {
         if (!state.isCompleted()) return;
 
-        String processResult = state.getProcessResult();
-        if (processResult == null) return;
+        List<GrinderRecipe.GrindingResult> results = GrinderRecipe.parseResults(state.getProcessResult());
 
-        String[] recipeIDs = processResult.split(",", -1);
-
-        if (recipeIDs.length >= 1 && !recipeIDs[0].isEmpty()) {
-            GrinderRecipe recipe1 = GrinderRecipe.valueOf(recipeIDs[0]);
-            setResultButton(RESULT_1_SLOT, recipe1.getPowder().asQuantity(REQUIRED_ORE_AMOUNT * RESULT_PER_ORE), recipe1);
+        if (!results.isEmpty()) {
+            GrinderRecipe.GrindingResult r1 = results.getFirst();
+            setResultButton(RESULT_1_SLOT, r1.recipe().getPowder().asQuantity(r1.powderAmount()), r1.recipe());
         }
 
-        if (recipeIDs.length >= 2 && !recipeIDs[1].isEmpty()) {
-            GrinderRecipe recipe2 = GrinderRecipe.valueOf(recipeIDs[1]);
-            setResultButton(RESULT_2_SLOT, recipe2.getPowder().asQuantity(REQUIRED_ORE_AMOUNT * RESULT_PER_ORE), recipe2);
+        if (results.size() >= 2) {
+            GrinderRecipe.GrindingResult r2 = results.get(1);
+            setResultButton(RESULT_2_SLOT, r2.recipe().getPowder().asQuantity(r2.powderAmount()), r2.recipe());
         }
     }
 
@@ -264,26 +262,25 @@ public class GrinderMachineMenu extends MachineMenu {
                 state.setState(MachineState.State.IDLE);
                 machine.saveState(state);
                 updateUI();
-            } else {
-                String[] recipeIDs = state.getProcessResult().split(",");
-                StringBuilder remaining = new StringBuilder();
-
-                if (!isSlot1Empty && recipeIDs.length >= 1) {
-                    remaining.append(recipeIDs[0]);
-                }
-
-                if (recipeIDs.length >= 2) {
-                    if (!remaining.isEmpty() || isSlot1Empty) {
-                        remaining.append(",");
-                    }
-                    if (!isSlot2Empty) {
-                        remaining.append(recipeIDs[1]);
-                    }
-                }
-
-                state.setProcessResult(remaining.toString());
-                machine.saveState(state);
+                return;
             }
+
+            List<GrinderRecipe.GrindingResult> results = GrinderRecipe.parseResults(state.getProcessResult());
+            StringBuilder remaining = new StringBuilder();
+
+            if (!isSlot1Empty && !results.isEmpty()) {
+                remaining.append(results.getFirst().recipe().name()).append(":").append(results.getFirst().oreAmount());
+            }
+
+            if (results.size() >= 2) {
+                if (!remaining.isEmpty()) remaining.append(",");
+                if (!isSlot2Empty) {
+                    remaining.append(results.get(1).recipe().name()).append(":").append(results.get(1).oreAmount());
+                }
+            }
+
+            state.setProcessResult(remaining.toString());
+            machine.saveState(state);
         });
     }
 
