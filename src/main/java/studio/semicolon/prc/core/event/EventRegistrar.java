@@ -19,6 +19,7 @@ import studio.semicolon.prc.core.event.listener.game.AdvancementDoneListener;
 import studio.semicolon.prc.core.event.listener.game.BackPackListener;
 import studio.semicolon.prc.core.event.listener.game.BuriedChestListener;
 import studio.semicolon.prc.core.event.listener.game.DocumentListener;
+import studio.semicolon.prc.core.event.listener.game.PlayerListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAILeftClickListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAIRightClickListener;
 import studio.semicolon.prc.core.event.listener.machine.CoffeeListener;
@@ -32,6 +33,7 @@ import studio.semicolon.prc.core.event.listener.module.ModulePanelListener;
 import studio.semicolon.prc.core.event.listener.game.CrystalCaveListener;
 
 public class EventRegistrar implements Bootable {
+    private final PlayerListener playerListener = new PlayerListener();
     private final DoorUpdateListener doorUpdateListener = new DoorUpdateListener();
 
     @Override
@@ -72,11 +74,13 @@ public class EventRegistrar implements Bootable {
                 .subscribe(new AdvancementDoneListener())
                 .build();
 
+        plugin.getServer().getPluginManager().registerEvents(playerListener, plugin);
         plugin.getServer().getPluginManager().registerEvents(doorUpdateListener, plugin);
     }
 
     @Override
     public void end(JavaPlugin plugin) {
+        HandlerList.unregisterAll(playerListener);
         HandlerList.unregisterAll(doorUpdateListener);
     }
 }
