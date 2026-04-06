@@ -14,14 +14,13 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scoreboard.Team;
+import studio.semicolon.prc.api.constant.GameLocation;
 import studio.semicolon.prc.api.constant.item.game.GameItems;
 import studio.semicolon.prc.api.constant.item.game.ToolItems;
 import studio.semicolon.prc.api.constant.item.module.ModuleItems;
@@ -78,6 +77,7 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
         if (ctx instanceof Context.First(Player player, PlayerContext playerContext, Interaction interaction, boolean isSpecial)) {
             playerContext.persistentFlag(FLAG_KEY, true);
             Players.stopMovement(player, 60);
+            player.setRespawnLocation(GameLocation.HOME_MODULE.toLocation(player.getWorld()), true);
 
             if (isSpecial) {
                 interaction.getPersistentDataContainer().set(BACKPACK_SPECIAL, PersistentDataType.BOOLEAN, false);
