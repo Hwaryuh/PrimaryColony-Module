@@ -1,7 +1,11 @@
 package studio.semicolon.prc.api.constant.text;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.entity.Player;
+import studio.semicolon.prc.api.constant.GameLocation;
 
 public interface GameMessages {
     Component CRYSTAL_CAVE_FORBIDDEN = Component.text("날아다니는 분진으로 인해 호흡이 힘들어 더 이상 들어갈 수가 없다, 지금은 무리야...", NamedTextColor.GRAY);
@@ -11,5 +15,26 @@ public interface GameMessages {
 
     static Component getBackPackSearchingMessage(int dotCount) {
         return Component.text("가방을 수색하는 중" + ".".repeat(dotCount), NamedTextColor.GRAY);
+    }
+
+    static Component buildTutorialMessages() {
+        Component builder = Component.empty();
+        GameLocation[] locations = GameLocation.values();
+
+        for (int i = 0; i < locations.length; i++) {
+            GameLocation loc = locations[i];
+            if (loc.getLabel() == null) continue;
+            if (i > 0) builder = builder.append(Component.space());
+            var hoverText = loc.getLabel().append(Component.text("(으)로 이동하기"));
+            builder = builder.append(loc.getLabel()
+                    .clickEvent(ClickEvent.callback(audience -> {
+                        if (audience instanceof Player player) {
+                            player.teleport(loc.toLocation(player.getWorld()));
+                        }
+                    }))
+                    .hoverEvent(HoverEvent.showText(hoverText)));
+        }
+
+        return builder;
     }
 }

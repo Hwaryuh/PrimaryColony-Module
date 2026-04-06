@@ -12,7 +12,7 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
-import studio.semicolon.prc.api.constant.text.UtilMessages;
+import studio.semicolon.prc.api.constant.text.GameMessages;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
 import studio.semicolon.prc.core.event.PDCMatcher;
 
@@ -46,7 +46,8 @@ public class DocumentListener implements EventSubscriber<PlayerInteractEntityEve
         Player player = e.getPlayer();
         PlayerContext playerContext = PlayerContexts.ctx(player);
 
-        player.sendMessage(UtilMessages.WIKI_LINK);
+//        player.sendMessage(UtilMessages.WIKI_LINK);
+        player.sendMessage(GameMessages.buildTutorialMessages());
         PRCSounds.DOCUMENTS_CLICK.play(player);
         int count = playerContext.increment(COUNTER_KEY);
         if (count == 5) {
