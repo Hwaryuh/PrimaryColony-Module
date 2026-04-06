@@ -10,10 +10,11 @@ public final class MachineKeys {
     public static final String DISPLAY_UUID = "display_uuid";
 
     public static String locationKey(Location loc) {
-        return String.format("loc_%s_%d_%d_%d",
+        return "loc_%s_%d_%d_%d".formatted(
                 loc.getWorld().getName(),
                 loc.getBlockX(),
                 loc.getBlockY(),
-                loc.getBlockZ());
+                loc.getBlockZ()
+        );
     }
 }
