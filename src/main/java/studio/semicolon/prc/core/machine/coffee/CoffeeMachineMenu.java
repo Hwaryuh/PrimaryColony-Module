@@ -5,7 +5,6 @@ import io.quill.paper.menu.DragPolicy;
 import io.quill.paper.menu.button.ClickContext;
 import io.quill.paper.menu.button.DynamicButton;
 import io.quill.paper.menu.slot.SlotFilter;
-import io.quill.paper.util.bukkit.task.Tasks;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -187,13 +186,13 @@ public class CoffeeMachineMenu extends MachineMenu {
         }
     }
 
-    private void clearSlots() {
-        Tasks.run(() -> setSlotEmpty(MUG_SLOT, BEAN_SLOT));
+    private void tryStartBrewing() {
+        startCrafting(getBrewTime(getInventory().getItem(BEAN_SLOT)), null);
     }
 
-    private void tryStartBrewing() {
-        this.clearSlots();
-        startCrafting(getBrewTime(getInventory().getItem(BEAN_SLOT)), null);
+    @Override
+    protected void consumeIngredients() {
+        setSlotEmpty(MUG_SLOT, BEAN_SLOT);
     }
 
     @Override
@@ -215,7 +214,6 @@ public class CoffeeMachineMenu extends MachineMenu {
 
     @Override
     protected void onTakeResult() {
-        this.clearSlots();
         Missions.progressV1(player, "DEVICE_INTERACTION", "coffee_module", 1);
     }
 
