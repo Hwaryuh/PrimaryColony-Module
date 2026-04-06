@@ -1,12 +1,10 @@
 plugins {
-    java
-    id("xyz.jpenilla.run-paper") version "2.3.1"
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.16"
+    javaid("io.papermc.paperweight.userdev") version "2.0.0-beta.16"
     id("com.gradleup.shadow") version "8.3.6"
 }
 
 group = "studio.semicolon"
-version = "1.0.3"
+version = "1.0.4"
 val serverDirectory = project.findProperty("server.directory") as String
 
 java {

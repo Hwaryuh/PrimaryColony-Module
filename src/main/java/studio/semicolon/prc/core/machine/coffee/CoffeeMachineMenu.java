@@ -6,7 +6,6 @@ import io.quill.paper.menu.button.ClickContext;
 import io.quill.paper.menu.button.DynamicButton;
 import io.quill.paper.menu.slot.SlotFilter;
 import io.quill.paper.util.bukkit.task.Tasks;
-import kr.eme.prcMission.enums.MissionVersion;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -23,7 +22,7 @@ import studio.semicolon.prc.core.util.Missions;
 
 @SuppressWarnings({"UnstableApiUsage", "UnnecessaryUnicodeEscape"})
 public class CoffeeMachineMenu extends MachineMenu {
-    private static final int[] TAT = { 120, 90, 10 }; // AG, AU, TI
+    private static final int[] TAT = { 90, 60, 10 }; // AG, AU, TI
 
     private static final int BREW_BUTTON_SLOT = 12;
     private static final int MUG_SLOT = 39;
