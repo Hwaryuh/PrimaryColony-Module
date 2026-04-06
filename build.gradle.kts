@@ -1,5 +1,6 @@
 plugins {
-    javaid("io.papermc.paperweight.userdev") version "2.0.0-beta.16"
+    java
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.16"
     id("com.gradleup.shadow") version "8.3.6"
 }
 
