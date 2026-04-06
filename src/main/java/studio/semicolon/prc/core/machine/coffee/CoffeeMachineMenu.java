@@ -158,6 +158,7 @@ public class CoffeeMachineMenu extends MachineMenu {
     protected void updateUI() {
         if (state.isProcessing()) {
             setTitle(machine.getTitleForState(MachineState.State.PROCESSING));
+            setSlotFilter(BEAN_SLOT, item -> false);
             setButton(BREW_BUTTON_SLOT, button(getTimerItem(state.getRemainingSeconds()))
                     .onLeftClick(ctx -> {
                         syncState();
@@ -168,6 +169,7 @@ public class CoffeeMachineMenu extends MachineMenu {
             );
         } else if (state.isCompleted()) {
             setTitle(machine.getTitleForState(MachineState.State.IDLE));
+            setSlotFilter(BEAN_SLOT, item -> false);
             setButton(BREW_BUTTON_SLOT, button(CoffeeMachineItems.START_BUTTON)
                     .onLeftClick(ctx -> {
                         alert(MachineMessages.COFFEE_EXIST_RESULT);
