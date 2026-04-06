@@ -21,8 +21,12 @@ public class PlayerListener implements Listener {
                 .excludeIf(item -> item.getType() == Material.DIAMOND_CHESTPLATE)
                 .excludeIf(item -> item.getType() == Material.DIAMOND_LEGGINGS)
                 .excludeIf(item -> item.getType() == Material.DIAMOND_BOOTS)
-                .excludeIf(item -> ItemMatcher.matches(item, ModuleItems.MODULE_MARKER_ADD))
-                .excludeIf(item -> ItemMatcher.matches(item, ModuleItems.MODULE_MARKER_REMOVE))
+                .excludeIf(item -> ItemMatcher.matchesMaterial(item, ModuleItems.MODULE_MARKER_ADD))
+                .excludeIf(item -> ItemMatcher.matchesMaterial(item, ModuleItems.MODULE_MARKER_REMOVE))
+                .excludeIf(ItemMatcher.matcherOf(Material.ORANGE_DYE, 5))
+                .excludeIf(ItemMatcher.matcherOf(Material.ORANGE_DYE, 6))
+                .excludeIf(ItemMatcher.matcherOf(Material.ORANGE_DYE, 7))
+                .excludeIf(ItemMatcher.matcherOf(Material.ORANGE_DYE, 10))
                 .build();
 
         var inventory = player.getInventory();
