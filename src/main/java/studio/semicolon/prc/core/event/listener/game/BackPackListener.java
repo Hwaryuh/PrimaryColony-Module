@@ -27,6 +27,7 @@ import studio.semicolon.prc.api.constant.item.module.ModuleItems;
 import studio.semicolon.prc.api.constant.text.GameMessages;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
 import studio.semicolon.prc.core.event.PDCMatcher;
+import studio.semicolon.prc.core.game.GravityService;
 import studio.semicolon.prc.core.util.Missions;
 import studio.semicolon.prc.core.util.Players;
 import studio.semicolon.prc.core.util.Teams;
@@ -78,6 +79,7 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
             playerContext.persistentFlag(FLAG_KEY, true);
             Players.stopMovement(player, 60);
             player.setRespawnLocation(GameLocation.HOME_MODULE.toLocation(player.getWorld()), true);
+            GravityService.remove(player);
 
             if (isSpecial) {
                 interaction.getPersistentDataContainer().set(BACKPACK_SPECIAL, PersistentDataType.BOOLEAN, false);

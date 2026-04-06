@@ -1,4 +1,4 @@
-package studio.semicolon.prc.core.event.listener.machine;
+package studio.semicolon.prc.core.event.listener.module;
 
 import io.quill.paper.event.EventContext;
 import io.quill.paper.event.EventResult;
@@ -20,6 +20,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.core.event.AdvancementMatcher;
+import studio.semicolon.prc.core.game.GravityService;
 import studio.semicolon.prc.core.util.Titles;
 
 import java.util.Optional;
@@ -103,12 +104,14 @@ public class EntryModuleListener implements EventSubscriber<PlayerInteractEntity
     }
 
     private void onJoin(Player player) {
+        GravityService.remove(player);
         if (player.getFreezeTicks() > 0) {
             player.setFreezeTicks(0);
         }
     }
 
     private void onQuit(Player player) {
+        GravityService.set(player);
         if (!hasAnyArmor(player)) {
 //            player.sendMessage(GameMessages.COLD_OUTSIDE);
             grant(player);

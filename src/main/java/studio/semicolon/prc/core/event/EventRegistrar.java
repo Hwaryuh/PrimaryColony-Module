@@ -23,7 +23,7 @@ import studio.semicolon.prc.core.event.listener.game.PlayerListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAILeftClickListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAIRightClickListener;
 import studio.semicolon.prc.core.event.listener.machine.CoffeeListener;
-import studio.semicolon.prc.core.event.listener.machine.EntryModuleListener;
+import studio.semicolon.prc.core.event.listener.module.EntryModuleListener;
 import studio.semicolon.prc.core.event.listener.machine.MachineDestroyListener;
 import studio.semicolon.prc.core.event.listener.machine.MachineInteractListener;
 import studio.semicolon.prc.core.event.listener.machine.MachinePlaceListener;
