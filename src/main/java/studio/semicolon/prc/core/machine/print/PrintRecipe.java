@@ -34,12 +34,12 @@ public enum PrintRecipe {
             )
     ),
 
-    WEAPON_KNIFE(
-            ToolItems.WEAPON_KNIFE,
+    WEAPON_LONG_SWORD(
+            ToolItems.WEAPON_LONG_SWORD,
             materials(
-                    FurnaceMachineItems.CU_INGOT, 10,
-                    FurnaceMachineItems.LI_INGOT, 10,
-                    FurnaceMachineItems.PT_INGOT, 10
+                    FurnaceMachineItems.AL_INGOT, 20,
+                    FurnaceMachineItems.FE_INGOT, 10,
+                    FurnaceMachineItems.CU_INGOT, 5
             )
     ),
     PICKAXE_2(
@@ -71,12 +71,12 @@ public enum PrintRecipe {
             )
     ),
 
-    WEAPON_LONG_SWORD(
-            ToolItems.WEAPON_LONG_SWORD,
+    WEAPON_KNIFE(
+            ToolItems.WEAPON_KNIFE,
             materials(
-                    FurnaceMachineItems.AL_INGOT, 20,
-                    FurnaceMachineItems.FE_INGOT, 10,
-                    FurnaceMachineItems.CU_INGOT, 5
+                    FurnaceMachineItems.CU_INGOT, 10,
+                    FurnaceMachineItems.LI_INGOT, 10,
+                    FurnaceMachineItems.PT_INGOT, 10
             )
     ),
     PICKAXE_3(
@@ -93,9 +93,9 @@ public enum PrintRecipe {
     HOE_3(
             ToolItems.HOE_3,
             materials(
+                    FurnaceMachineItems.FE_INGOT, 10,
                     FurnaceMachineItems.CU_INGOT, 10,
                     FurnaceMachineItems.LI_INGOT, 10,
-                    FurnaceMachineItems.FE_INGOT, 10,
                     FurnaceMachineItems.NI_INGOT, 5,
                     FurnaceMachineItems.TI_INGOT, 5,
                     ToolItems.HOE_2, 1
