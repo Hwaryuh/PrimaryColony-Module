@@ -48,7 +48,7 @@ public enum PrintRecipe {
                     FurnaceMachineItems.AL_INGOT, 10,
                     FurnaceMachineItems.FE_INGOT, 10,
                     FurnaceMachineItems.CU_INGOT, 10,
-                    FurnaceMachineItems.LI_INGOT, 2,
+                    FurnaceMachineItems.LI_INGOT, 3,
                     ToolItems.PICKAXE_1, 1
             )
     ),
@@ -57,7 +57,7 @@ public enum PrintRecipe {
             materials(
                     FurnaceMachineItems.AL_INGOT, 10,
                     FurnaceMachineItems.FE_INGOT, 10,
-                    FurnaceMachineItems.CU_INGOT, 10,
+                    FurnaceMachineItems.CU_INGOT, 7,
                     ToolItems.HOE_1, 1
             )
     ),
@@ -75,17 +75,16 @@ public enum PrintRecipe {
             ToolItems.WEAPON_KNIFE,
             materials(
                     FurnaceMachineItems.CU_INGOT, 10,
-                    FurnaceMachineItems.LI_INGOT, 10,
-                    FurnaceMachineItems.PT_INGOT, 10
+                    FurnaceMachineItems.LI_INGOT, 7,
+                    FurnaceMachineItems.PT_INGOT, 3
             )
     ),
     PICKAXE_3(
             ToolItems.PICKAXE_3,
             materials(
-                    FurnaceMachineItems.CU_INGOT, 10,
-                    FurnaceMachineItems.LI_INGOT, 10,
+                    FurnaceMachineItems.LI_INGOT, 15,
                     FurnaceMachineItems.PT_INGOT, 10,
-                    FurnaceMachineItems.NI_INGOT, 5,
+                    FurnaceMachineItems.NI_INGOT, 7,
                     FurnaceMachineItems.TI_INGOT, 5,
                     ToolItems.PICKAXE_2, 1
             )
@@ -93,11 +92,10 @@ public enum PrintRecipe {
     HOE_3(
             ToolItems.HOE_3,
             materials(
-                    FurnaceMachineItems.FE_INGOT, 10,
-                    FurnaceMachineItems.CU_INGOT, 10,
                     FurnaceMachineItems.LI_INGOT, 10,
+                    FurnaceMachineItems.PT_INGOT, 7,
                     FurnaceMachineItems.NI_INGOT, 5,
-                    FurnaceMachineItems.TI_INGOT, 5,
+                    FurnaceMachineItems.TI_INGOT, 3,
                     ToolItems.HOE_2, 1
             )
     ),
@@ -108,7 +106,8 @@ public enum PrintRecipe {
                     FurnaceMachineItems.CU_INGOT, 10,
                     FurnaceMachineItems.LI_INGOT, 10
             )
-    );
+    ),
+    ;
 
     private final ItemStack result;
     private final Map<ItemStack, Integer> materials;
