@@ -16,7 +16,8 @@ import studio.semicolon.prc.core.module.menu.BuildPanelMenu;
 import java.util.Optional;
 
 public class ModulePanelListener implements EventSubscriber<PlayerInteractEntityEvent, ModulePanelListener.Context>, PDCMatcher {
-    public record Context(double panelY) implements EventContext, EventContext.Data { }
+    public record Context(double panelY) implements EventContext, EventContext.Data {
+    }
 
     @Override
     public NamespacedKey getIdentityKey() {

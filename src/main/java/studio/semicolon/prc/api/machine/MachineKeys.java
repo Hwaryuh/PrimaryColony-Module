@@ -3,7 +3,8 @@ package studio.semicolon.prc.api.machine;
 import org.bukkit.Location;
 
 public final class MachineKeys {
-    private MachineKeys() { }
+    private MachineKeys() {
+    }
 
     public static final String CHUNK_DATA = "chunk_machine_data";
     public static final String TYPE = "machine_type";

@@ -26,8 +26,11 @@ public class ModuleMarkerListener implements EventSubscriber<PlayerInteractEvent
     public static final NamespacedKey MODULE_MARKER_KEY = PDCKeys.of("module_marker");
 
     public sealed interface Context extends EventContext permits Context.Add, Context.Remove {
-        record Add(Player player, Location location) implements Context, EventContext.Data { }
-        record Remove(Player player, Location location) implements Context, EventContext.Data { }
+        record Add(Player player, Location location) implements Context, EventContext.Data {
+        }
+
+        record Remove(Player player, Location location) implements Context, EventContext.Data {
+        }
     }
 
     @Override
@@ -37,7 +40,9 @@ public class ModuleMarkerListener implements EventSubscriber<PlayerInteractEvent
 
     @Override
     public Optional<Context> expect(PlayerInteractEvent e) {
-        if (!(e.getAction() == Action.RIGHT_CLICK_BLOCK) || !(e.getHand() == EquipmentSlot.HAND)) return Optional.empty();
+        if (!(e.getAction() == Action.RIGHT_CLICK_BLOCK) || !(e.getHand() == EquipmentSlot.HAND)) {
+            return Optional.empty();
+        }
         Block block = e.getClickedBlock();
         if (block == null) return Optional.empty();
 

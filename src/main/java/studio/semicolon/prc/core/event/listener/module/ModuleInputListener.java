@@ -29,7 +29,8 @@ import java.util.Optional;
 public class ModuleInputListener implements EventSubscriber<PlayerInputEvent, ModuleInputListener.Context> {
     private static final int CONFIRM_TICKS = 20;
 
-    public record Context(BuildSession session) implements EventContext, EventContext.Data { }
+    public record Context(BuildSession session) implements EventContext, EventContext.Data {
+    }
 
     @Override
     public Optional<Context> expect(PlayerInputEvent e) {

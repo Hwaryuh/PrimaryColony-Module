@@ -37,8 +37,11 @@ public class EntryModuleListener implements EventSubscriber<PlayerInteractEntity
     public sealed interface Context extends EventContext permits Context.Join, Context.Quit {
         Interaction target();
 
-        record Join(Interaction target) implements Context, EventContext.Data { }
-        record Quit(Interaction target) implements Context, EventContext.Data { }
+        record Join(Interaction target) implements Context, EventContext.Data {
+        }
+
+        record Quit(Interaction target) implements Context, EventContext.Data {
+        }
     }
 
     @Override
