@@ -119,7 +119,7 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
                         ));
 
                         if (isSpecial) {
-                            items.add(ModuleItems.MINE);
+                            items.add(ModuleItems.FARM_M);
                         }
 
                         player.setExperienceLevelAndProgress(0);
