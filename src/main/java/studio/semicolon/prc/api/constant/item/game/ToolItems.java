@@ -64,8 +64,8 @@ public interface ToolItems extends IConfigureItem {
     ItemStack WATERING_CAN_2 = IConfigureItem.builder(Material.WOODEN_SHOVEL).customModelData(8).itemName(Component.text("펌프형 물뿌리개"))
             .addLore(Component.text("경작지나 식물에 더 넓은 범위로 물을 줄 수 있다.", NamedTextColor.GRAY))
             .hideAttributes()
-            .pdc(PDCKeys.of(PRCCore.toLowerCase(), "custom_durability_max"), PersistentDataType.INTEGER, 450)
-            .pdc(PDCKeys.of(PRCCore.toLowerCase(), "custom_durability_cur"), PersistentDataType.INTEGER, 450)
+            .pdc(PDCKeys.of(PRCCore.toLowerCase(), "custom_durability_max"), PersistentDataType.INTEGER, 600)
+            .pdc(PDCKeys.of(PRCCore.toLowerCase(), "custom_durability_cur"), PersistentDataType.INTEGER, 600)
             .build();
     ItemStack CAPSULE_GUN = IConfigureItem.builder(Material.WOODEN_SHOVEL).customModelData(9).itemName(Component.text("캡슐건"))
             .addLore(Component.text("왼손에 든 캡슐을 소모하여 작물에 사용한다.", NamedTextColor.GRAY))
