@@ -122,13 +122,13 @@ public class MachinePlaceListener implements EventSubscriber<PlayerInteractEvent
             Missions.progressV1(player, "MODULE_PLACE", "printer_module", 1);
             return new PrintMachine(location);
         }
-        if (ItemMatcher.matches(item, MachineItems.FURNACE_MACHINE)) {
-            Missions.progressV1(player, "MODULE_PLACE", "storage_module", 2);
-            return new FurnaceMachine(location);
-        }
         if (ItemMatcher.matches(item, MachineItems.GRINDER_MACHINE)) {
             Missions.progressV1(player, "MODULE_PLACE", "storage_module", 1);
             return new GrinderMachine(location);
+        }
+        if (ItemMatcher.matches(item, MachineItems.FURNACE_MACHINE)) {
+            Missions.progressV1(player, "MODULE_PLACE", "storage_module", 2);
+            return new FurnaceMachine(location);
         }
         return null;
     }

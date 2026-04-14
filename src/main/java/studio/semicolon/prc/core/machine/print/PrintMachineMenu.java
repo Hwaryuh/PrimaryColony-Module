@@ -250,27 +250,13 @@ public class PrintMachineMenu extends MachineMenu {
 
     private void progressMission(PrintRecipe recipe) {
         switch (recipe) {
-            case HOE_1 -> {
-                Missions.progressV1(player, "CRAFTING", "crafting", 1);
-            }
-            case WATERING_CAN_1 -> {
-                Missions.progressV1(player, "CRAFTING", "crafting", 2);
-            }
-            case PICKAXE_2 -> {
-                Missions.progressV1(player, "UPGRADE", "upgrade", 1);
-            }
-            case HOE_2 -> {
-                Missions.progressV1(player, "UPGRADE", "upgrade", 2);
-            }
-            case WATERING_CAN_2 -> {
-                Missions.progressV1(player, "UPGRADE", "upgrade", 3);
-            }
-            case CAPSULE_GUN -> {
-                Missions.progressV2(player, "CRAFTING", "crafting", 1);
-            }
-            case WEAPON_LONG_SWORD, PICKAXE_3 -> {
-                Missions.progressV2(player, "CRAFTING", "printer_module", 1);
-            }
+            case HOE_1, CAPSULE_GUN -> Missions.progressV1(player, "CRAFTING", "crafting", 1);
+            case WATERING_CAN_1 -> Missions.progressV1(player, "CRAFTING", "crafting", 2);
+            case PICKAXE_2 -> Missions.progressV1(player, "UPGRADE", "upgrade", 1);
+            case HOE_2 -> Missions.progressV1(player, "UPGRADE", "upgrade", 2);
+            case WATERING_CAN_2 -> Missions.progressV1(player, "UPGRADE", "upgrade", 3);
+
+            case WEAPON_KNIFE, PICKAXE_3 -> Missions.progressV1(player, "CRAFTING", "printer_module", 1);
         }
     }
 }
