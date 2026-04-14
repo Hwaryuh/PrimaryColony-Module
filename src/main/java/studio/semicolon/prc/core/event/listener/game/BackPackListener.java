@@ -128,6 +128,7 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
                         Missions.progressV1(player, "DEVICE_INTERACTION", "home_module", 1);
                         Teams.getOrCreate(player, "primary_colony", team -> {
                             team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+                            team.setAllowFriendlyFire(false);
                         }).addPlayer(player);
                     });
                 }
