@@ -47,7 +47,7 @@ public class DocumentListener implements EventSubscriber<PlayerInteractEntityEve
         PlayerContext playerContext = PlayerContexts.ctx(player);
 
 //        player.sendMessage(UtilMessages.WIKI_LINK);
-        player.sendMessage(GameMessages.buildTutorialMessages());
+        player.sendMessage(GameMessages.getTutorialMessage());
         PRCSounds.DOCUMENTS_CLICK.play(player);
         int count = playerContext.increment(COUNTER_KEY);
         if (count == 5) {

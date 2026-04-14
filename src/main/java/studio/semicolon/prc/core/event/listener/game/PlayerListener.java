@@ -1,17 +1,20 @@
 package studio.semicolon.prc.core.event.listener.game;
 
 import io.quill.paper.item.ItemMatcher;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import studio.semicolon.prc.api.constant.item.module.ModuleItems;
+import studio.semicolon.prc.api.constant.text.GameMessages;
 import studio.semicolon.prc.core.game.RandomSlotSelector;
 
 public class PlayerListener implements Listener {
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
         var player = event.getPlayer();
         if (player.getGameMode().isInvulnerable()) return;
 
@@ -30,6 +33,18 @@ public class PlayerListener implements Listener {
                 .build();
 
         var inventory = player.getInventory();
-        selector.select(inventory).ifPresent(slot -> inventory.setItem(slot, ItemStack.empty()));
+        selector.select(inventory).ifPresent(slot -> {
+            ItemStack lost = inventory.getItem(slot);
+            if (lost != null) {
+                player.sendMessage(GameMessages.getLostItemMessage(lost));
+                Sound sound = Sound.sound()
+                        .type(Key.key("minecraft:item.armor.equip_leather"))
+                        .volume(1.0F)
+                        .pitch(0.75F)
+                        .build();
+                player.playSound(sound);
+            }
+            inventory.setItem(slot, ItemStack.empty());
+        });
     }
 }

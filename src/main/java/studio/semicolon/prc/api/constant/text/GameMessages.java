@@ -5,6 +5,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import studio.semicolon.prc.api.constant.GameLocation;
 
 public interface GameMessages {
@@ -17,7 +18,7 @@ public interface GameMessages {
         return Component.text("가방을 수색하는 중" + ".".repeat(dotCount), NamedTextColor.GRAY);
     }
 
-    static Component buildTutorialMessages() {
+    static Component getTutorialMessage() {
         Component builder = Component.empty();
         GameLocation[] locations = GameLocation.values();
 
@@ -36,5 +37,18 @@ public interface GameMessages {
         }
 
         return builder;
+    }
+
+    static Component getLostItemMessage(ItemStack item) {
+        Component itemName = item.getItemMeta().hasItemName()
+                ? item.getItemMeta().itemName()
+                : Component.text(item.getType().name());
+
+        return Component.text("귀환 중", NamedTextColor.GRAY)
+                .append(Component.space())
+                .append(itemName)
+                .append(Component.space())
+                .append(Component.text(item.getAmount()))
+                .append(Component.text("개를 잃었습니다..."));
     }
 }
