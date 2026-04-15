@@ -18,8 +18,8 @@ import studio.semicolon.prc.api.constant.item.machine.MachineItems;
 import studio.semicolon.prc.api.constant.item.module.ModuleItems;
 import studio.semicolon.prc.api.item.IConfigureItem;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("UnstableApiUsage")
 public class AdminMenu extends InventoryMenu {
@@ -206,7 +206,7 @@ public class AdminMenu extends InventoryMenu {
     }
 
     private void giveItem(ItemStack item) {
-        HashMap<Integer, ItemStack> remaining = player.getInventory().addItem(item);
+        Map<Integer, ItemStack> remaining = player.getInventory().addItem(item);
         remaining.values().forEach(drop ->
                 player.getWorld().dropItemNaturally(player.getLocation(), drop)
         );

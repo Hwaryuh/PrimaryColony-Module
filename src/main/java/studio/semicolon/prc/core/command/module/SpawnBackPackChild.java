@@ -16,7 +16,7 @@ public class SpawnBackPackChild {
                 .runPlayer(ctx -> {
                     Player player = ctx.sender().player();
 
-                    Location loc = player.getLocation();
+                    Location loc = player.getLocation().clone();
                     loc.setX(177.5);
                     loc.setY(-33);
                     loc.setZ(176.5);

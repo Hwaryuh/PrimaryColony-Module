@@ -26,7 +26,6 @@ public interface PrintMachineItems extends IConfigureItem {
             .addLore(Component.text("이전 화면으로 돌아갑니다.", NamedTextColor.RED).decoration(TextDecoration.ITALIC, false))
             .build();
 
-
     static ItemStack withMaterials(ItemStack selected, Map<ItemStack, Integer> materials) {
         ItemStack item = selected.clone();
         item.editMeta(meta -> {

@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import studio.semicolon.prc.api.constant.item.game.ETCItems;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class MachineMenu extends InventoryMenu {
@@ -64,7 +64,7 @@ public abstract class MachineMenu extends InventoryMenu {
     protected void returnItem(ItemStack item) {
         if (item == null || item.getType().isAir()) return;
 
-        HashMap<Integer, ItemStack> remaining = player.getInventory().addItem(item);
+        Map<Integer, ItemStack> remaining = player.getInventory().addItem(item);
         if (!remaining.isEmpty()) {
             for (ItemStack drop : remaining.values()) {
                 player.getWorld().dropItemNaturally(player.getLocation(), drop);

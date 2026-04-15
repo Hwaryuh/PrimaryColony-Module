@@ -21,7 +21,7 @@ public class SpawnBuriedChestChild {
                 .argument(INDEX, ArgType.integer(1, 4)).and()
                 .runPlayer(ctx -> {
                     Player player = ctx.sender().player();
-                    Location loc = player.getLocation();
+                    Location loc = player.getLocation().clone();
                     NamespacedKey key;
 
                     switch (ctx.arg(INDEX)) {
