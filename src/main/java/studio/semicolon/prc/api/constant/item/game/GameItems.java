@@ -1,6 +1,9 @@
 package studio.semicolon.prc.api.constant.item.game;
 
 import kr.eme.prcShop.api.PRCItems;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.inventory.EquipmentSlotGroup;
@@ -21,4 +24,36 @@ public interface GameItems extends IConfigureItem {
             .unbreakable()
             .addAttribute(Attribute.STEP_HEIGHT, "step_height", 2.0, ADD_NUMBER, EquipmentSlotGroup.FEET)
             .build();
+
+    static ItemStack nametagOf(int index) {
+        return IConfigureItem.builder(Material.ORANGE_DYE)
+                .customModelData(9)
+                .itemName(Component.text("누군가의 인식표"))
+                .addLore(Component.text("희미하게 ", NamedTextColor.GRAY)
+                        .append(Component.text("["))
+                        .append(Component.text(nametagLoreOf(index)))
+                        .append(Component.text("]"))
+                        .append(Component.text("... 이라고 적혀있는 것 같다"))
+                )
+                .build();
+    }
+
+    private static String nametagLoreOf(int index) {
+        return switch (index) {
+            case 1 -> "리플";
+            case 2 -> "이래도";
+            case 3 -> "법마";
+            case 4 -> "신삼두";
+            case 5 -> "이난오";
+            case 6 -> "훈";
+            case 7 -> "명훈";
+            case 8 -> "에메";
+            case 9 -> "이해미";
+            case 10 -> "폭마군";
+            case 11 -> "카페인";
+            case 12 -> "무린";
+            case 13 -> "엘";
+            default -> throw new IllegalArgumentException("Invalid statue index: " + index);
+        };
+    }
 }

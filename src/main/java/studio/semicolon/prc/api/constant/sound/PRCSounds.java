@@ -32,6 +32,7 @@ public interface PRCSounds {
 
     SoundData BURIED_CHEST_OPEN = new SoundData("minecraft:item.mace.smash_ground", 1.0f, 1.0f);
     SoundData DOCUMENTS_CLICK = new SoundData("minecraft:item.book.page_turn", 1.0f, 1.25f);
+    SoundData SEARCH_STATUE = new SoundData("minecraft:entity.allay.death", 0.85f, 0.55f);
 
     record SoundData(String sound, float volume, float pitch) {
         public void play(Location location) {
