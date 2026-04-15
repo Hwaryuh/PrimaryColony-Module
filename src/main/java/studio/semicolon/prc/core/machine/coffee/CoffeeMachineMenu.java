@@ -21,7 +21,7 @@ import studio.semicolon.prc.core.util.Missions;
 
 @SuppressWarnings({"UnstableApiUsage", "UnnecessaryUnicodeEscape"})
 public class CoffeeMachineMenu extends MachineMenu {
-    private static final int[] TAT = { 90, 60, 10 }; // AG, AU, TI
+    private static final int[] TAT = {90, 60, 10}; // AG, AU, TI
 
     private static final int BREW_BUTTON_SLOT = 12;
     private static final int MUG_SLOT = 39;
@@ -39,66 +39,7 @@ public class CoffeeMachineMenu extends MachineMenu {
         if (state.isCompleted()) {
             renderResult();
         } else if (state.isIdle()) {
-            setDynamicButton(MUG_SLOT, new DynamicButton() {
-                @Override
-                public ItemStack createIcon(ClickContext ctx) {
-                    ItemStack current = ctx.getSlotItem();
-                    if (ItemMatcher.matches(current, CoffeeMachineItems.MUG)) return current;
-                    return ItemStack.empty();
-                }
-
-                @Override
-                public void onClick(ClickContext ctx) { }
-
-                @Override
-                public boolean shouldCancel(ClickContext ctx) {
-                    if (ctx.isPlace()) {
-                        ItemStack cursor = ctx.getCursor();
-                        ItemStack slotItem = ctx.getSlotItem();
-
-                        if (!ItemMatcher.matches(cursor, CoffeeMachineItems.MUG)) return true;
-                        if (slotItem != null && !slotItem.getType().isAir()) return true;
-
-                        if (cursor.getAmount() > 1) {
-                            ItemStack toPlace = cursor.clone();
-                            toPlace.setAmount(1);
-                            ctx.event().getClickedInventory().setItem(ctx.event().getSlot(), toPlace);
-                            cursor.setAmount(cursor.getAmount() - 1);
-                            return true;
-                        }
-
-                        PRCSounds.MACHINE_INSERT_ITEM.play(player);
-                        return false;
-                    }
-
-                    if (ctx.isPickup() || ctx.isMove()) {
-                        ItemStack slotItem = ctx.getSlotItem();
-                        return !ItemMatcher.matches(slotItem, CoffeeMachineItems.MUG);
-                    }
-
-                    if (ctx.isHotbarSwap()) {
-                        ItemStack hotbarItem = player.getInventory().getItem(ctx.event().getHotbarButton());
-                        ItemStack slotItem = ctx.getSlotItem();
-
-                        if (hotbarItem == null || hotbarItem.getType().isAir()) {
-                            return !ItemMatcher.matches(slotItem, CoffeeMachineItems.MUG);
-                        }
-
-                        if (!ItemMatcher.matches(hotbarItem, CoffeeMachineItems.MUG)) return true;
-                        if (slotItem != null && !slotItem.getType().isAir()) return true;
-
-                        ItemStack toPlace = hotbarItem.clone();
-                        toPlace.setAmount(1);
-                        ctx.event().getClickedInventory().setItem(ctx.event().getSlot(), toPlace);
-                        hotbarItem.setAmount(hotbarItem.getAmount() - 1);
-                        PRCSounds.MACHINE_INSERT_ITEM.play(player);
-
-                        return true;
-                    }
-
-                    return true;
-                }
-            });
+            renderIdle();
         }
 
         setSlotFilter(BEAN_SLOT, new SlotFilter() {
@@ -171,21 +112,100 @@ public class CoffeeMachineMenu extends MachineMenu {
             setTitle(machine.getTitleForState(MachineState.State.IDLE));
             setSlotFilter(BEAN_SLOT, item -> false);
             setButton(BREW_BUTTON_SLOT, button(CoffeeMachineItems.START_BUTTON)
-                    .onLeftClick(ctx -> {
-                        alert(MachineMessages.COFFEE_EXIST_RESULT);
-                    })
+                    .onLeftClick(ctx -> alert(MachineMessages.COFFEE_EXIST_RESULT))
                     .cancelAll()
                     .build()
             );
             renderResult();
         } else {
             setTitle(machine.getTitleForState(state.getState()));
+            setSlotFilter(BEAN_SLOT, new SlotFilter() {
+                @Override
+                public boolean canPlace(ItemStack item, InventoryClickEvent event) {
+                    return isCoffeeBean(item);
+                }
+
+                @Override
+                public Integer getMaxPlaceAmount() {
+                    return 1;
+                }
+
+                @Override
+                public void onPlaced() {
+                    PRCSounds.MACHINE_INSERT_ITEM.play(player);
+                }
+            });
             setButton(BREW_BUTTON_SLOT, button(CoffeeMachineItems.START_BUTTON)
                     .onLeftClick(ctx -> tryStartBrewing())
                     .cancelAll()
                     .build()
             );
+            renderIdle();
         }
+    }
+
+    private void renderIdle() {
+        setDynamicButton(MUG_SLOT, new DynamicButton() {
+            @Override
+            public ItemStack createIcon(ClickContext ctx) {
+                ItemStack current = ctx.getSlotItem();
+                if (ItemMatcher.matches(current, CoffeeMachineItems.MUG)) return current;
+                return ItemStack.empty();
+            }
+
+            @Override
+            public void onClick(ClickContext ctx) {
+            }
+
+            @Override
+            public boolean shouldCancel(ClickContext ctx) {
+                if (ctx.isPlace()) {
+                    ItemStack cursor = ctx.getCursor();
+                    ItemStack slotItem = ctx.getSlotItem();
+
+                    if (!ItemMatcher.matches(cursor, CoffeeMachineItems.MUG)) return true;
+                    if (slotItem != null && !slotItem.getType().isAir()) return true;
+
+                    if (cursor.getAmount() > 1) {
+                        ItemStack toPlace = cursor.clone();
+                        toPlace.setAmount(1);
+                        ctx.event().getClickedInventory().setItem(ctx.event().getSlot(), toPlace);
+                        cursor.setAmount(cursor.getAmount() - 1);
+                        return true;
+                    }
+
+                    PRCSounds.MACHINE_INSERT_ITEM.play(player);
+                    return false;
+                }
+
+                if (ctx.isPickup() || ctx.isMove()) {
+                    ItemStack slotItem = ctx.getSlotItem();
+                    return !ItemMatcher.matches(slotItem, CoffeeMachineItems.MUG);
+                }
+
+                if (ctx.isHotbarSwap()) {
+                    ItemStack hotbarItem = player.getInventory().getItem(ctx.event().getHotbarButton());
+                    ItemStack slotItem = ctx.getSlotItem();
+
+                    if (hotbarItem == null || hotbarItem.getType().isAir()) {
+                        return !ItemMatcher.matches(slotItem, CoffeeMachineItems.MUG);
+                    }
+
+                    if (!ItemMatcher.matches(hotbarItem, CoffeeMachineItems.MUG)) return true;
+                    if (slotItem != null && !slotItem.getType().isAir()) return true;
+
+                    ItemStack toPlace = hotbarItem.clone();
+                    toPlace.setAmount(1);
+                    ctx.event().getClickedInventory().setItem(ctx.event().getSlot(), toPlace);
+                    hotbarItem.setAmount(hotbarItem.getAmount() - 1);
+                    PRCSounds.MACHINE_INSERT_ITEM.play(player);
+
+                    return true;
+                }
+
+                return true;
+            }
+        });
     }
 
     private void tryStartBrewing() {
