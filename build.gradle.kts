@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "studio.semicolon"
-version = "1.0.9"
+version = "1.0.10"
 val serverDirectory = project.findProperty("server.directory") as String
 
 java {
