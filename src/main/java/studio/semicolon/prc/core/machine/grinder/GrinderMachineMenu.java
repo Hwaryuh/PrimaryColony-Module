@@ -13,18 +13,18 @@ import org.bukkit.inventory.MenuType;
 import studio.semicolon.prc.api.machine.AbstractMachine;
 import studio.semicolon.prc.api.machine.MachineMenu;
 import studio.semicolon.prc.api.machine.MachineState;
-import studio.semicolon.prc.api.machine.Upgradeable;
 import studio.semicolon.prc.api.constant.item.game.ETCItems;
 import studio.semicolon.prc.api.constant.item.machine.GrinderMachineItems;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.constant.text.MachineMessages;
+import studio.semicolon.prc.api.machine.UpgradeableMachine;
 import studio.semicolon.prc.core.util.Missions;
 
 import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 public class GrinderMachineMenu extends MachineMenu {
-    private final Upgradeable upgradeable;
+    private final UpgradeableMachine upgradeable;
 
     private static final int ORE_1_SLOT = 3;
     private static final int ORE_2_SLOT = 5;
@@ -39,7 +39,7 @@ public class GrinderMachineMenu extends MachineMenu {
 
     public GrinderMachineMenu(Player player, AbstractMachine machine) {
         super(player, machine, MenuType.GENERIC_9X6);
-        this.upgradeable = (Upgradeable) machine;
+        this.upgradeable = (UpgradeableMachine) machine;
     }
 
     @Override

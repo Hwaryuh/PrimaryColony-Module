@@ -2,6 +2,8 @@ package studio.semicolon.prc.api.machine;
 
 import io.quill.paper.util.bukkit.Locations;
 import io.quill.paper.util.bukkit.pdc.PDCKeys;
+import io.quill.paper.util.bukkit.task.CancellableTask;
+import io.quill.paper.util.bukkit.task.Tasks;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -101,7 +103,8 @@ public abstract class AbstractMachine {
                     new AxisAngle4f(),
                     getScale(),
                     new AxisAngle4f()
-            ));
+                    )
+            );
         });
 
         return display.getUniqueId();
