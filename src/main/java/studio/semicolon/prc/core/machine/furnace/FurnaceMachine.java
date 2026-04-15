@@ -1,27 +1,24 @@
 package studio.semicolon.prc.core.machine.furnace;
 
 import com.google.common.collect.Lists;
-import io.quill.paper.util.bukkit.pdc.PDCKeys;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 import org.joml.Vector3f;
-import studio.semicolon.prc.api.machine.AbstractMachine;
 import studio.semicolon.prc.api.machine.MachineMenu;
 import studio.semicolon.prc.api.machine.MachineState;
-import studio.semicolon.prc.api.machine.Upgradeable;
 import studio.semicolon.prc.api.constant.item.machine.FurnaceMachineItems;
 import studio.semicolon.prc.api.constant.item.machine.MachineItems;
 import studio.semicolon.prc.api.constant.sound.PRCSounds;
 import studio.semicolon.prc.api.constant.text.MenuTitles;
+import studio.semicolon.prc.api.machine.UpgradeableMachine;
 
 import java.util.List;
 
-public class FurnaceMachine extends AbstractMachine implements Upgradeable {
+public class FurnaceMachine extends UpgradeableMachine {
     private static final String MACHINE_TYPE = "furnace_machine";
 
     public FurnaceMachine(Location location) {
@@ -97,18 +94,5 @@ public class FurnaceMachine extends AbstractMachine implements Upgradeable {
         if (level >= 3) drops.add(FurnaceMachineItems.TORCH.clone());
 
         return drops;
-    }
-
-    @Override
-    public int getUpgradeLevel() {
-        var pdc = getPDC();
-        return pdc.getOrDefault(PDCKeys.of(KEY_UPGRADE_LEVEL), PersistentDataType.INTEGER, 0);
-    }
-
-    @Override
-    public void setUpgradeLevel(int level) {
-        var pdc = getPDC();
-        pdc.set(PDCKeys.of(KEY_UPGRADE_LEVEL), PersistentDataType.INTEGER, level);
-        savePDC(pdc);
     }
 }
