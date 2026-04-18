@@ -26,6 +26,7 @@ public class DoorUpdateListener implements Listener, AdvancementMatcher {
         if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ()) return;
         Player player = e.getPlayer();
 
+        if (player.getGameMode().isInvulnerable()) return;
         if (!player.isOnGround()) return;
         if (player.isFlying()) return;
         if (player.isGliding()) return;
