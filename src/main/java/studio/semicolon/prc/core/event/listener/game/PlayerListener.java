@@ -1,18 +1,48 @@
 package studio.semicolon.prc.core.event.listener.game;
 
+import com.google.common.collect.Lists;
 import io.quill.paper.item.ItemMatcher;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import studio.semicolon.prc.api.constant.item.module.ModuleItems;
 import studio.semicolon.prc.api.constant.text.GameMessages;
 import studio.semicolon.prc.core.game.RandomSlotSelector;
+import studio.semicolon.prc.Module;
+
+import java.util.List;
 
 public class PlayerListener implements Listener {
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        Player joined = event.getPlayer();
+
+        List<String> joinedName = List.of(joined.getName());
+        List<String> allNames = Lists.newArrayList();
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            allNames.add(online.getName());
+            if (!online.equals(joined)) {
+                Module.nms().hideNametag(online, joinedName);
+            }
+        }
+
+        Module.nms().hideNametag(joined, allNames);
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        Module.nms().invalidateNametag(event.getPlayer());
+    }
+
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         var player = event.getPlayer();

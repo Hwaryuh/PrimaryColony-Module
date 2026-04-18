@@ -30,7 +30,7 @@ import studio.semicolon.prc.core.event.PDCMatcher;
 import studio.semicolon.prc.core.game.GravityService;
 import studio.semicolon.prc.core.util.Missions;
 import studio.semicolon.prc.core.util.Players;
-import studio.semicolon.prc.core.util.Teams;
+//import studio.semicolon.prc.core.util.Teams;
 
 import java.util.List;
 import java.util.Optional;
@@ -126,10 +126,10 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
                         player.setLevel(0);
                         player.getInventory().addItem(items.toArray(new ItemStack[0]));
                         Missions.progressV1(player, "DEVICE_INTERACTION", "home_module", 1);
-                        Teams.getOrCreate(player, "primary_colony", team -> {
-                            team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-                            team.setAllowFriendlyFire(false);
-                        }).addPlayer(player);
+//                        Teams.getOrCreate(player, "primary_colony", team -> {
+//                            team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+//                            team.setAllowFriendlyFire(false);
+//                        }).addPlayer(player);
                     });
                 }
             }.start();
