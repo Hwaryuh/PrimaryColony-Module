@@ -76,4 +76,3 @@ public class StatueListener implements EventSubscriber<PlayerInteractEntityEvent
         return EventResult.STOP;
     }
 }
-
