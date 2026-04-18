@@ -71,8 +71,8 @@ public interface ToolItems extends IConfigureItem {
             .addLore(Component.text("왼손에 든 캡슐을 소모하여 작물에 사용한다.", NamedTextColor.GRAY))
             .addLore(Component.text("한 식물에 여러 캡슐을 사용할 수는 없다.", NamedTextColor.GRAY))
             .hideAttributes()
-            .pdc(PDCKeys.of(PRCCore.toLowerCase(), "custom_durability_max"), PersistentDataType.INTEGER, 50)
-            .pdc(PDCKeys.of(PRCCore.toLowerCase(), "custom_durability_cur"), PersistentDataType.INTEGER, 50)
+            .pdc(PDCKeys.of(PRCCore.toLowerCase(), "custom_durability_max"), PersistentDataType.INTEGER, 150)
+            .pdc(PDCKeys.of(PRCCore.toLowerCase(), "custom_durability_cur"), PersistentDataType.INTEGER, 150)
             .build();
 
 

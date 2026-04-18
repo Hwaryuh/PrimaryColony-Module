@@ -60,6 +60,7 @@ public class PlayerListener implements Listener {
                 .excludeIf(ItemMatcher.matcherOf(Material.ORANGE_DYE, 6))
                 .excludeIf(ItemMatcher.matcherOf(Material.ORANGE_DYE, 7))
                 .excludeIf(ItemMatcher.matcherOf(Material.ORANGE_DYE, 10))
+                .excludeIf(ItemMatcher.matcherOf(Material.WOODEN_SHOVEL, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13))
                 .build();
 
         var inventory = player.getInventory();
