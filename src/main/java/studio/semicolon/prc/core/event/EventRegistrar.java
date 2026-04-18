@@ -23,6 +23,7 @@ import studio.semicolon.prc.core.event.listener.game.PlayerListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAILeftClickListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAIRightClickListener;
 import studio.semicolon.prc.core.event.listener.game.StatueListener;
+import studio.semicolon.prc.core.event.listener.game.VanillaDisableListener;
 import studio.semicolon.prc.core.event.listener.machine.CoffeeListener;
 import studio.semicolon.prc.core.event.listener.module.EntryModuleListener;
 import studio.semicolon.prc.core.event.listener.machine.MachineDestroyListener;
@@ -36,6 +37,7 @@ import studio.semicolon.prc.core.event.listener.game.CrystalCaveListener;
 public class EventRegistrar implements Bootable {
     private final PlayerListener playerListener = new PlayerListener();
     private final DoorUpdateListener doorUpdateListener = new DoorUpdateListener();
+    private final VanillaDisableListener vanillaDisableListener = new VanillaDisableListener();
 
     @Override
     public void start(JavaPlugin plugin) {
@@ -78,11 +80,13 @@ public class EventRegistrar implements Bootable {
 
         plugin.getServer().getPluginManager().registerEvents(playerListener, plugin);
         plugin.getServer().getPluginManager().registerEvents(doorUpdateListener, plugin);
+        plugin.getServer().getPluginManager().registerEvents(vanillaDisableListener, plugin);
     }
 
     @Override
     public void end(JavaPlugin plugin) {
         HandlerList.unregisterAll(playerListener);
         HandlerList.unregisterAll(doorUpdateListener);
+        HandlerList.unregisterAll(vanillaDisableListener);
     }
 }
