@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "studio.semicolon"
-version = "1.0.10"
+version = "1.0.11"
 val serverDirectory = project.findProperty("server.directory") as String
 
 java {
@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
-    implementation(files("libs/Quill-0.2.87.jar"))
+    implementation(files("libs/Quill-0.2.88.jar"))
 
     compileOnly(files("libs/PRCMission-1.0.9.jar"))
     compileOnly("com.github.mireu9275:PRCShop:v1.1.1")
