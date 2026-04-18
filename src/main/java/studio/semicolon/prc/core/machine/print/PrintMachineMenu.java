@@ -256,7 +256,7 @@ public class PrintMachineMenu extends MachineMenu {
             case HOE_2 -> Missions.progressV1(player, "UPGRADE", "upgrade", 2);
             case WATERING_CAN_2 -> Missions.progressV1(player, "UPGRADE", "upgrade", 3);
 
-            case WEAPON_KNIFE, PICKAXE_3 -> Missions.progressV1(player, "CRAFTING", "printer_module", 1);
+            case WEAPON_KNIFE, PICKAXE_3 -> Missions.progressV2(player, "CRAFTING", "printer_module", 1);
         }
     }
 }
