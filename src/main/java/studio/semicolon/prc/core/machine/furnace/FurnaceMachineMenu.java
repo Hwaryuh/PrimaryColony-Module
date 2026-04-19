@@ -1,5 +1,6 @@
 package studio.semicolon.prc.core.machine.furnace;
 
+import com.google.common.collect.Lists;
 import io.quill.paper.item.ItemMatcher;
 import io.quill.paper.menu.DragPolicy;
 import io.quill.paper.menu.slot.SlotFilter;
@@ -70,12 +71,27 @@ public class FurnaceMachineMenu extends MachineMenu {
         List<ItemStack> requiredPowders = recipe.getRequiredPowders();
         int[] slots = { POWDER_1_SLOT, POWDER_2_SLOT, POWDER_3_SLOT };
 
+        List<ItemStack> slotPowders = Lists.newArrayList();
         for (int i = 0; i < requiredPowders.size(); i++) {
             ItemStack powder = getInventory().getItem(slots[i]);
-            if (!ItemMatcher.matches(powder, requiredPowders.get(i)) || powder.getAmount() < REQUIRED_POWDER_AMOUNT) {
+            if (powder == null || powder.getAmount() < REQUIRED_POWDER_AMOUNT) {
                 alert(MachineMessages.FURNACE_INSUFFICIENT_INGREDIENTS);
                 return null;
             }
+            slotPowders.add(powder);
+        }
+
+        List<ItemStack> remaining = Lists.newArrayList(slotPowders);
+        for (ItemStack required : requiredPowders) {
+            ItemStack matched = remaining.stream()
+                    .filter(p -> ItemMatcher.matches(p, required))
+                    .findFirst()
+                    .orElse(null);
+            if (matched == null) {
+                alert(MachineMessages.FURNACE_INSUFFICIENT_INGREDIENTS);
+                return null;
+            }
+            remaining.remove(matched);
         }
 
         int activeSlotCount = Math.min(upgradeable.getUpgradeLevel() + 1, slots.length);
