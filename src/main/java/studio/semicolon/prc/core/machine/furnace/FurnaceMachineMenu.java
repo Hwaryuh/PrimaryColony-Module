@@ -39,7 +39,7 @@ public class FurnaceMachineMenu extends MachineMenu {
     private static final int UPGRADE_2_SLOT = 17;
     private static final int UPGRADE_3_SLOT = 26;
 
-    private static final int REQUIRED_POWDER_AMOUNT = 3;
+    private static final int REQUIRED_POWDER_AMOUNT = 5;
 
     public FurnaceMachineMenu(Player player, AbstractMachine machine) {
         super(player, machine, MenuType.GENERIC_9X6);

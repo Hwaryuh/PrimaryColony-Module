@@ -95,7 +95,7 @@ public interface FurnaceMachineItems extends IConfigureItem {
             .build();
     ItemStack GUIDE_POWDER = IConfigureItem.builder(Material.GLASS_PANE).customModelData(1)
             .itemName(Component.text("파우더", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false))
-            .addLore(Component.text("용해시킬 파우더를 놓아주세요. (3개 필요)", NamedTextColor.GRAY))
+            .addLore(Component.text("용해시킬 파우더를 놓아주세요. (5개 필요)", NamedTextColor.GRAY))
             .build();
     ItemStack GUIDE_RECIPE = IConfigureItem.builder(Material.GLASS_PANE).customModelData(1)
             .itemName(Component.text("레시피", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false))

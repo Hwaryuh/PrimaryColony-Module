@@ -60,7 +60,7 @@ public enum FurnaceRecipe {
     }
 
     public ItemStack getResult() {
-        return result.clone();
+        return result.asQuantity(2);
     }
 
     public int getDuration(boolean hasTorch) {
