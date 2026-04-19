@@ -7,10 +7,12 @@ import org.bukkit.scoreboard.Team;
 import java.util.function.Consumer;
 
 public final class Teams {
-    private Teams() { }
+    private Teams() {
+    }
 
     public static Team getOrCreate(Player player, String teamName) {
-        return getOrCreate(player, teamName, team -> {});
+        return getOrCreate(player, teamName, team -> {
+        });
     }
 
     public static Team getOrCreate(Player player, String teamName, Consumer<Team> initializer) {
