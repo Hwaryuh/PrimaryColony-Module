@@ -27,6 +27,7 @@ public class PlayerFallListener implements EventSubscriber<EntityDamageEvent, Pl
     @Override
     public EventResult onEvent(EntityDamageEvent e, Context ctx) {
         Player player = ctx.player;
+        e.setDamage(e.getDamage() * 0.5);
         if (player.getFallDistance() > 10.0) {
             grant(player);
         }
