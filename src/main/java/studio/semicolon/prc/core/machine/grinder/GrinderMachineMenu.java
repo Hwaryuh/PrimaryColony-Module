@@ -4,6 +4,7 @@ import io.quill.paper.item.ItemMatcher;
 import io.quill.paper.menu.DragPolicy;
 import io.quill.paper.menu.slot.SlotFilter;
 import io.quill.paper.util.bukkit.task.Tasks;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -161,7 +162,7 @@ public class GrinderMachineMenu extends MachineMenu {
                         Tasks.run(() -> refreshOreSlots());
                     }
 
-                    PRCSounds.MACHINE_UPGRADE.play(player);
+                    PRCSounds.MACHINE_UPGRADE.play(player, SoundCategory.RECORDS);
                 }
             });
         }

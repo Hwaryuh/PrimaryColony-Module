@@ -8,6 +8,7 @@ import io.quill.paper.util.bukkit.task.CancellableTask;
 import io.quill.paper.util.bukkit.task.Tasks;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.util.Transformation;
@@ -46,7 +47,7 @@ public class DoorAnimator {
         moveUp(display);
         removeBarriers(door);
 
-        PRCSounds.MODULE_DOOR_OPEN.stopAndPlay(display.getLocation());
+        PRCSounds.MODULE_DOOR_OPEN.stopAndPlay(display.getLocation(), SoundCategory.RECORDS);
     }
 
     /**
@@ -69,7 +70,7 @@ public class DoorAnimator {
         });
 
         trackTask(display, restoreTask);
-        PRCSounds.MODULE_DOOR_CLOSE.stopAndPlay(display.getLocation());
+        PRCSounds.MODULE_DOOR_CLOSE.stopAndPlay(display.getLocation(), SoundCategory.RECORDS);
     }
 
     private void cancelAnimation(ItemDisplay display) {

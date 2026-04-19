@@ -89,6 +89,28 @@ public interface PRCSounds {
             player.playSound(player, sound, newVolume, newPitch);
         }
 
+        public void stopAndPlay(Location location, SoundCategory category) {
+            stopAndPlay(location, category, volume, pitch);
+        }
+
+        public void stopAndPlay(Location location, SoundCategory category, float newVolume, float newPitch) {
+            String soundKey = sound.startsWith("minecraft:") ? sound.substring(10) : sound;
+
+            location.getWorld().stopSound(SoundStop.named(NamespacedKey.minecraft(soundKey)));
+            location.getWorld().playSound(location, sound, category, newVolume, newPitch);
+        }
+
+        public void stopAndPlay(Player player, SoundCategory category) {
+            stopAndPlay(player, category, volume, pitch);
+        }
+
+        public void stopAndPlay(Player player, SoundCategory category, float newVolume, float newPitch) {
+            String soundKey = sound.startsWith("minecraft:") ? sound.substring(10) : sound;
+
+            player.stopSound(SoundStop.named(NamespacedKey.minecraft(soundKey)));
+            player.playSound(player, sound, category, newVolume, newPitch);
+        }
+
         public SoundData withVolume(float newVolume) {
             return new SoundData(sound, newVolume, pitch);
         }
