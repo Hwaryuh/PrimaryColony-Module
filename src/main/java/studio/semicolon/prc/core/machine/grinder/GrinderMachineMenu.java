@@ -35,8 +35,6 @@ public class GrinderMachineMenu extends MachineMenu {
     private static final int UPGRADE_2_SLOT = 36;
     private static final int UPGRADE_3_SLOT = 45;
 
-    private static final int REQUIRED_ORE_AMOUNT = 2;
-
     public GrinderMachineMenu(Player player, AbstractMachine machine) {
         super(player, machine, MenuType.GENERIC_9X6);
         this.upgradeable = (UpgradeableMachine) machine;
@@ -56,11 +54,11 @@ public class GrinderMachineMenu extends MachineMenu {
         setUpgradeSlot(UPGRADE_3_SLOT, 3, GrinderMachineItems.DRILL);
 
         if (state.isIdle()) {
-            setPlaceholderSlot(ORE_1_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, REQUIRED_ORE_AMOUNT);
+            setPlaceholderSlot(ORE_1_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, getMaxOreAmount());
             registerInputSlot(ORE_1_SLOT);
 
             if (upgradeable.getUpgradeLevel() >= 1) {
-                setPlaceholderSlot(ORE_2_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, REQUIRED_ORE_AMOUNT);
+                setPlaceholderSlot(ORE_2_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, getMaxOreAmount());
                 registerInputSlot(ORE_2_SLOT);
             }
 
@@ -150,12 +148,17 @@ public class GrinderMachineMenu extends MachineMenu {
                         removeButton(ORE_2_SLOT);
                         setUpgradeSlot(UPGRADE_2_SLOT, 2, GrinderMachineItems.GEAR);
                         Tasks.run(() -> {
-                            setPlaceholderSlot(ORE_2_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, REQUIRED_ORE_AMOUNT);
-                            registerInputSlot(ORE_2_SLOT);
+                            refreshOreSlots();
+                            Missions.progressV2(player, "MODULE_UPGRADE", "crusher_process", 1);
                         });
                     } else if (requiredLevel == 2) {
                         setUpgradeSlot(UPGRADE_3_SLOT, 3, GrinderMachineItems.DRILL);
-                        Missions.progressV2(player, "MODULE_UPGRADE", "crusher_process", 1);
+                        Tasks.run(() -> {
+                            refreshOreSlots();
+                            Missions.progressV2(player, "MODULE_UPGRADE", "crusher_process", 1);
+                        });
+                    } else if (requiredLevel == 3) {
+                        Tasks.run(() -> refreshOreSlots());
                     }
 
                     PRCSounds.MACHINE_UPGRADE.play(player);
@@ -183,7 +186,7 @@ public class GrinderMachineMenu extends MachineMenu {
             return null;
         }
 
-        int duration = recipe1.getDuration(upgradeable.getUpgradeLevel());
+        int duration = recipe1.getDuration(upgradeable.getUpgradeLevel()) * ore1.getAmount();
         String processResult = recipe1.name() + ":" + ore1.getAmount();
 
         ItemStack ore2 = getInventory().getItem(ORE_2_SLOT);
@@ -200,7 +203,7 @@ public class GrinderMachineMenu extends MachineMenu {
                 return null;
             }
 
-            int duration2 = recipe2.getDuration(upgradeable.getUpgradeLevel());
+            int duration2 = recipe2.getDuration(upgradeable.getUpgradeLevel()) * ore2.getAmount();
             duration = Math.max(duration, duration2);
             processResult += "," + recipe2.name() + ":" + ore2.getAmount();
         }
@@ -303,6 +306,22 @@ public class GrinderMachineMenu extends MachineMenu {
         if (state.isIdle()) {
             returnAllInputSlots();
         }
+    }
+
+    private void refreshOreSlots() {
+        setPlaceholderSlot(ORE_1_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, getMaxOreAmount());
+        registerInputSlot(ORE_1_SLOT);
+        setPlaceholderSlot(ORE_2_SLOT, GrinderMachineItems.GUIDE_ORE, GrinderMachineItems::isOre, getMaxOreAmount());
+        registerInputSlot(ORE_2_SLOT);
+    }
+
+    private int getMaxOreAmount() {
+        return switch (upgradeable.getUpgradeLevel()) {
+            case 0 -> 2;
+            case 1 -> 4;
+            case 2 -> 8;
+            default -> 16;
+        };
     }
 
     private void processMission(GrinderRecipe recipe) {
