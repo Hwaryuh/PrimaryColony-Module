@@ -10,6 +10,7 @@ import io.quill.paper.player.PlayerContexts;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import studio.semicolon.prc.core.event.listener.game.BackPackListener;
+import studio.semicolon.prc.core.event.listener.game.BuriedChestListener;
 import studio.semicolon.prc.core.event.listener.game.DocumentListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAILeftClickListener;
 import studio.semicolon.prc.core.event.listener.game.RoPAIRightClickListener;
@@ -32,8 +33,11 @@ public class ResetAdvancementChild {
                     playerContext.resetCounter(BackPackListener.COUNTER_KEY);
                     playerContext.resetCounter(DocumentListener.COUNTER_KEY);
                     playerContext.removePersistentFlag(BackPackListener.FLAG_KEY);
+                    for (var key : BuriedChestListener.CHEST_KEYS) {
+                        playerContext.removePersistentFlag(key.getKey());
+                    }
 
-                    target.sendActionBar(Component.text("상호작용 카운트 기록이 초기화 되었습니다."));
+                    target.sendActionBar(Component.text("카운트 기록이 초기화 되었습니다."));
                     return CommandResult.success();
                 })
                 .build();

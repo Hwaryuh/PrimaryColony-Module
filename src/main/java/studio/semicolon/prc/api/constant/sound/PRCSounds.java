@@ -28,10 +28,10 @@ public interface PRCSounds {
 
     SoundData MODULE_DOOR_OPEN = new SoundData("minecraft:semicolon.build_module_door_open", 1.0f, 1.0f);
     SoundData MODULE_DOOR_CLOSE = new SoundData("minecraft:semicolon.build_module_door_close", 1.0f, 1.0f);
-    SoundData MODULE_INTERACT_ENTRY = new SoundData("minecraft:semicolon.entry_module_interact", 1.0f, 1.0f);
+    SoundData MODULE_INTERACT_ENTRY = new SoundData("minecraft:semicolon.entry_module_interact", 1.0f, 0.9f);
 
     SoundData BURIED_CHEST_OPEN = new SoundData("minecraft:item.mace.smash_ground", 1.0f, 1.0f);
-    SoundData DOCUMENTS_CLICK = new SoundData("minecraft:item.book.page_turn", 1.0f, 1.25f);
+    SoundData DOCUMENTS_CLICK = new SoundData("block.heavy_core.step", 1.0f, 0.6f);
     SoundData SEARCH_STATUE = new SoundData("minecraft:entity.allay.death", 0.85f, 0.55f);
 
     record SoundData(String sound, float volume, float pitch) {

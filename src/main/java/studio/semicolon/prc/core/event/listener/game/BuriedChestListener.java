@@ -6,10 +6,11 @@ import io.quill.paper.event.EventContext;
 import io.quill.paper.event.EventResult;
 import io.quill.paper.event.EventSubscriber;
 import io.quill.paper.item.ItemMatcher;
+import io.quill.paper.player.PlayerContext;
+import io.quill.paper.player.PlayerContexts;
 import io.quill.paper.util.bukkit.pdc.PDCKeys;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -36,11 +37,10 @@ public class BuriedChestListener implements EventSubscriber<PlayerInteractEntity
     public static final NamespacedKey BURIED_LEGGINGS = PDCKeys.of("buried_chest_3");
     public static final NamespacedKey BURIED_BOOTS = PDCKeys.of("buried_chest_4");
 
-    private static final Set<NamespacedKey> CHEST_KEYS = ImmutableSet.of(
-            BURIED_HELMET,
-            BURIED_CHESTPLATE,
-            BURIED_LEGGINGS,
-            BURIED_BOOTS
+    private static final NamespacedKey OPENED_KEY = PDCKeys.of("buried_chest_opened");
+
+    public static final Set<NamespacedKey> CHEST_KEYS = ImmutableSet.of(
+            BURIED_HELMET, BURIED_CHESTPLATE, BURIED_LEGGINGS, BURIED_BOOTS
     );
 
     private static final Map<NamespacedKey, ItemStack> CHEST_REWARDS = ImmutableMap.of(
@@ -53,10 +53,22 @@ public class BuriedChestListener implements EventSubscriber<PlayerInteractEntity
     private static final int CHEST_CLOSED_CMD = 42;
     private static final int CHEST_OPENED_CMD = 43;
 
-    public sealed interface Context extends EventContext permits Context.Allow, Context.Deny {
-        record Allow(ItemStack reward, Interaction interaction) implements Context, EventContext.Data { }
+    public sealed interface Context extends EventContext permits Context.FirstOpen, Context.AlreadyOpened, Context.Deny {
+        record FirstOpen(
+                NamespacedKey chestKey,
+                ItemStack reward,
+                Interaction interaction
+        ) implements Context, EventContext.Data {
+        }
+
+        record AlreadyOpened(NamespacedKey chestKey, ItemStack reward) implements Context, EventContext.Data {
+        }
+
         record Deny() implements Context, EventContext.Error {
-            @Override public Component text() { return GameMessages.BURIED_CHEST_NEED_TOOL; }
+            @Override
+            public Component text() {
+                return GameMessages.BURIED_CHEST_NEED_TOOL;
+            }
         }
     }
 
@@ -65,61 +77,85 @@ public class BuriedChestListener implements EventSubscriber<PlayerInteractEntity
         Entity entity = e.getRightClicked();
         if (!(entity instanceof Interaction interaction)) return Optional.empty();
 
-        PersistentDataContainer pdc = interaction.getPersistentDataContainer();
+        PersistentDataContainer interactionPdc = interaction.getPersistentDataContainer();
+        NamespacedKey matchedKey = findMatchingKey(interactionPdc);
+        if (matchedKey == null) return Optional.empty();
 
-        for (NamespacedKey key : CHEST_KEYS) {
-            if (matchesKey(pdc, key)) {
-                if (!ItemMatcher.matches(e.getPlayer().getInventory().getItemInMainHand(), ToolItems.PICKAXE_3)) {
-                    return Optional.of(new Context.Deny());
-                }
+        Player player = e.getPlayer();
 
-                return Optional.of(new Context.Allow(CHEST_REWARDS.get(key), interaction));
-            }
+        if (!ItemMatcher.matches(player.getInventory().getItemInMainHand(), ToolItems.PICKAXE_3)) {
+            return Optional.of(new Context.Deny());
         }
-        return Optional.empty();
+
+        PlayerContext playerContext = PlayerContexts.ctx(player);
+        if (playerContext.persistentFlag(matchedKey.getKey())) {
+            return Optional.empty();
+        }
+
+        ItemStack reward = CHEST_REWARDS.get(matchedKey);
+        boolean isFirstOpen = !interactionPdc.has(OPENED_KEY, PersistentDataType.BOOLEAN);
+
+        return Optional.of(isFirstOpen
+                ? new Context.FirstOpen(matchedKey, reward, interaction)
+                : new Context.AlreadyOpened(matchedKey, reward));
     }
 
     @Override
     public EventResult onEvent(PlayerInteractEntityEvent e, Context ctx) {
-        Context.Allow allow = (Context.Allow) ctx;
         Player player = e.getPlayer();
-        Location location = allow.interaction().getLocation();
+        Location location = e.getRightClicked().getLocation();
 
-        updateChestDisplay(location);
+        if (ctx instanceof Context.FirstOpen firstOpen) {
+            Interaction interaction = firstOpen.interaction();
+            interaction.getPersistentDataContainer().set(OPENED_KEY, PersistentDataType.BOOLEAN, true);
+            updateChestDisplay(location);
+            PRCSounds.BURIED_CHEST_OPEN.play(location);
+            player.getWorld().spawnParticle(Particle.LARGE_SMOKE, location, 10);
+        }
 
-        PRCSounds.BURIED_CHEST_OPEN.play(location);
-        player.getWorld().dropItemNaturally(location.clone().add(0, 0.5, 0), allow.reward());
-        player.getWorld().spawnParticle(Particle.LARGE_SMOKE, location, 10);
+        NamespacedKey chestKey = switch (ctx) {
+            case Context.FirstOpen f -> f.chestKey();
+            case Context.AlreadyOpened f -> f.chestKey();
+            default -> throw new IllegalStateException();
+        };
+        ItemStack reward = switch (ctx) {
+            case Context.FirstOpen f -> f.reward();
+            case Context.AlreadyOpened f -> f.reward();
+            default -> throw new IllegalStateException();
+        };
+
+        player.getWorld().dropItemNaturally(location.clone().add(0, 0.5, 0), reward.clone());
         player.sendMessage(GameMessages.BURIED_CHEST_FOUND_ITEM);
+        PlayerContexts.ctx(player).persistentFlag(chestKey.getKey(), true);
 
-        allow.interaction().remove();
         return EventResult.STOP;
     }
 
     @Override
     public EventResult onError(PlayerInteractEntityEvent e, EventContext.Error error) {
-        e.getPlayer().sendMessage(error.text());
+        Player player = e.getPlayer();
+        player.sendMessage(error.text());
+        PRCSounds.DOCUMENTS_CLICK.play(player);
         return EventResult.STOP;
+    }
+
+    private NamespacedKey findMatchingKey(PersistentDataContainer pdc) {
+        for (NamespacedKey key : CHEST_KEYS) {
+            if (pdc.has(key, PersistentDataType.BOOLEAN)) return key;
+        }
+        return null;
     }
 
     private void updateChestDisplay(Location loc) {
         loc.getWorld().getNearbyEntities(loc, 1.5, 1.5, 1.5).forEach(entity -> {
-            if (entity instanceof ItemDisplay itemDisplay) {
-                ItemStack displayItem = itemDisplay.getItemStack();
-                if (displayItem.hasItemMeta()) {
-                    ItemMeta meta = displayItem.getItemMeta();
-                    if (meta.hasCustomModelData() && meta.getCustomModelData() == CHEST_CLOSED_CMD) {
-                        meta.setCustomModelData(CHEST_OPENED_CMD);
-                        displayItem.setItemMeta(meta);
-                        itemDisplay.setItemStack(displayItem);
-                    }
-                }
-            }
+            if (!(entity instanceof ItemDisplay itemDisplay)) return;
+            ItemStack displayItem = itemDisplay.getItemStack();
+            if (!displayItem.hasItemMeta()) return;
+            ItemMeta meta = displayItem.getItemMeta();
+            if (!meta.hasCustomModelData() || meta.getCustomModelData() != CHEST_CLOSED_CMD) return;
+            meta.setCustomModelData(CHEST_OPENED_CMD);
+            displayItem.setItemMeta(meta);
+            itemDisplay.setItemStack(displayItem);
         });
-    }
-
-    private boolean matchesKey(PersistentDataContainer pdc, NamespacedKey key) {
-        return pdc.has(key, PersistentDataType.BOOLEAN)
-                && Boolean.TRUE.equals(pdc.get(key, PersistentDataType.BOOLEAN));
     }
 }
