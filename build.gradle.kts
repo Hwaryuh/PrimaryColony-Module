@@ -22,8 +22,8 @@ dependencies {
     paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
     implementation(files("libs/Quill-0.2.90.jar"))
 
-    compileOnly(files("libs/PRCMission-1.0.9.jar"))
     compileOnly("com.github.mireu9275:PRCShop:v1.1.1")
+    compileOnly("com.github.mireu9275:PRCMission:v1.0.14")
 }
 
 tasks {

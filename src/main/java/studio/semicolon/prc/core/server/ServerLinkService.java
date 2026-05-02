@@ -17,6 +17,7 @@ public class ServerLinkService implements Bootable {
         Servers.addServerLink(server, ServerLinkConstants.TITLE_3, ServerLinkConstants.URL_3);
         Servers.addServerLink(server, ServerLinkConstants.TITLE_4, ServerLinkConstants.URL_4);
         Servers.addServerLink(server, ServerLinkConstants.TITLE_5, ServerLinkConstants.URL_5);
+        Servers.addServerLink(server, ServerLinkConstants.TITLE_6, ServerLinkConstants.URL_6);
     }
 
     @Override

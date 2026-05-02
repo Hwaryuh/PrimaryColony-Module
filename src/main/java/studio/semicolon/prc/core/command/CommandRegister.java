@@ -14,7 +14,8 @@ public class CommandRegister implements Bootable {
             CommandRegistry registry = new CommandRegistry(event.registrar());
             registry.register(ModuleCommand.create());
             registry.register(EscapeCommand.create());
-            registry.register(TestLabel.create());
+//            registry.register(InteractionHandleLabel.create());
+//            registry.register(TestLabel.create());
         });
     }
 

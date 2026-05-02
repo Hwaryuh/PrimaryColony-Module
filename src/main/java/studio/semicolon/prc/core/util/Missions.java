@@ -1,5 +1,6 @@
 package studio.semicolon.prc.core.util;
 
+import kr.eme.prcMission.api.MissionAPI;
 import kr.eme.prcMission.api.events.MissionEvent;
 import kr.eme.prcMission.enums.MissionVersion;
 import org.bukkit.Bukkit;
@@ -12,5 +13,9 @@ public class Missions {
 
     public static void progressV2(Player player, String target, String type, int value) {
         Bukkit.getPluginManager().callEvent(new MissionEvent(player, MissionVersion.V2, target, type, value));
+    }
+
+    public static boolean start(MissionVersion version) {
+        return MissionAPI.INSTANCE.startMission(version);
     }
 }

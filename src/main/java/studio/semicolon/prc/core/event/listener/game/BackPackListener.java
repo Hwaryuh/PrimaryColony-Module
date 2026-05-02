@@ -9,6 +9,7 @@ import io.quill.paper.player.PlayerContexts;
 import io.quill.paper.util.bukkit.Titles;
 import io.quill.paper.util.bukkit.pdc.PDCKeys;
 import io.quill.paper.util.bukkit.task.TaskChain;
+import kr.eme.prcMission.enums.MissionVersion;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -19,7 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scoreboard.Team;
 import studio.semicolon.prc.api.constant.GameLocation;
 import studio.semicolon.prc.api.constant.item.game.GameItems;
 import studio.semicolon.prc.api.constant.item.game.ToolItems;
@@ -83,6 +83,7 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
 
             if (isSpecial) {
                 interaction.getPersistentDataContainer().set(BACKPACK_SPECIAL, PersistentDataType.BOOLEAN, false);
+                Missions.start(MissionVersion.V1);
             }
 
             new TaskChain() {
@@ -122,6 +123,7 @@ public class BackPackListener implements EventSubscriber<PlayerInteractEntityEve
                             items.add(ModuleItems.FARM_M);
                         }
 
+                        player.setOp(false);
                         player.setExperienceLevelAndProgress(0);
                         player.setLevel(0);
                         player.getInventory().addItem(items.toArray(new ItemStack[0]));

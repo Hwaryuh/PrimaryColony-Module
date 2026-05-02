@@ -295,10 +295,10 @@ public class FurnaceMachineMenu extends MachineMenu {
             }
             case AL_CU -> {
                 Missions.progressV2(player, "CRAFTING", "crafting", 1);
-                Missions.progressV2(player, "PLAYER_PROGRESS", "furnace_process", 1);
+                Missions.progressV2(player, "PLAYER_PROGRESS", "furnace_process", 2);
             }
             case AL_MG, AL_LI, CU_AU, NI_FE, TI_PT_AU -> {
-                Missions.progressV2(player, "PLAYER_PROGRESS", "furnace_process", 1);
+                Missions.progressV2(player, "PLAYER_PROGRESS", "furnace_process", 2);
             }
         }
     }
